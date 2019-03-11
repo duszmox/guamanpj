@@ -6,6 +6,5 @@
   </head>
   <body>
     Feltöltés folyamatban....
-    
   </body>
 </html>
