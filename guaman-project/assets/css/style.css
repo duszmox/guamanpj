@@ -1,0 +1,9 @@
+.website-logo{
+    max-width: 100%;
+    height: 80px;
+}
+
+:root{
+    --primary-color: #927826;
+    --primary-dark-color: #7F6000;
+}
