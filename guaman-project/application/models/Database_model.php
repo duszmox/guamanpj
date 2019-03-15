@@ -55,4 +55,9 @@ class Database_model extends CI_Model
 		return $column_names;
 	}
 
+	public function update_field($table_name, $column, $id, $value)
+	{
+		// TODO Andris update field
+	}
+
 }

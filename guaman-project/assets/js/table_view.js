@@ -50,3 +50,7 @@ function loadTable(baseUrl, table_name) {
 			console.log("error");
 		})
 }
+
+function update_table_field(tablename, column, id, newValue) {
+
+}
