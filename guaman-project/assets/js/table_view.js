@@ -27,7 +27,7 @@ function loadTable(baseUrl, table_name) {
 			console.log(data[i]);
 
 			Object.keys(data[i]).forEach(function (k) {
-				html += "<td>" + data[i][k] + "</td>";
+				html += "<td><input type='text' class='form-control' value='" + data[i][k] + "'><span class='data-cell'>" + data[i][k] + "</span></td>";
 			});
 
 			html += "</tr>";

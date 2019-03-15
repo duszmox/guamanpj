@@ -31,6 +31,7 @@
 	</div>
 </div>
 <script>
+	// TODO translate all elements
 	var data_table_strings = {
 		processing:     "Traitement en cours...",
 		search:         "Rechercher&nbsp;:",
