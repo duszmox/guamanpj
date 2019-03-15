@@ -41,6 +41,20 @@ $lang["statistics_label"] = "Statisztikák";
 $lang["tables_label"] = "Táblák";
 $lang["profile_title"] = "Profil";
 $lang["settings_title"] = "Beállítások";
+$lang["shown_pages_start_message"] = "Lekérdezése ";
+$lang["shown_pages_end_message"] = " elemnek";
+$lang["searcher_message"] = "Keresés: ";
+$lang["processing_message"] = "Folyamatban...";
+$lang["first_page_message"] = "Első";
+$lang["previous_page_message"] = "Előző";
+$lang["last_page_message"] = "Utolsó";
+$lang["next_page_message"] = "Következő";
+$lang["asc_table_message"] = ": növekvő sorrendbe állítás";
+$lang["desc_table_message"] = ": csökkenő sorrendbe állítás";
+$lang["records_loading_message"] = "Elemek betöltése...";
+$lang["records_zero_message"] = "Nincsen eleme ennek a táblázatnak.";
+$lang["empty_table_message"] = "Üres táblázat.";
+
 
 
 $lang["username_label"] = "Felhasználónév: ";
