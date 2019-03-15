@@ -20,7 +20,9 @@
 							/*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-							echo "<td onclick='loadTable(\"" . base_url() . "\", \"" . $table["table_name"] . "\")'>" . $table["table_title"] . "</td>";
+							echo "<td onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
+								"<i class='fas fa-database'></i> " . $table["table_title"] .
+								"</td>";
 							echo "</tr>";
 						}
 						?>
@@ -31,28 +33,30 @@
 	</div>
 </div>
 <script>
-	// TODO translate all elements
 	var data_table_strings = {
-		processing:     "Traitement en cours...",
-		search:         "Rechercher&nbsp;:",
-		lengthMenu:    "Afficher _MENU_ &eacute;l&eacute;ments",
-		info:           "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-		infoEmpty:      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
-		infoFiltered:   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+		processing:     "<?php echo lang("processing_message");?>",
+		search:         "<?php echo lang("searcher_message");?>",
+		lengthMenu:    "<?php echo lang("shown_pages_start_message")."_MENU_".lang("shown_pages_end_message");?>",
+		info:           "",
+		infoEmpty:      "",
+		infoFiltered:   "",
 		infoPostFix:    "",
-		loadingRecords: "Chargement en cours...",
-		zeroRecords:    "Aucun &eacute;l&eacute;ment &agrave; afficher",
-		emptyTable:     "Aucune donnée disponible dans le tableau",
+		loadingRecords: "<?php echo lang("records_loading_message");?>",
+		zeroRecords:    "<?php echo lang("records_zero_message");?>",
+		emptyTable:     "<?php echo lang("empty_table_message");?>",
 		paginate: {
-			first:      "Premier",
-			previous:   "Pr&eacute;c&eacute;dent",
-			next:       "Suivant",
-			last:       "Dernier"
+			first:      "<?php echo lang("first_page_message");?>",
+			previous:   "<?php echo lang("previous_page_message");?>",
+			next:       "<?php echo lang("next_page_message");?>",
+			last:       "<?php echo lang("last_page_message");?>"
 		},
 		aria: {
-			sortAscending:  ": activer pour trier la colonne par ordre croissant",
-			sortDescending: ": activer pour trier la colonne par ordre décroissant"
+			sortAscending:  "<?php echo lang("asc_table_message");?>",
+			sortDescending: "<?php echo lang("desc_table_message");?>"
 		}
-	}
+	};
+
+	var base_url = "<?php echo base_url(); ?>";
 </script>
+
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>

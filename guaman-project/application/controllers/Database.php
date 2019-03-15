@@ -27,6 +27,13 @@ class Database extends CI_Controller
 		$this->load->view("templates/footer");
 	}
 
+	function create(){
+        require_rank(Ranks::$ADMIN);
+
+        $this->load->view("templates/header");
+        $this->load->view("templates/footer");
+    }
+
 	function get_table($table_name, $order_by = "id", $order = "ASC")
 	{
 		require_rank(Ranks::$ADMIN);
@@ -54,5 +61,25 @@ class Database extends CI_Controller
 		$this->output
 			->set_content_type("application/json")
 			->set_output(json_encode($this->Database_model->get_columns_by_table($table_name)));
+	}
+
+	function update_field(){
+		require_rank(Ranks::$ADMIN);
+		$table_name = $this->input->post("table_name");
+		$column = $this->input->post("column");
+		$id = $this->input->post("id");
+		$value = $this->input->post("value");
+		print_r($table_name . "; " . $column . "; " . $id . "; " . $value);
+
+		try{
+			$this->Database_model->update_field($table_name, $column, $id, $value);
+		}
+		catch (Exception $exception){
+			switch ($exception->getMessage()){
+				case "invalid_input":
+					die("invalid_input");
+					break;
+			}
+		}
 	}
 }

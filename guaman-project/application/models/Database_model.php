@@ -55,4 +55,19 @@ class Database_model extends CI_Model
 		return $column_names;
 	}
 
+	public function update_field($table_name, $column, $id, $value)
+	{
+	    if(!Validator::is_alphanumeric($table_name)){
+	        throw new Exception("invalid_input");
+        }
+        if(!Validator::is_alphanumeric($column)){
+            throw new Exception("invalid_input");
+        }
+        if(!Validator::is_numeric($id)) {
+            throw new Exception("invalid_input");
+        }
+
+        $this->db->update($table_name, array($column=>$value), array("id" => $id));
+	}
+
 }

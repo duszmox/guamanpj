@@ -28,19 +28,34 @@
             <i class="fas fa-database"></i>
             <span><?php echo lang("database_system_title") ?></span>
         </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <?php //<h6 class="collapse-header">Login Screens:</h6> ?>
-                <a class="collapse-item" href="<?php echo base_url("database/statistics")?>">
-                    <?php echo lang("statistics_label");?>
-                </a>
-                <a class="collapse-item" href="<?php echo base_url("database/")?>"><?php echo lang("tables_label")?></a>
+		<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<?php //<h6 class="collapse-header">Login Screens:</h6> ?>
+				<a class="collapse-item" href="<?php echo base_url("database/statistics")?>">
+					<?php echo lang("statistics_label");?>
+				</a>
+				<a class="collapse-item" href="<?php echo base_url("database/")?>"><?php echo lang("tables_label")?></a>
 
-                <div class="collapse-divider"></div>
+				<div class="collapse-divider"></div>
 
-            </div>
-        </div>
-    </li>
+			</div>
+		</div>
+		<?php
+		?>
+		<div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+				<?php //<h6 class="collapse-header">Login Screens:</h6> ?>
+				<a class="collapse-item" href="<?php echo base_url("database/statistics")?>">
+					<?php echo $modul->subpages->label; ?>
+				</a>
+				<a class="collapse-item" href="<?php echo base_url("database/")?>"><?php echo lang("tables_label")?></a>
+
+				<div class="collapse-divider"></div>
+
+			</div>
+		</div>
+
+	</li>
 
 
     <!-- Nav Item - Tables -->
