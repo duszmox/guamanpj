@@ -7,7 +7,7 @@
  */
 $config["table_prefix"] = "guaman_";
 $config["website_title"] = "Guaman Projects";
-$config["website_logo_url"] = "https://ambrusweb11.hu/ideaHatchery/img/logo_bordered.svg";
+$config["website_logo_url"] = "https://guamanpj.com/guaman-project/assets/img/logo.png";
 $config["allow_registration"] = false;
 
 $config["modules"] = array();

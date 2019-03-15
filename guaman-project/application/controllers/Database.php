@@ -24,7 +24,7 @@ class Database extends CI_Controller
 		$this->load->view("templates/menu");
 		$table_array = ($this->Database_model->get_tables());
 		$this->load->view("database/table_view", array("table_array" => $table_array));
-		$this->load->view("database/new_row_view");
+		$this->load->view("database/insert_row_view", array("table_name" => $this->Database_model));
 		$this->load->view("templates/footer");
 	}
 
