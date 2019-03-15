@@ -21,5 +21,6 @@ class Language extends CI_Controller
         $language = ($language != "") ? $language : "english";
         if(!in_array($language, array("hungarian", "english"))) $language = "english";
         $this->session->set_userdata('site_lang', $language);
+        redirect(base_url("account/profile"));
     }
 }

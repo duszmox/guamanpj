@@ -133,8 +133,10 @@ class Account_model extends CI_Model
 
     public function is_available_email($email)
     {
-        return true;
-        // TODO check available email address
+        $this->db->select("id");
+        $this->db->where("$email", $email);
+        $query = $this->db->get(self::$TABLE_NAME);
+        return $query->num_rows() == 0;
     }
 
 

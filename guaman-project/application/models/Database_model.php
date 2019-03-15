@@ -30,4 +30,9 @@ class Database_model extends CI_Model
         $query = $this->db->get(self::$TABLE_NAME);
         return $query->result_array();
     }
+    public function get_table($columns = "*",$table,$by_table,$order){
+        $this->db->select($columns);
+        $this->db->order_by($by_table,$order);
+        return $this->db->get($table);
+    }
 }

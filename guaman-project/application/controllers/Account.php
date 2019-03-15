@@ -39,7 +39,7 @@ class Account extends CI_Controller
                 js_alert(lang("enter_valid_data_message"). base_url("account/login"));
             }
             if($this->Account_model->login_user($username, Validator::encrypt($password))){
-                js_alert(lang("successful_login_message"), base_url("account/profile"));
+                js_alert(lang("successful_login_message"), base_url("language/hungarian"));
             }
             else{
                 js_alert(lang("wrong_login_message"), base_url("account/login"));
@@ -70,19 +70,19 @@ class Account extends CI_Controller
                 catch (Exception $exception){
                     switch ($exception->getMessage()){
                         case "unavailable_username":
-                            js_alert("Ez a felhasználónév már foglalt!", base_url("account/register"));
+                            js_alert(lang("used_username_message"), base_url("account/register"));
                             break;
                         case "unavailable_email":
-                            js_alert("Ezzel az email címmel már regosztrált valaki.", base_url("account/register"));
+                            js_alert(lang("used_email_message"), base_url("account/register"));
                             break;
 
                     }
                 }
-                js_alert("Sikeres regisztráció!", base_url("account/login"));
+                js_alert(lang("successful_registration_message"), base_url("account/login"));
             }
         } else {
             // Load register form
-            $this->load->view("templates/header", array("title" => "Regisztráció"));
+            $this->load->view("templates/header", array("title" => lang("registration_title")));
             $this->load->view("account/register-form");
             $this->load->view("templates/footer");
         }
