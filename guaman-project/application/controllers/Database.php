@@ -24,6 +24,7 @@ class Database extends CI_Controller
 		$this->load->view("templates/menu");
 		$table_array = ($this->Database_model->get_tables());
 		$this->load->view("database/table_view", array("table_array" => $table_array));
+		$this->load->view("database/insert_row_view", array("table_name" => $this->Database_model));
 		$this->load->view("templates/footer");
 	}
 
@@ -82,4 +83,9 @@ class Database extends CI_Controller
 			}
 		}
 	}
+	function insert_row($table_name){
+	    $data = array();
+        $this->db->insert($table_name, $data);
+        redirect("database/");
+    }
 }
