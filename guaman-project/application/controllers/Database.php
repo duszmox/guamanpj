@@ -55,4 +55,23 @@ class Database extends CI_Controller
 			->set_content_type("application/json")
 			->set_output(json_encode($this->Database_model->get_columns_by_table($table_name)));
 	}
+
+	function update_field(){
+		require_rank(Ranks::$ADMIN);
+		$table_name = $this->input->post("table_name");
+		$column = $this->input->post("column");
+		$id = $this->input->post("id");
+		$value = $this->input->post("value");
+
+		try{
+			$this->Database_model->update_field($table_name, $column, $id, $value);
+		}
+		catch (Exception $exception){
+			switch ($exception->getMessage()){
+				case "invalid_input":
+					die("invalid_input");
+					break;
+			}
+		}
+	}
 }

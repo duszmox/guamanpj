@@ -20,7 +20,9 @@
 							/*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-							echo "<td onclick='loadTable(\"" . base_url() . "\", \"" . $table["table_name"] . "\")'>" . $table["table_title"] . "</td>";
+							echo "<td onclick='loadTable(\"" . base_url() . "\", \"" . $table["table_name"] . "\")'>" .
+								"<button class='btn'><i class='fas fa-database'></i>" . $table["table_title"] . "</button>" .
+								"</td>";
 							echo "</tr>";
 						}
 						?>
@@ -52,7 +54,6 @@
 			sortAscending:  "<?php echo lang("asc_table_message");?>",
 			sortDescending: "<?php echo lang("desc_table_message");?>"
 		}
-		//todo magyarba beírás
 	}
 </script>
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
