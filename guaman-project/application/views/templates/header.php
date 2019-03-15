@@ -31,7 +31,7 @@ if (!isset($title)) {
     <link rel="manifest" href="https://guamanpj.com/guaman-project/favicon/site.webmanifest">
     <link rel="mask-icon" href="https://guamanpj.com/guaman-project/favicon/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">ł
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
 <div id="wrapper">
