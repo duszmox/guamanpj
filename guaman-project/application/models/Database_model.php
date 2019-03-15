@@ -35,4 +35,10 @@ class Database_model extends CI_Model
         $this->db->order_by($by_table,$order);
         return $this->db->get($table);
     }
+    public function create_table(){
+        
+    }
+    public function create_folder(){
+        //todo folder create
+    }
 }

@@ -25,4 +25,10 @@ class Database extends CI_Controller
         $this->load->view("templates/footer");
 
     }
+    function statistics(){
+        return true;
+    }
+    function create(){
+
+    }
 }

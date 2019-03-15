@@ -15,26 +15,29 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4"><?php echo lang("login_message");?></h1>
                                 </div>
-                                <form class="user">
+                                <form class="user" method="post">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="<?php echo lang("username_placeholder");?>">
+                                        <input type="text" class="form-control form-control-user" id="exampleInputEmail" name="username" aria-describedby="emailHelp" placeholder="<?php echo lang("username_placeholder");?>">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="<?php echo lang("password_placeholder");?>">
+                                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" placeholder="<?php echo lang("password_placeholder");?>">
                                     </div>
 
-                                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                        Login
-                                    </a>
+                                    <input type="submit" class="btn btn-primary btn-user btn-block" value="<?php echo lang("send_login_message")?>">
+
+
 
 
                                 </form>
                                 <hr>
+
                                 <div class="text-center">
-                                    <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="register.html">Create an Account!</a>
+                                    <?php
+                                        if($this->config->item("allow_registration")){
+                                            echo "<a href=\"".base_url("account/register")."\">".lang("create_account_message")." </a>";
+                                        }
+                                    ?>
+
                                 </div>
                             </div>
                         </div>

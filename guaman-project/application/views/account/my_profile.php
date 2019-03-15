@@ -13,51 +13,36 @@
  * @var $is_phone_number_public boolean
  */
 ?>
-<table>
-    <tr>
-        <th><?php echo lang("username_label") ?></th>
-        <td><?php echo $username; ?></td>
-    </tr>
-    <tr>
-        <th><?php echo lang("email_label") ?></th>
-        <td><?php echo $email; ?></td>
-        <td><?php echo lang("public"); ?> <input type="checkbox" checked disabled></td>
-    </tr>
-    <tr>
-        <th><?php echo lang("rank_label") ?></th>
-        <td><?php echo Ranks::get_nice_name($rank); ?></td>
-    </tr>
-    <tr>
-        <th><?php echo lang("password_label") ?></th>
-        <td>******** <a
-                    href="<?php echo base_url("account/change-password"); ?>"><?php echo lang("change_password_button"); ?>
-                <i class="fas fa-external-link-alt"></i></a></td>
-    </tr>
-    <tr>
-        <th><?php echo lang("phone_number_label"); ?></th>
-        <td><?php echo $phone_number; ?></td>
-        <td><?php echo lang("public"); ?><input type="checkbox" <?php echo($is_phone_number_public ? "checked" : "") ?>>
-        </td>
-    </tr>
-    <tr>
-        <th><?php echo lang("language_label"); ?></th>
-        <td>
-            <a href="<?php echo base_url("language/english");?>">
-                <img src="https://cdn2.iconfinder.com/data/icons/flag-country-emblem/512/flag-16-512.png" class="language-logo">
-            </a>
-            <a href="<?php echo base_url("language/hungarian");?>">
-                <img src="https://cdn3.iconfinder.com/data/icons/50-flags-of-the-world-circular-shape-2/60/Circular_world_Flag_147-512.png" class="language-logo">
-            </a>
-        </td>
-
-        </td>
-    </tr>
-    <tr>
-        <th>
-            <a href="<?php echo base_url("account/logout");?>"><?php echo lang("logout_label"); ?></a>
-        </th>
+<div class="container-fluid">
+    <h2><?php echo lang("profil_page_title")?></h2>
+    <table>
+        <tr>
+            <th><?php echo lang("username_label") ?></th>
+            <td><?php echo $username; ?></td>
+        </tr>
+        <tr>
+            <th><?php echo lang("email_label") ?></th>
+            <td><?php echo $email; ?></td>
+            <td><?php echo lang("public"); ?> <input type="checkbox" checked disabled></td>
+        </tr>
+        <tr>
+            <th><?php echo lang("rank_label") ?></th>
+            <td><?php echo Ranks::get_nice_name($rank); ?></td>
+        </tr>
+        <tr>
+            <th><?php echo lang("password_label") ?></th>
+            <td>******** <a
+                        href="<?php echo base_url("account/change-password"); ?>"><?php echo lang("change_password_button"); ?>
+                    <i class="fas fa-external-link-alt"></i></a></td>
+        </tr>
+        <tr>
+            <th><?php echo lang("phone_number_label"); ?></th>
+            <td><?php echo $phone_number; ?></td>
+            <td><?php echo lang("public"); ?><input
+                        type="checkbox" <?php echo($is_phone_number_public ? "checked" : "") ?>>
+            </td>
+        </tr>
 
 
-        </td>
-    </tr>
-</table>
+    </table>
+</div>
