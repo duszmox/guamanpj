@@ -75,6 +75,7 @@ class Database extends CI_Controller
 		$column = $this->input->post("column");
 		$id = $this->input->post("id");
 		$value = $this->input->post("value");
+		print_r($table_name . "; " . $column . "; " . $id . "; " . $value);
 
 		try{
 			$this->Database_model->update_field($table_name, $column, $id, $value);

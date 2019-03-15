@@ -1,0 +1,1 @@
+<a class="btn"><?php echo lang("new_row");?></a>
