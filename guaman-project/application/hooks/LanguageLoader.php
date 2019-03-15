@@ -17,7 +17,7 @@ class LanguageLoader
         if ($site_lang) {
             $ci->lang->load('information', $site_lang);
         } else {
-            $ci->lang->load('information', 'english');
+            $ci->lang->load('information', 'hungarian');
         }
     }
 }
