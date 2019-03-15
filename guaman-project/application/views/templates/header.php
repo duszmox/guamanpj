@@ -24,6 +24,8 @@ if (!isset($title)) {
 	<script src="<?php echo js_url("jquery.easing.min.js");?>" ></script>
 	<script src="<?php echo js_url("jquery.dataTables.min.js");?>" ></script>
 	<script src="<?php echo js_url("dataTables.bootstrap4.min.js");?>" ></script>
+    <link rel="icon" href="<?php echo img_url("logo.png")?>" type="image/x-icon"/>
+    <link rel="shortcut icon" href="<?php echo img_url("logo.png")?>" type="image/x-icon"/>
 </head>
 <body>
 <div id="wrapper">
