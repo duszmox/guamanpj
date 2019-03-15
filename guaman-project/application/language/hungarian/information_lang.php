@@ -54,6 +54,10 @@ $lang["desc_table_message"] = ": csökkenő sorrendbe állítás";
 $lang["records_loading_message"] = "Elemek betöltése...";
 $lang["records_zero_message"] = "Nincsen eleme ennek a táblázatnak.";
 $lang["empty_table_message"] = "Üres táblázat.";
+$lang["create_folder_title"] = "Mappa létrehozása";
+$lang["folder_name_title"] = "Mappa neve: ";
+$lang["folder_destination_title"] = "Mappa helye: ";
+$lang["create_table_title"] = "Tábla létrehozása ";
 
 
 

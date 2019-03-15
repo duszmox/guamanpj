@@ -24,4 +24,9 @@ class Validator
         if (trim($email) === "") return false;
         return (filter_var($email, FILTER_VALIDATE_EMAIL));
     }
+
+    public static function is_numeric($id)
+    {
+        return is_numeric($id);
+    }
 }
