@@ -20,8 +20,8 @@
 							/*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-							echo "<td onclick='loadTable(\"" . base_url() . "\", \"" . $table["table_name"] . "\")'>" .
-								"<button class='btn'><i class='fas fa-database'></i>" . $table["table_title"] . "</button>" .
+							echo "<td onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
+								"<i class='fas fa-database'></i> " . $table["table_title"] .
 								"</td>";
 							echo "</tr>";
 						}
@@ -55,6 +55,9 @@
 			sortAscending: ": activer pour trier la colonne par ordre croissant",
 			sortDescending: ": activer pour trier la colonne par ordre décroissant"
 		}
-	}
+	};
+
+	var base_url = "<?php echo base_url(); ?>";
 </script>
+
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
