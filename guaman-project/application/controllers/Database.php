@@ -30,8 +30,29 @@ class Database extends CI_Controller
 	function get_table($table_name, $order_by = "id", $order = "ASC")
 	{
 		require_rank(Ranks::$ADMIN);
+
+		$rows = $this->Database_model->get_table("*", $table_name, $order_by, $order);
+		$output = array();
+		$cols = $this->Database_model->get_columns_by_table($table_name);
+		$header_row = array();
+		foreach ($cols as $key => $col){
+			$header_row[$col] = $col;
+		}
+
+		$output[]= $header_row;
+		foreach ($rows as $key => $row) {
+			$output[] = $row;
+		}
 		$this->output
 			->set_content_type('application/json')
-			->set_output(json_encode($this->Database_model->get_table("*", $table_name, $order_by, $order)));
+			->set_output(json_encode($output));
+	}
+
+	function get_column_names($table_name)
+	{
+		require_rank(Ranks::$ADMIN);
+		$this->output
+			->set_content_type("application/json")
+			->set_output(json_encode($this->Database_model->get_columns_by_table($table_name)));
 	}
 }

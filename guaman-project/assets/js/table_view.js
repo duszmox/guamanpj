@@ -1,21 +1,28 @@
 $(document).ready(function () {
-	$("#table-data").DataTable();
 
 });
 
 
 function loadTable(baseUrl, table_name) {
 	$.getJSON(baseUrl + "database/get_table/" + table_name + "/1/desc", function (data) {
+		$("#data-table").dataTable().remove();
 		$("#table-container").html("");
 		html = "<table class=\"table table\" id=\"data-table\" >";
 		console.log(data);
 		html += "<thead><tr>";
-		for (var i = 0; i < data.length; i++) {
-			html += "<th>hello</th>";
-		}
+			html += "<tr>";
+			console.log(data[0]);
+
+			Object.keys(data[0]).forEach(function (k) {
+				html += "<th>" + data[0][k] + "</th>";
+			});
+
+			html += "</tr>";
+
 		html += "</tr></thead>";
+
 		html += "<tbody>";
-		for (var i = 0; i < data.length; i++) {
+		for (var i = 1; i < data.length; i++) {
 			html += "<tr>";
 			console.log(data[i]);
 
@@ -29,7 +36,11 @@ function loadTable(baseUrl, table_name) {
 
 		console.log(html);
 		$("#table-container").html(html);
-		$("#data-table").DataTable();
+		setTimeout(function() {
+			$("#data-table").DataTable({
+				language: data_table_strings
+			});
+		}, 1);
 
 	})
 		.done(function () {
