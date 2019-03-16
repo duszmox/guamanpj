@@ -83,7 +83,7 @@ class Database_model extends CI_Model
     public function get_database_type_name($string){
 
         $string = strtolower($string);
-        $string = str_replace(" ", "_", $string);
+        $string = str_replace("&nbsp;", "_", $string);
 	    $string = str_replace("-", "_", $string);
 	    $string = str_replace("á", "a", $string);
 	    $string = str_replace("é", "e", $string);
