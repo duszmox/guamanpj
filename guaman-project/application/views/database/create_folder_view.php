@@ -3,6 +3,12 @@
     <?php echo lang("folder_name_title"); ?>
     <input type="text" name="folder_name">
     <?php echo lang("folder_destination_title"); ?>
-    <input type="text" name="folder_destination">
+    <select name="parent_folder">
+        <?php
+        foreach ($folder_array as $key => $folder) {
+            echo "<option value='".$folder['parent_folder']."'>".$folder['parent_folder']."</option>";
+        }
+        ?>
+    </select>
     <input type="submit" value="OK">
 </form>

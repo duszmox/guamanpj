@@ -76,7 +76,8 @@ class Database_model extends CI_Model
         $this->db->update($table_name, array($column=>$value), array("id" => $id));
 	}
 
-	public function create_folder(){
+	public function create_folder($name, $parent_folder){
+	    $this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
 
     }
 
