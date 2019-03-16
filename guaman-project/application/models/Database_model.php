@@ -81,9 +81,11 @@ class Database_model extends CI_Model
     }
 
     public function get_database_type_name($string){
-	    $string = str_replace(" ", "_", $string);
+
+        $string = strtolower($string);
+        $string = str_replace(" ", "_", $string);
 	    $string = str_replace("-", "_", $string);
-	    $string = strtolower($string);
+
 	    return $string;
 
     }
