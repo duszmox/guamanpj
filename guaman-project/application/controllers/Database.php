@@ -25,16 +25,11 @@ class Database extends CI_Controller
 		$table_array = ($this->Database_model->get_tables());
 		$folder_array = ($this->Database_model->get_folders());
 		$this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
-		$this->load->view("database/insert_row_view", array("table_name" => $this->Database_model));
+
 		$this->load->view("templates/footer");
 	}
 
-	function create(){
-        require_rank(Ranks::$ADMIN);
 
-        $this->load->view("templates/header");
-        $this->load->view("templates/footer");
-    }
 
 	function get_table($table_name, $order_by = "id", $order = "ASC")
 	{
