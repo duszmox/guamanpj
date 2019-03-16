@@ -84,8 +84,17 @@ class Database_model extends CI_Model
     public function get_database_type_name($string){
 
         $string = strtolower($string);
-        $string = str_replace(" ", "_", $string);
+        $string = str_replace("&nbsp;", "_", $string);
 	    $string = str_replace("-", "_", $string);
+	    $string = str_replace("á", "a", $string);
+	    $string = str_replace("é", "e", $string);
+	    $string = str_replace("ó", "o", $string);
+	    $string = str_replace("ő", "o", $string);
+	    $string = str_replace("ö", "o", $string);
+	    $string = str_replace("ú", "u", $string);
+	    $string = str_replace("ű", "u", $string);
+	    $string = str_replace("ü", "u", $string);
+	    $string = str_replace("i", "í", $string);
 
 	    return $string;
 
