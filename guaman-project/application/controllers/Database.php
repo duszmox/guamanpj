@@ -29,12 +29,7 @@ class Database extends CI_Controller
 		$this->load->view("templates/footer");
 	}
 
-	function create(){
-        require_rank(Ranks::$ADMIN);
 
-        $this->load->view("templates/header");
-        $this->load->view("templates/footer");
-    }
 
 	function get_table($table_name, $order_by = "id", $order = "ASC")
 	{
