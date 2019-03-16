@@ -1,6 +1,4 @@
-<style>
 
-</style>
 <div class="row">
 	<div class="col-sm-8">
 		<div class="card">
@@ -63,36 +61,36 @@
 		return false;
 	}
 
-	var output = "<ul id='table-list' class='jsl-open'>";
+	var output = "<ul id='table-list' class='jsl-open table-list'>";
 
-	function get_folder_title_by_name(folder_name) {
+	function get_folder_title_by_id(folder_id) {
 		for (var i = 0; i < folders.length; i++) {
-			if (folders[i].folder_name === folder_name) {
+			if (folders[i].id === folder_id) {
 				return folders[i].folder_title;
 			}
 		}
 		return "";
 	}
 
-	function tree(current_folder, level) {
+	function tree(current_folder_id, level) {
 		if (level !== 0) {
 			output += "<li>";
 			output += '<i class="fa fa-folder-o" aria-hidden="true"></i>';
-			output += "<i class=\"fas fa-folder\"></i> <b>" + get_folder_title_by_name(current_folder) + "</b>";
+			output += "<i class=\"fas fa-folder\"></i> <b>" + get_folder_title_by_id(current_folder_id) + "</b>";
 
 			// Ha a current_folder egy foldernek a parentje:
-			output += "<ul>";
+			output += "<ul class='table-list'>";
 		}
 		for (var i = 0; i < folders.length; i++) {
-			if (current_folder === folders[i].parent_folder) {
-				tree(folders[i].folder_name, level + 1);
+			if (current_folder_id === folders[i].parent_folder) {
+				tree(folders[i].id, level + 1);
 			}
 		}
 
 
 		// Ha a current_folder egy table-nek a parentje:
 		for (var i = 0; i < tables.length; i++) {
-			if (current_folder === tables[i].parent_folder) {
+			if (current_folder_id === tables[i].parent_folder) {
 				output += '<li onclick="loadTable(\'' + tables[i].table_name + '\')"><i class="fa fa-file-text-o" aria-hidden="true"></i> <i class=\'fas fa-database\'></i> ' + tables[i].table_title + "</li>";
 			}
 		}

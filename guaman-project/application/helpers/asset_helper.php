@@ -11,7 +11,7 @@ function js_url($js_file)
 
 function img_url($img_file)
 {
-    return base_url("/assets/js/" . $img_file);
+	return base_url("/assets/img/" . $img_file);
 }
 
 

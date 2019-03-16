@@ -39,5 +39,5 @@ function require_rank($min_rank){
     }
 }
 function doesHaveRankForTableOrFolder($table_name){
-     //todo megnézni hogy a permmissions táblban 1-es vagy 0-s a hozzátartozó érték a nevéhez.
+	// todo megnézni hogy a permmissions táblban 1-es vagy 0-s a hozzátartozó érték a nevéhez.
 }

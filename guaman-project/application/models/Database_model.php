@@ -10,12 +10,14 @@ class Database_model extends CI_Model
 {
 
 	public static $TABLE_NAME = "tables";
-    public static  $FOLDER_TABLE_NAME = "folders";
+	public static $FOLDER_TABLE_NAME = "folders";
+
 	public function __construct()
 	{
+		parent::__construct();
+
 		self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
 		self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
-
 	}
 
 	public function get_table_names()
@@ -34,11 +36,12 @@ class Database_model extends CI_Model
 		$query = $this->db->get(self::$TABLE_NAME);
 		return $query->result_array();
 	}
-    public function get_folders()
-    {
-        $query = $this->db->get(self::$FOLDER_TABLE_NAME);
-        return $query->result_array();
-    }
+
+	public function get_folders()
+	{
+		$query = $this->db->get(self::$FOLDER_TABLE_NAME);
+		return $query->result_array();
+	}
 
 	public function get_table($columns, $table, $order_by, $order)
 	{
@@ -63,46 +66,50 @@ class Database_model extends CI_Model
 
 	public function update_field($table_name, $column, $id, $value)
 	{
-	    if(!Validator::is_alphanumeric($table_name)){
-	        throw new Exception("invalid_input");
-        }
-        if(!Validator::is_alphanumeric($column)){
-            throw new Exception("invalid_input");
-        }
-        if(!Validator::is_numeric($id)) {
-            throw new Exception("invalid_input");
-        }
+		if (!Validator::is_alphanumeric($table_name)) {
+			throw new Exception("invalid_input");
+		}
+		if (!Validator::is_alphanumeric($column)) {
+			throw new Exception("invalid_input");
+		}
+		if (!Validator::is_numeric($id)) {
+			throw new Exception("invalid_input");
+		}
 
-        $this->db->update($table_name, array($column=>$value), array("id" => $id));
+		$this->db->update($table_name, array($column => $value), array("id" => $id));
 	}
 
-	public function create_folder($name, $parent_folder){
-	    //todo feltölteni az adatot a permissions táblába is column-ként.
-	    $this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
+	public function create_folder($name, $parent_folder)
+	{
+		//todo feltölteni az adatot a permissions táblába is column-ként.
+		$this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
 
-    }
-    public function create_table(){
-	   //todo permissions táblához is hozzá kell adni, emellett táblaként létre kell hozni, és a tables-be is fel kell tölteni.
-    }
+	}
 
-    public function get_database_type_name($string){
+	public function create_table()
+	{
+		//todo permissions táblához is hozzá kell adni, emellett táblaként létre kell hozni, és a tables-be is fel kell tölteni.
+	}
 
-        $string = strtolower($string);
-        $string = str_replace("&nbsp;", "_", $string);
-	    $string = str_replace("-", "_", $string);
-	    $string = str_replace("á", "a", $string);
-	    $string = str_replace("é", "e", $string);
-	    $string = str_replace("ó", "o", $string);
-	    $string = str_replace("ő", "o", $string);
-	    $string = str_replace("ö", "o", $string);
-	    $string = str_replace("ú", "u", $string);
-	    $string = str_replace("ű", "u", $string);
-	    $string = str_replace("ü", "u", $string);
-	    $string = str_replace("i", "í", $string);
+	public function get_database_type_name($string)
+	{
 
-	    return $string;
+		$string = strtolower($string);
+		$string = str_replace("&nbsp;", "_", $string);
+		$string = str_replace("-", "_", $string);
+		$string = str_replace("á", "a", $string);
+		$string = str_replace("é", "e", $string);
+		$string = str_replace("ó", "o", $string);
+		$string = str_replace("ő", "o", $string);
+		$string = str_replace("ö", "o", $string);
+		$string = str_replace("ú", "u", $string);
+		$string = str_replace("ű", "u", $string);
+		$string = str_replace("ü", "u", $string);
+		$string = str_replace("i", "í", $string);
 
-    }
+		return $string;
+
+	}
 
 
 }

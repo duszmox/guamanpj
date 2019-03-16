@@ -1,19 +1,16 @@
 <div class="container">
+	<h2><?php echo lang("settings_page_title"); ?></h2>
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link <?php if ($page_active == 'settings') {
-                echo "active";
-            } ?>"
-               href="<?php echo base_url("account/settings") ?>"><?php echo lang("settings_title") ?></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link <?php if ($page_active == 'profile') {
-                echo "active";
-            } ?>" href="<?php echo base_url("account/profile") ?>"><?php echo lang("profile_title") ?></a>
-        </li>
-    </ul>
-    </a>
-    </li>
-    </ul>
-</div>
+	<ul class="nav nav-tabs">
+		<li class="nav-item">
+			<a class="nav-link <?php if ($page_active == 'settings') {
+				echo "active";
+			} ?>"
+			   href="<?php echo base_url("account/settings") ?>"><?php echo lang("settings_title") ?></a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link <?php if ($page_active == 'profile') {
+				echo "active";
+			} ?>" href="<?php echo base_url("account/profile") ?>"><?php echo lang("profile_title") ?></a>
+		</li>
+	</ul>

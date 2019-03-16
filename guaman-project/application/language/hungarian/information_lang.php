@@ -62,8 +62,8 @@ $lang["insert_row_title"] = "Új sor hozzáadása";
 $lang["current_password_label"] = "Jelenlegi jelszó:";
 $lang["new_password_label"] = "Új jelszó:";
 $lang["again_password_label"] = "Új jelszó újra:";
-$lang["submit_button_title"] = "Elküldés";
-
+$lang["change_password_title"] = "Jelszó megváltoztatása";
+$lang["submit_change_password_button"] = "Megváltoztatás";
 
 $lang["username_label"] = "Felhasználónév: ";
 $lang["email_label"] = "Email cím: ";

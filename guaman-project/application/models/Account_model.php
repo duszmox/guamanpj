@@ -16,8 +16,10 @@ class Account_model extends CI_Model
 
     public function __construct()
     {
-        self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
 
+	    parent::__construct();
+
+        self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
 
         $username = $this->session->userdata('username');
         $password_hash = $this->session->userdata('password_hash');

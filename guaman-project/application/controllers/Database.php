@@ -29,20 +29,21 @@ class Database extends CI_Controller
 		$this->load->view("templates/footer");
 	}
 
-    function create(){
-	    require_rank(Ranks::$ADMIN);
+	function create()
+	{
+		require_rank(Ranks::$ADMIN);
 
-        $this->load->view("templates/header");
-        $this->load->view("templates/menu");
-        $folder_array = ($this->Database_model->get_folders());
-        $this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
-        $this->load->view("database/create_table_view");
-        $this->load->view("templates/footer");
+		$this->load->view("templates/header");
+		$this->load->view("templates/menu");
+		$folder_array = ($this->Database_model->get_folders());
+		$this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
+		$this->load->view("database/create_table_view");
+		$this->load->view("templates/footer");
 
-        if($this->input->post("submit") == "OK"){
-            echo "<script>alert(\"Doesnt work yet\");</script>";
-        }
-    }
+		if ($this->input->post("submit") == "OK") {
+			echo "<script>alert(\"Doesnt work yet\");</script>";
+		}
+	}
 
 	function get_table($table_name, $order_by = "id", $order = "ASC")
 	{
@@ -52,11 +53,11 @@ class Database extends CI_Controller
 		$output = array();
 		$cols = $this->Database_model->get_columns_by_table($table_name);
 		$header_row = array();
-		foreach ($cols as $key => $col){
+		foreach ($cols as $key => $col) {
 			$header_row[$col] = $col;
 		}
 
-		$output[]= $header_row;
+		$output[] = $header_row;
 		foreach ($rows as $key => $row) {
 			$output[] = $row;
 		}
@@ -72,13 +73,17 @@ class Database extends CI_Controller
 			->set_content_type("application/json")
 			->set_output(json_encode($this->Database_model->get_columns_by_table($table_name)));
 	}
-    function insert_row($table_name){
-        require_rank(Ranks::$ADMIN);
-        $data = array();
-        $this->db->insert($table_name, $data);
-        redirect("database");
-    }
-	function update_field(){
+
+	function insert_row($table_name)
+	{
+		require_rank(Ranks::$ADMIN);
+		$data = array();
+		$this->db->insert($table_name, $data);
+		redirect("database");
+	}
+
+	function update_field()
+	{
 		require_rank(Ranks::$ADMIN);
 		$table_name = $this->input->post("table_name");
 		$column = $this->input->post("column");
@@ -86,11 +91,10 @@ class Database extends CI_Controller
 		$value = $this->input->post("value");
 		print_r($table_name . "; " . $column . "; " . $id . "; " . $value);
 
-		try{
+		try {
 			$this->Database_model->update_field($table_name, $column, $id, $value);
-		}
-		catch (Exception $exception){
-			switch ($exception->getMessage()){
+		} catch (Exception $exception) {
+			switch ($exception->getMessage()) {
 				case "invalid_input":
 					die("invalid_input");
 					break;

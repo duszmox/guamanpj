@@ -96,11 +96,12 @@ class Account extends CI_Controller
      * Change password
      */
     function change_password(){
-        //todo összevetni
         require_rank(Ranks::$LOGGED_IN);
-        $this->load->view("templates/header", array("title" => lang("my_profile_title")));
+	    $this->load->view("templates/header", array("title" => lang("change_password_title")));
         $this->load->view("templates/menu");
-        $this->load->view("database/change_password_view");
+	    $this->load->view("account/change_password_view");
+	    $this->load->view("templates/footer");
+
 
     }
 
@@ -122,6 +123,8 @@ class Account extends CI_Controller
             "phone_number" => $this->Account_model->get_user_field("phone_number", Account_model::$user_id),
             "is_phone_number_public" => $this->Account_model->get_user_field("is_phone_number_public", Account_model::$user_id)
         ));
+	    $this->load->view("templates/footer");
+
     }
 
     /**
@@ -136,7 +139,7 @@ class Account extends CI_Controller
 
         $this->load->view("account/my_menu", array("page_active" => "settings"));
 
-        $this->load->view("account/settings");
+	    $this->load->view("account/my_settings");
 
         $this->load->view("templates/footer");
     }
