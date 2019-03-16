@@ -58,7 +58,7 @@ $lang["create_folder_title"] = "Mappa létrehozása";
 $lang["folder_name_title"] = "Mappa neve: ";
 $lang["folder_destination_title"] = "Mappa helye: ";
 $lang["create_table_title"] = "Tábla létrehozása ";
-$lang["insert_row"] = "Új sor hozzáadása";
+$lang["insert_row_title"] = "Új sor hozzáadása";
 
 
 

@@ -76,4 +76,16 @@ class Database_model extends CI_Model
         $this->db->update($table_name, array($column=>$value), array("id" => $id));
 	}
 
+	public function create_folder(){
+
+    }
+
+    public function get_database_type_name($string){
+	    $string = str_replace(" ", "_", $string);
+	    $string = str_replace("-", "_", $string);
+	    $string = strtolower($string);
+	    return $string;
+
+    }
+
 }
