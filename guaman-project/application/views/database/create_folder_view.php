@@ -6,7 +6,7 @@
     <select name="parent_folder">
         <?php
         foreach ($folder_array as $key => $folder) {
-            echo "<option value='".$folder['parent_folder']."'>".$folder['parent_folder']."</option>";
+            echo "<option value='".$folder['parent_folder']."'>".$folder['folder_title']."</option>";
         }
         ?>
     </select>
