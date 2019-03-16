@@ -16,10 +16,10 @@
 	<div class="col-sm-4">
 		<div class="card">
 			<div class="card-header">
-				<h2>Táblázatok:</h2>
+				<h2><?php echo lang("tables_label"); ?></h2>
 			</div>
 			<div class="card-body" id="table-list-container">
-				Ide fog betölteni a táblázatok listája
+				...
 			</div>
 		</div>
 	</div>
@@ -75,13 +75,14 @@
 	}
 
 	function tree(current_folder, level) {
+		if (level !== 0) {
+			output += "<li>";
+			output += '<i class="fa fa-folder-o" aria-hidden="true"></i>';
+			output += "<i class=\"fas fa-folder\"></i> <b>" + get_folder_title_by_name(current_folder) + "</b>";
 
-		output += "<li>";
-		output += '<i class="fa fa-folder-o" aria-hidden="true"></i>';
-		output += "<i class=\"fas fa-folder\"></i> <b>" + get_folder_title_by_name(current_folder) + "</b>";
-
-		// Ha a current_folder egy foldernek a parentje:
-		output += "<ul>";
+			// Ha a current_folder egy foldernek a parentje:
+			output += "<ul>";
+		}
 		for (var i = 0; i < folders.length; i++) {
 			if (current_folder === folders[i].parent_folder) {
 				tree(folders[i].folder_name, level + 1);
@@ -96,12 +97,14 @@
 			}
 		}
 
-		output += "</ul>";
-		output += "</li>";
+		if (level !== 0) {
+			output += "</ul>";
+			output += "</li>";
+		}
 
 	}
 
-	tree("", 1);
+	tree("", 0);
 
 	output += "</ul>";
 	$("#table-list-container").html(output);

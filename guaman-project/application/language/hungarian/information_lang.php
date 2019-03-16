@@ -38,7 +38,7 @@ $lang["settings_page_title"] = "Beállítások";
 $lang["modules_title"] = "Moduljaim";
 $lang["database_system_title"] = "Adatbázis Rendszer";
 $lang["statistics_label"] = "Statisztikák";
-$lang["tables_label"] = "Táblák";
+$lang["tables_title"] = "Táblák";
 $lang["profile_title"] = "Profil";
 $lang["settings_title"] = "Beállítások";
 $lang["shown_pages_start_message"] = " elem ";
@@ -69,5 +69,5 @@ $lang["rank_label"] = "Szerepkör: ";
 $lang["phone_number_label"] = "Telefonszám: ";
 $lang["change_password_button"] = "Jelszó megváltoztatása";
 $lang["public"] = "Publikus";
-
+$lang["tables_label"] = "Táblázatok: ";
 

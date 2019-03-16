@@ -12,7 +12,6 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-
     <!-- Heading -->
     <hr class="sidebar-divider">
 
@@ -34,7 +33,8 @@
 				<a class="collapse-item" href="<?php echo base_url("database/statistics")?>">
 					<?php echo lang("statistics_label");?>
 				</a>
-				<a class="collapse-item" href="<?php echo base_url("database/")?>"><?php echo lang("tables_label")?></a>
+				<a class="collapse-item"
+				   href="<?php echo base_url("database/") ?>"><?php echo lang("tables_title") ?></a>
 
 				<div class="collapse-divider"></div>
 
