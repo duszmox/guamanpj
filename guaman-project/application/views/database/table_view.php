@@ -1,11 +1,16 @@
+<style>
+
+</style>
 <div class="row">
 	<div class="col-sm-8">
 		<div class="card">
 			<div class="card-body">
+
 				<div class="responsive-table" id="table-container">
 
 
 				</div>
+				<input type="text" placeholder="hello">
 			</div>
 		</div>
 	</div>
