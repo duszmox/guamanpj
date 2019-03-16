@@ -32,7 +32,7 @@
 							/*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-							echo "<td class='parentfolder_" . $table["parent_folder"] . " invisible'onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
+							echo "<td class='parentfolder_" . $table["parent_folder"] . " 'onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
 								"<i class='fas fa-database'></i> " . $table["table_title"] .
 								"</td>";
 							echo "</tr>";
