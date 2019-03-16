@@ -46,7 +46,7 @@
 			<div class="bg-white py-2 collapse-inner rounded">
 				<?php //<h6 class="collapse-header">Login Screens:</h6> ?>
 				<a class="collapse-item" href="<?php echo base_url("database/statistics")?>">
-					<?php echo $modul->subpages->label; ?>
+					<?php //echo $modul->subpages->label; ?>
 				</a>
 				<a class="collapse-item" href="<?php echo base_url("database/")?>"><?php echo lang("tables_label")?></a>
 
@@ -204,7 +204,7 @@
                              <div class="text-truncate">I have the photos that you ordered last month, how would
                                  you like them sent to you?
                              </div>
-                             <div class="small text-gray-500">Jae Chun · 1d</div>
+                             <div class="small txt-gray-500">Jae Chun · 1d</div>
                          </div>
                      </a>
                      <a class="dropdown-item d-flex align-items-center" href="#">

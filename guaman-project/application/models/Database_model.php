@@ -10,10 +10,11 @@ class Database_model extends CI_Model
 {
 
 	public static $TABLE_NAME = "tables";
-
+    public static  $FOLDER_TABLE_NAME = "folders";
 	public function __construct()
 	{
 		self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
+		self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
 
 	}
 
@@ -33,6 +34,11 @@ class Database_model extends CI_Model
 		$query = $this->db->get(self::$TABLE_NAME);
 		return $query->result_array();
 	}
+    public function get_folders()
+    {
+        $query = $this->db->get(self::$FOLDER_TABLE_NAME);
+        return $query->result_array();
+    }
 
 	public function get_table($columns, $table, $order_by, $order)
 	{

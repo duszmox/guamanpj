@@ -4,11 +4,26 @@
 			<div class="card-body">
 				<div class="responsive-table" id="table-container">
 
-
 				</div>
 			</div>
 		</div>
 	</div>
+    <script>
+        function openFolder(folder_name) {
+            //todo jQuery: Nyissa ki a folder, minden childnak tegye a display-ét visible-vé none-ról. Emellett az onclick folder, az legyen closeFolder(), és a .html-jében pedig változtassa meg az ikont, <i class="fa fa-angle-up"></i>, visible, és invisible classok létrehozva
+            if (folder_name !== "main") {
+                $('.' + folder_name).addClass('visible').removeClass('invisible').attr("onclick", "closeFolder(folder_name)");
+            }
+        }
+
+        function closeFolder() {
+            //todo display = none, jQuery
+            if (folder_name !== "main") {
+                $('.' + folder_name).addClass('invisible').removeClass('visible').attr("onclick", "openFolder(folder_name)");
+            }
+        }
+    </script>
+
 	<div class="col-sm-4">
 		<div class="card">
 			<div class="card-body">
@@ -20,11 +35,21 @@
 							/*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-							echo "<td onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
+							echo "<td class='" . $table["parent_folder"] . " invisible'onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
 								"<i class='fas fa-database'></i> " . $table["table_title"] .
 								"</td>";
 							echo "</tr>";
 						}
+                        foreach ($folder_array as $key => $folder) {
+                            echo "<tr><div class=''>\n";
+                            /*foreach ($table as $key => $value) {
+                                echo "<td>" . $value . "</td>";
+                            }*/
+                            echo "<td class='" . $folder["parent_folder"] . "' onclick='openFolder(\"" . $folder["folder_name"] . "\")'>\n" .
+                                "<i class='fas fa-folder'></i> " . $folder["folder_title"] . "  <i class=\"fa fa-angle-down\"></i>\n".
+                                "</td>\n";
+                            echo "</tr>\n";
+                        }
 						?>
 					</table>
 				</div>
