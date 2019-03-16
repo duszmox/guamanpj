@@ -99,6 +99,8 @@ class Account extends CI_Controller
         require_rank(Ranks::$LOGGED_IN);
         $this->load->view("templates/header", array("title" => lang("my_profile_title")));
         $this->load->view("templates/menu");
+
+        $this->load->view("account/my_menu", array("page_active" => "profile"));
         $this->load->view("account/my_profile", array(
             "username" => Account_model::$username,
             "user_id" => Account_model::$user_id,
@@ -115,10 +117,14 @@ class Account extends CI_Controller
     function settings()
     {
         require_rank(Ranks::$LOGGED_IN);
-        $this->load->view("templates/header", array("title" => lang("my_profile_title")));
+        $this->load->view("templates/header", array("title" => lang("settings_title")));
 
         $this->load->view("templates/menu");
+
         $this->load->view("account/my_menu", array("page_active" => "settings"));
+
+        $this->load->view("account/settings");
+
         $this->load->view("templates/footer");
     }
 

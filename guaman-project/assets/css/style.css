@@ -1,6 +1,6 @@
 .website-logo{
-    max-width: 100%;
-    height: 80px;
+    width: 60px;
+    height: 60px;
 }
 
 :root{
@@ -11,6 +11,13 @@
     max-width: 100%;
     height: 40px;
 }
-#data-table .data-cell{
-	display: none;
+#table-container .col-sm-12 {
+    overflow-x: scroll;
 }
+.invisible{
+    display:none;
+}
+.visible{
+    display:block;
+}
+

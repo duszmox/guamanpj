@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+//todo minden egyes elemet a sajét mappájába tegyen, ennek létre is lett hozva egy div class="folder_".folder_name, a végére appendelje
 });
 
 
@@ -26,9 +26,9 @@ function loadTable(table_name) {
 			html += "<tr>";
 			console.log(data[i]);
 
-			Object.keys(data[i]).forEach(function (k) {
-				html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + data[0][k] + "'><input type='text' class='form-control' value='" + data[i][k] + "'><span class='data-cell'>" + data[i][k] + "</span></td>";
-			});
+            Object.keys(data[i]).forEach(function (k) {
+                html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + data[0][k] + "'><input type='text' class='form-control' value='" + data[i][k] + "'></td>";
+            });
 
 			html += "</tr>";
 		}

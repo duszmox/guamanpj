@@ -23,7 +23,9 @@ class Database extends CI_Controller
 		$this->load->view("templates/header");
 		$this->load->view("templates/menu");
 		$table_array = ($this->Database_model->get_tables());
-		$this->load->view("database/table_view", array("table_array" => $table_array));
+		$folder_array = ($this->Database_model->get_folders());
+		$this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
+		$this->load->view("database/insert_row_view", array("table_name" => $this->Database_model));
 		$this->load->view("templates/footer");
 	}
 
@@ -62,7 +64,12 @@ class Database extends CI_Controller
 			->set_content_type("application/json")
 			->set_output(json_encode($this->Database_model->get_columns_by_table($table_name)));
 	}
-
+    function insert_row($table_name){
+        require_rank(Ranks::$ADMIN);
+        $data = array();
+        $this->db->insert($table_name, $data);
+        redirect("database");
+    }
 	function update_field(){
 		require_rank(Ranks::$ADMIN);
 		$table_name = $this->input->post("table_name");
