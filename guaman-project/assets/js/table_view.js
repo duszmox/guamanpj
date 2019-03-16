@@ -33,6 +33,7 @@ function loadTable(table_name) {
 			html += "</tr>";
 		}
 		html += "</tbody></table>";
+		html += "<div class=\'float-right\'>\n    <a href=\"#\" class=\"btn btn-primary\" style=\'margin-top: 20px;\'>\n        <span class=\"text\">Új hozzáadása</span>\n    </a>\n</div>\n\n";
 
 		console.log(html);
 		$("#table-container").html(html);
@@ -40,7 +41,10 @@ function loadTable(table_name) {
 			$("#data-table").DataTable({
 				language: data_table_strings
 			});
+			$("#data-table").parent().css("overflow-x", "scroll");
 	}, 1);
+
+
 
 		$(".data-cell-container").focusout(function () {
 			newValue = $(this).children().eq(0).val();
