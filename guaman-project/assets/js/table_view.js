@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+//todo minden egyes elemet a sajét mappájába tegyen, ennek létre is lett hozva egy div class="folder_".folder_name, a végére appendelje
 });
 
 

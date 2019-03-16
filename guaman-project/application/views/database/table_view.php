@@ -9,18 +9,15 @@
 		</div>
 	</div>
     <script>
-        function openFolder(folder_name) {
+        function openFolder(folder_name, current_folder) {
             //todo jQuery: Nyissa ki a folder, minden childnak tegye a display-ét visible-vé none-ról. Emellett az onclick folder, az legyen closeFolder(), és a .html-jében pedig változtassa meg az ikont, <i class="fa fa-angle-up"></i>, visible, és invisible classok létrehozva
-            if (folder_name !== "main") {
-                $('.' + folder_name).addClass('visible').removeClass('invisible').attr("onclick", "closeFolder(folder_name)");
-            }
+            //todo minden táblához hozzá lett adva egy parentfoler_ tag, és a folder neve.
+            //todo a mappákat is tegye bele a parentfolderbe, és csak a MAIN maradjon kint
         }
 
         function closeFolder() {
             //todo display = none, jQuery
-            if (folder_name !== "main") {
-                $('.' + folder_name).addClass('invisible').removeClass('visible').attr("onclick", "openFolder(folder_name)");
-            }
+
         }
     </script>
 
@@ -35,20 +32,20 @@
 							/*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-							echo "<td class='" . $table["parent_folder"] . " invisible'onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
+							echo "<td class='parentfolder_" . $table["parent_folder"] . " invisible'onclick='loadTable(\"" . $table["table_name"] . "\")'>" .
 								"<i class='fas fa-database'></i> " . $table["table_title"] .
 								"</td>";
 							echo "</tr>";
 						}
                         foreach ($folder_array as $key => $folder) {
-                            echo "<tr><div class=''>\n";
+                            echo "<tr><div class='folder_" . $folder["folder_name"] . "'>\n";
                             /*foreach ($table as $key => $value) {
                                 echo "<td>" . $value . "</td>";
                             }*/
-                            echo "<td class='" . $folder["parent_folder"] . "' onclick='openFolder(\"" . $folder["folder_name"] . "\")'>\n" .
+                            echo "<td  onclick='openFolder(\"" . $folder["folder_name"] . "\"'>\n" .
                                 "<i class='fas fa-folder'></i> " . $folder["folder_title"] . "  <i class=\"fa fa-angle-down\"></i>\n".
                                 "</td>\n";
-                            echo "</tr>\n";
+                            echo "</div></tr>\n";
                         }
 						?>
 					</table>
