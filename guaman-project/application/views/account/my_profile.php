@@ -32,7 +32,7 @@
         <tr>
             <th><?php echo lang("password_label") ?></th>
             <td>******** <a
-                        href="<?php echo base_url("account/change-password"); ?>"><?php echo lang("change_password_button"); ?>
+                        href="<?php echo base_url("account/change_password"); ?>"><?php echo lang("change_password_button"); ?>
                     <i class="fas fa-external-link-alt"></i></a></td>
         </tr>
         <tr>

@@ -59,7 +59,10 @@ $lang["folder_name_title"] = "Mappa neve: ";
 $lang["folder_destination_title"] = "Mappa helye: ";
 $lang["create_table_title"] = "Tábla létrehozása ";
 $lang["insert_row_title"] = "Új sor hozzáadása";
-
+$lang["current_password_label"] = "Jelenlegi jelszó:";
+$lang["new_password_label"] = "Új jelszó:";
+$lang["again_password_label"] = "Új jelszó újra:";
+$lang["submit_button_title"] = "Elküldés";
 
 
 $lang["username_label"] = "Felhasználónév: ";

@@ -92,8 +92,19 @@ class Account extends CI_Controller
 
 
     }
+    /*
+     * Change password
+     */
+    function change_password(){
+        //todo összevetni
+        require_rank(Ranks::$LOGGED_IN);
+        $this->load->view("templates/header", array("title" => lang("my_profile_title")));
+        $this->load->view("templates/menu");
+        $this->load->view("database/change_password_view");
 
-    /**
+    }
+
+    /*
      * Profile page
      */
     function profile()

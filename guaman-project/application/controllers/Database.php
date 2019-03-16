@@ -38,6 +38,10 @@ class Database extends CI_Controller
         $this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
         $this->load->view("database/create_table_view");
         $this->load->view("templates/footer");
+
+        if($this->input->post("submit") == "OK"){
+            echo "<script>alert(\"Doesnt work yet\");</script>";
+        }
     }
 
 	function get_table($table_name, $order_by = "id", $order = "ASC")
