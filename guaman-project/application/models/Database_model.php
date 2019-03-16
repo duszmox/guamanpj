@@ -77,8 +77,12 @@ class Database_model extends CI_Model
 	}
 
 	public function create_folder($name, $parent_folder){
+	    //todo feltölteni az adatot a permissions táblába is column-ként.
 	    $this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
 
+    }
+    public function create_table(){
+	   //todo permissions táblához is hozzá kell adni, emellett táblaként létre kell hozni, és a tables-be is fel kell tölteni.
     }
 
     public function get_database_type_name($string){
@@ -99,5 +103,6 @@ class Database_model extends CI_Model
 	    return $string;
 
     }
+
 
 }

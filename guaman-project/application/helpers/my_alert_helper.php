@@ -12,18 +12,9 @@
  */
 function js_alert($text = "", $redirect_url = "")
 {
-    die("<html>
-<head>
-    <title>Alert</title>
-    <meta charset='utf8'>
-</head>
-<body>
-<script charset='utf8'>
-    alert('" . $text . "'); 
+    echo "<script>
     window.location.href = '" . $redirect_url . "'
-</script>
-</body>
-</html>");
+</script>";
 
 
 }
