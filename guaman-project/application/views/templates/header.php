@@ -27,6 +27,9 @@ if (!isset($title)) {
 
     <link rel="icon" href="<?php echo img_url("logo.png")?>" type="image/x-icon"/>
     <link rel="shortcut icon" href="<?php echo img_url("logo.png")?>" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
 
 
 

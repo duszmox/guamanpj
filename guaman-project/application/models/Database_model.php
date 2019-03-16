@@ -76,4 +76,28 @@ class Database_model extends CI_Model
         $this->db->update($table_name, array($column=>$value), array("id" => $id));
 	}
 
+	public function create_folder($name, $parent_folder){
+	    $this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
+
+    }
+
+    public function get_database_type_name($string){
+
+        $string = strtolower($string);
+        $string = str_replace("&nbsp;", "_", $string);
+	    $string = str_replace("-", "_", $string);
+	    $string = str_replace("á", "a", $string);
+	    $string = str_replace("é", "e", $string);
+	    $string = str_replace("ó", "o", $string);
+	    $string = str_replace("ő", "o", $string);
+	    $string = str_replace("ö", "o", $string);
+	    $string = str_replace("ú", "u", $string);
+	    $string = str_replace("ű", "u", $string);
+	    $string = str_replace("ü", "u", $string);
+	    $string = str_replace("i", "í", $string);
+
+	    return $string;
+
+    }
+
 }

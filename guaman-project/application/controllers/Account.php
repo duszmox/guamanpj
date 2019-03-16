@@ -9,6 +9,8 @@
 
 class Account extends CI_Controller
 {
+
+
     function index()
     {
         if (Account_model::$logged_in) {
