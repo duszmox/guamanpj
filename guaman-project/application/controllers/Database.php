@@ -77,9 +77,7 @@ class Database extends CI_Controller
 	function insert_row($table_name)
 	{
 		require_rank(Ranks::$ADMIN);
-		$data = array();
-		$this->db->insert($table_name, $data);
-		redirect("database");
+		$this->Database_model->insert_new_line($table_name);
 	}
 
 	function update_field()

@@ -130,8 +130,11 @@ class Database_model extends CI_Model
 	    return true;
     }
 
-	public function insert_new_line(){
+	public function insert_new_line($table_name){
 	    //todo a gombbal megcsinálkni hogy valóban új sort csináljon az adott táblűra.
+
+        $data = array();
+        $this->db->insert($table_name, $data);
     }
 
 
