@@ -20,30 +20,43 @@ class Database extends CI_Controller
 	{
 		require_rank(Ranks::$ADMIN);
 
-		$this->load->view("templates/header");
-		$this->load->view("templates/menu");
-		$table_array = ($this->Database_model->get_tables());
-		$folder_array = ($this->Database_model->get_folders());
-		$this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
+        $this->load->view("templates/header");
+        $this->load->view("templates/menu");
+        $table_array = ($this->Database_model->get_tables());
+        $folder_array = ($this->Database_model->get_folders());
+        $this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
 
 		$this->load->view("templates/footer");
 	}
 
-	function create()
-	{
-		require_rank(Ranks::$ADMIN);
+    function create_folder()
+    {
+        require_rank(Ranks::$ADMIN);
+
+        $this->load->view("templates/header");
+        $this->load->view("templates/menu");
+        $folder_array = ($this->Database_model->get_folders());
+        $this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
+
+        $this->load->view("templates/footer");
+
+        if ($this->input->post("submit") == "OK") {
+            echo "<script>alert(\"Doesnt work yet\");</script>";
+        }
+    }
+
+    function create_table()
+    {
+        require_rank(Ranks::$ADMIN);
+
+        $this->load->view("templates/header");
+        $this->load->view("templates/menu");
+        $this->load->view("database/create_table_view");
+
+        $this->load->view("templates/footer");
 
 		if ($this->input->post("submit") == "OK") {
-			echo "<script>alert(\"Doesn't work yet\");</script>";
-		}
-		else {
-			$this->load->view("templates/header");
-			$this->load->view("templates/menu");
-			$folder_array = ($this->Database_model->get_folders());
-			$this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
-			$this->load->view("database/create_table_view");
-			$this->load->view("templates/footer");
-
+			echo "<script>alert(\"Doesnt work yet\");</script>";
 		}
 	}
 
@@ -76,13 +89,11 @@ class Database extends CI_Controller
 			->set_output(json_encode($this->Database_model->get_columns_by_table($table_name)));
 	}
 
-	function insert_row($table_name)
-	{
-		require_rank(Ranks::$ADMIN);
-		$data = array();
-		$this->db->insert($table_name, $data);
-		redirect("database");
-	}
+    function insert_row($table_name)
+    {
+        require_rank(Ranks::$ADMIN);
+        $this->Database_model->insert_new_line($table_name);
+    }
 
 	function update_field()
 	{

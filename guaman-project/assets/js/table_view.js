@@ -32,6 +32,7 @@ function loadTable(table_name) {
 			html += "</tr>";
 		}
 		html += "</tbody></table>";
+		//TODO ANDRIS  Js ajax lekérés és futtatása a insert_linenak és megadni neki hogy table_name
 		html += "<div class=\'float-right\'>\n    <a href=\"#\" class=\"btn btn-primary btn-icon-split\" style=\'margin-top: 20px;\'>\n        <span class=\'icon\'>\n            <i class=\"fas fa-plus\"></i>\n        </span>\n        <span class=\'text\'>\n            Új hozzáadása\n        </span>\n    </a>\n</div>\n\n";
 
 		console.log(html);

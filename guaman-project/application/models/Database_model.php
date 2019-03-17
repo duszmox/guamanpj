@@ -86,7 +86,9 @@ class Database_model extends CI_Model
 
 	public function create_folder($name, $parent_folder)
 	{
+		//todo feltölteni az adatot a permissions táblába is column-ként.
 		$this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
+
 	}
 
 	public function create_table()
@@ -123,20 +125,13 @@ class Database_model extends CI_Model
 			return $arr[0]["nice_column_name"];
 		}
 		return "";
-		// TODO leellenorizni hogy muxik e
 	}
 
-	public function does_user_got_permission_data($user)
-	{
 
-		//todo megcsinákni
-		return TRUE;
-	}
-
-	public function insert_new_line()
-	{
-		//todo a gombbal megcsinálkni hogy valóban új sort csináljon az adott táblűra.
-	}
+	public function insert_new_line($table_name){
+        $data = array();
+        $this->db->insert($table_name, $data);
+    }
 
 
 }

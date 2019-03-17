@@ -12,10 +12,10 @@
  */
 function js_alert($text = "", $redirect_url = "")
 {
-    echo "<script>
+    die("<script>
 	alert('" . $text . "')
     window.location.href = '" . $redirect_url . "'
-</script>";
+</script>");
 
 
 }

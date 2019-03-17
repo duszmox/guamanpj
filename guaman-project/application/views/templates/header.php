@@ -7,6 +7,7 @@ if (!isset($title)) {
 ?>
 <html>
 <head>
+    <meta charset="utf-8">
 	<link rel="stylesheet" href="<?php echo css_url("style.css"); ?>">
 	<title><?php echo $pageTitle; ?></title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
