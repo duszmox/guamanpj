@@ -66,13 +66,16 @@ class Database extends CI_Controller
 
 		$rows = $this->Database_model->get_table("*", $table_name, $order_by, $order);
 		$output = array();
+
 		$cols = $this->Database_model->get_columns_by_table($table_name);
+		$col_nice_names = $this->Database_model->get_nice_column_names_by_table($table_name);
+
 		$header_row = array();
 		foreach ($cols as $key => $col) {
-			$header_row[$col] = $col;
+			$header_row[$col] = $col_nice_names[$key];
 		}
-
 		$output[] = $header_row;
+
 		foreach ($rows as $key => $row) {
 			$output[] = $row;
 		}
