@@ -76,4 +76,4 @@ $lang["phone_number_label"] = "Telefonszám: ";
 $lang["change_password_button"] = "Jelszó megváltoztatása";
 $lang["public"] = "Publikus";
 $lang["tables_label"] = "Táblázatok: ";
-
+$lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";

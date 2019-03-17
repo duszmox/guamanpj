@@ -89,7 +89,7 @@ $autoload['drivers'] = array("session");
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array("asset_helper", "url", "validator_helper", "my_alert_helper", "rank_helper");
+$autoload['helper'] = array("asset_helper", "url", "validator_helper", "my_alert_helper", "rank_helper", "permission_helper");
 
 /*
  *
@@ -133,4 +133,4 @@ $autoload['language'] = array();
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array("Account_model");
+$autoload['model'] = array("Account_model", "Permissions_model");

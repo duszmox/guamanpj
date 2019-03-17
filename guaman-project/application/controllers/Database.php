@@ -33,15 +33,17 @@ class Database extends CI_Controller
 	{
 		require_rank(Ranks::$ADMIN);
 
-		$this->load->view("templates/header");
-		$this->load->view("templates/menu");
-		$folder_array = ($this->Database_model->get_folders());
-		$this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
-		$this->load->view("database/create_table_view");
-		$this->load->view("templates/footer");
-
 		if ($this->input->post("submit") == "OK") {
-			echo "<script>alert(\"Doesnt work yet\");</script>";
+			echo "<script>alert(\"Doesn't work yet\");</script>";
+		}
+		else {
+			$this->load->view("templates/header");
+			$this->load->view("templates/menu");
+			$folder_array = ($this->Database_model->get_folders());
+			$this->load->view("database/create_folder_view", array("folder_array" => $folder_array));
+			$this->load->view("database/create_table_view");
+			$this->load->view("templates/footer");
+
 		}
 	}
 
@@ -96,5 +98,10 @@ class Database extends CI_Controller
 		} catch (Exception $exception) {
 			die($exception->getMessage());
 		}
+	}
+
+	function get_nice_column_name($table_id, $column_name)
+	{
+		echo $this->Database_model->get_nice_column_name($table_id, $column_name);
 	}
 }

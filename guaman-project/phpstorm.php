@@ -16,6 +16,7 @@ die('This file is used for development purposes only.');
  * @property Library_name       $library_name                        Library description
  *
  */
+
 /**
  * @property CI_Benchmark $benchmark                           This class enables you to mark points and calculate the time difference between them. Memory consumption can also be displayed.
  * @property CI_Calendar $calendar                            This class enables the creation of calendars
@@ -57,12 +58,14 @@ die('This file is used for development purposes only.');
  * @property CI_Upload $upload                              File Uploading Class
  * @property CI_URI $uri                                 Parses URIs and determines routing
  * @property CI_User_agent $agent                               Identifies the platform, browser, robot, or mobile device of the browsing agent
- * @property CI_Xmlrpc $xmlrpc                              XML-RPC request handler class
- * @property CI_Xmlrpcs $xmlrpcs                             XML-RPC server class
- * @property CI_Zip $zip                                 Zip Compression Class
- * @property CI_Utf8 $utf8                                Provides support for UTF-8 environments
- * @property Ispconfig $ispconfig                           This class enables you to use the ISPConfig 3 Remote API
- * @property Boleto $boleto                              Boleto Class
+ * @property CI_Xmlrpc         $xmlrpc                              XML-RPC request handler class
+ * @property CI_Xmlrpcs        $xmlrpcs                             XML-RPC server class
+ * @property CI_Zip            $zip                                 Zip Compression Class
+ * @property CI_Utf8           $utf8                                Provides support for UTF-8 environments
+ * @property Ispconfig         $ispconfig                           This class enables you to use the ISPConfig 3 Remote API
+ * @property Boleto            $boleto                              Boleto Class
+ * @property Permissions_model Permissions_model
+ * @property Account_model     Account_model
  */
 class CI_Controller
 {
