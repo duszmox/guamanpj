@@ -9,12 +9,6 @@
 class Permissions extends CI_Controller
 {
 
-	public function __construct()
-	{
-		parent::__construct();
-		require_permission("admin");
-	}
-
 	function index()
 	{
 		redirect("permissions/manage_permissions");
@@ -22,11 +16,16 @@ class Permissions extends CI_Controller
 
 	function manage_permissions()
 	{
+		require_permission("admin");
 
+		echo "// TODO [Ambrus] Manage permissions view";
+		// TODO [Ambrus] Manage permissions view
 	}
 
 	function remove_permission()
 	{
+		require_permission("admin");
+
 		$user_id = $this->input->post("user_id");
 		$permission_name = $this->input->post("permission_name");
 		try {

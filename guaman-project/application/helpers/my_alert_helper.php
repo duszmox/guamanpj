@@ -13,8 +13,8 @@
 function js_alert($text = "", $redirect_url = "")
 {
     die("<script>
-	alert('" . $text . "')
-    window.location.href = '" . $redirect_url . "'
+	alert('" . $text . "');
+    window.location.href = '" . $redirect_url . "';
 </script>");
 
 

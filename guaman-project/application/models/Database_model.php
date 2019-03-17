@@ -35,14 +35,34 @@ class Database_model extends CI_Model
 
 	public function get_tables()
 	{
+		$this->load->helper("permission_helper");
 		$query = $this->db->get(self::$TABLE_NAME);
-		return $query->result_array();
+		$array = $query->result_array();
+		$result_array = array();
+
+
+		foreach ($array as $table) {
+			if (has_permission($table["table_name"] . "_table_view")) {
+				$result_array[] = $table;
+			}
+		}
+		return $result_array;
 	}
 
 	public function get_folders()
 	{
 		$query = $this->db->get(self::$FOLDER_TABLE_NAME);
-		return $query->result_array();
+		$array = $query->result_array();
+
+		$result_array = array();
+
+
+		foreach ($array as $folder) {
+			if (has_permission($folder["folder_name"] . "_folder_view")) {
+				$result_array[] = $folder;
+			}
+		}
+		return $result_array;
 	}
 
 	public function get_table($columns, $table, $order_by, $order)

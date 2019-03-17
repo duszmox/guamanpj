@@ -28,8 +28,9 @@ class Permissions_model extends CI_Model
 	 * @param $permission_name
 	 *
 	 * @return bool Have permission
+	 * @throws Exception Exception
 	 */
-	public function have_permission($user_id, $permission_name)
+	public function has_permission($user_id, $permission_name)
 	{
 		if (!Validator::is_numeric($user_id)) throw new Exception("invalid_field: user_id");
 		if (!Validator::is_alphanumeric($permission_name)) throw new Exception("invalid_field: permission_type");
