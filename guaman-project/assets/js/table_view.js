@@ -12,9 +12,21 @@ function loadTable(table_name) {
 		html += "<tr>";
 		console.log(data[0]);
 
+
+		columns = [];
+		column_nice_names = [];
+
 		Object.keys(data[0]).forEach(function (k) {
-			html += "<th>" + data[0][k] + "</th>";
+			columns.push(k);
+			column_nice_names.push(data[0][k]);
 		});
+
+		console.log(columns);
+		console.log(column_nice_names);
+
+		for (var i = 0; i < column_nice_names.length; i++) {
+			html += "<th>" + column_nice_names[i] + "</th>";
+		}
 
 		html += "</tr>";
 
@@ -26,7 +38,7 @@ function loadTable(table_name) {
 			console.log(data[i]);
 
 			Object.keys(data[i]).forEach(function (k) {
-				html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + data[0][k] + "'><input type='text' class='form-control data-cell' value='" + data[i][k] + "'><span hidden>" + data[i][k] + "</span></td>";
+				html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'><input type='text' class='form-control data-cell' value='" + data[i][k] + "'><span hidden>" + data[i][k] + "</span></td>";
 			});
 
 			html += "</tr>";

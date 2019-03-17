@@ -69,6 +69,24 @@ class Database_model extends CI_Model
 		return $column_names;
 	}
 
+	public function get_nice_column_names_by_table($table_name)
+	{
+		$columns = $this->get_columns_by_table($table_name);
+		$nice_column_names = array();
+		foreach ($columns as $key => $column_name) {
+			$nice_column_names[] = $this->get_nice_column_name($this->get_table_id($table_name), $column_name);
+		}
+		return $nice_column_names;
+	}
+
+	public function get_table_id($table_name)
+	{
+		$this->db->select("id");
+		$query = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name), 1);
+		$arr = $query->result_array();
+		return $arr[0]["id"];
+	}
+
 	public function update_field($table_name, $column, $id, $value)
 	{
 		if (!Validator::is_alphanumeric($table_name)) {
@@ -86,9 +104,7 @@ class Database_model extends CI_Model
 
 	public function create_folder($name, $parent_folder)
 	{
-		//todo feltölteni az adatot a permissions táblába is column-ként.
 		$this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
-
 	}
 
 	public function create_table()
@@ -128,10 +144,11 @@ class Database_model extends CI_Model
 	}
 
 
-	public function insert_new_line($table_name){
-        $data = array();
-        $this->db->insert($table_name, $data);
-    }
+	public function insert_new_line($table_name)
+	{
+		$data = array();
+		$this->db->insert($table_name, $data);
+	}
 
 
 }
