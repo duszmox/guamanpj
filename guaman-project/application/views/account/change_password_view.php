@@ -1,7 +1,7 @@
 <div class="container">
 	<h2><?php echo lang("change_password_title"); ?></h2>
 
-	<form class="form-horizontal">
+	<form class="form-horizontal" method="post">
 		<fieldset>
 			<!-- Password input-->
 			<div class="form-group row">
@@ -9,7 +9,7 @@
 				       for="currentPassword"><?php echo lang("current_password_label") ?></label>
 				<div class="col-md-4">
 					<input id="currentPassword" name="current_password" type="password"
-					       class="form-control input-md">
+					       class="form-control input-md" required>
 				</div>
 			</div>
 
@@ -20,7 +20,7 @@
 				</label>
 				<div class="col-md-4">
 					<input id="newPassword" name="new_password" type="password"
-					       class="form-control input-md">
+					       class="form-control input-md" required>
 				</div>
 			</div>
 
@@ -31,7 +31,7 @@
 				</label>
 				<div class="col-md-4">
 					<input id="newPasswordAgain" name="new_password_again" type="password"
-					       class="form-control input-md">
+					       class="form-control input-md" required>
 				</div>
 			</div>
 
@@ -43,7 +43,6 @@
 					        class="btn btn-primary"><?php echo lang("submit_change_password_button"); ?></button>
 				</div>
 			</div>
-
 		</fieldset>
 	</form>
 

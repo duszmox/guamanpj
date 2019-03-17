@@ -67,13 +67,13 @@ class Database_model extends CI_Model
 	public function update_field($table_name, $column, $id, $value)
 	{
 		if (!Validator::is_alphanumeric($table_name)) {
-			throw new Exception("invalid_input");
+			throw new Exception("invalid_input table_name");
 		}
 		if (!Validator::is_alphanumeric($column)) {
-			throw new Exception("invalid_input");
+			throw new Exception("invalid_input column");
 		}
 		if (!Validator::is_numeric($id)) {
-			throw new Exception("invalid_input");
+			throw new Exception("invalid_input id");
 		}
 
 		$this->db->update($table_name, array($column => $value), array("id" => $id));
@@ -109,6 +109,11 @@ class Database_model extends CI_Model
 
 		return $string;
 
+	}
+
+	public function get_nice_column_name($table_id, $column_name)
+	{
+		// TODO get nice column name
 	}
 
 

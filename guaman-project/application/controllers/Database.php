@@ -94,11 +94,7 @@ class Database extends CI_Controller
 		try {
 			$this->Database_model->update_field($table_name, $column, $id, $value);
 		} catch (Exception $exception) {
-			switch ($exception->getMessage()) {
-				case "invalid_input":
-					die("invalid_input");
-					break;
-			}
+			die($exception->getMessage());
 		}
 	}
 }

@@ -64,7 +64,10 @@ $lang["new_password_label"] = "Új jelszó:";
 $lang["again_password_label"] = "Új jelszó újra:";
 $lang["change_password_title"] = "Jelszó megváltoztatása";
 $lang["submit_change_password_button"] = "Megváltoztatás";
-
+$lang["invalid_current_password"] = "Helytelen jelenlegi jelszót adtál meg. Próbáld újra!";
+$lang["again_password_not_matching"] = "A két jelszó nem egyezik.";
+$lang["invalid_new_password"] = "Érvénytelen karakterek szerepelnek az új jelszóban. Az engedélyezett karakterek: számok, betűk, _, és -.";
+$lang["successful_password_changing"] = "Sikeresen megváltoztattad a jelszavadat. A folytatáshoz újra be kell jelentkezned!";
 $lang["username_label"] = "Felhasználónév: ";
 $lang["email_label"] = "Email cím: ";
 $lang["password_label"] = "Jelszó: ";

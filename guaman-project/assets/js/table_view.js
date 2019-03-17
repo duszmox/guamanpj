@@ -25,14 +25,14 @@ function loadTable(table_name) {
 			html += "<tr>";
 			console.log(data[i]);
 
-            Object.keys(data[i]).forEach(function (k) {
-                html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + data[0][k] + "'><input type='text' class='form-control' value='" + data[i][k] + "'></td>";
-            });
+			Object.keys(data[i]).forEach(function (k) {
+				html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + data[0][k] + "'><input type='text' class='form-control data-cell' value='" + data[i][k] + "'><span hidden>" + data[i][k] + "</span></td>";
+			});
 
 			html += "</tr>";
 		}
 		html += "</tbody></table>";
-		html += "<div class=\'float-right\'>\n    <a href=\"#\" class=\"btn btn-primary\" style=\'margin-top: 20px;\'>\n        <span class=\"text\">Új hozzáadása</span>\n    </a>\n</div>\n\n";
+		html += "<div class=\'float-right\'>\n    <a href=\"#\" class=\"btn btn-primary btn-icon-split\" style=\'margin-top: 20px;\'>\n        <span class=\'icon\'>\n            <i class=\"fas fa-plus\"></i>\n        </span>\n        <span class=\'text\'>\n            Új hozzáadása\n        </span>\n    </a>\n</div>\n\n";
 
 		console.log(html);
 		$("#table-container").html(html);
@@ -41,14 +41,13 @@ function loadTable(table_name) {
 				language: data_table_strings
 			});
 			$("#data-table").parent().css("overflow-x", "scroll");
-	}, 1);
-
+		}, 1);
 
 
 		$(".data-cell-container").focusout(function () {
 			newValue = $(this).children().eq(0).val();
-			update_table_field(table_name, $(this).data("column"), $(this).data("id"), newValue)
-		})
+			update_table_field(table_name, $(this).data("column"), $(this).data("id"), newValue);
+		});
 
 	})
 		.done(function () {
@@ -73,6 +72,6 @@ function update_table_field(table_name, column, id, newValue) {
 		id: id,
 		value: newValue
 	}, function (data) {
-
+		console.log(data);
 	})
 }
