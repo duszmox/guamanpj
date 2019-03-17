@@ -11,6 +11,7 @@ class Database_model extends CI_Model
 
 	public static $TABLE_NAME = "tables";
 	public static $FOLDER_TABLE_NAME = "folders";
+	public static $COLUMNS_TABLE_NAME = "table_columns";
 
 	public function __construct()
 	{
@@ -18,6 +19,7 @@ class Database_model extends CI_Model
 
 		self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
 		self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
+		self::$COLUMNS_TABLE_NAME = $this->config->item("table_prefix") . self::$COLUMNS_TABLE_NAME;
 	}
 
 	public function get_table_names()
@@ -114,7 +116,23 @@ class Database_model extends CI_Model
 	public function get_nice_column_name($table_id, $column_name)
 	{
 		// TODO get nice column name
+        $this->db->select("columns_nice_name");
+        $this->db->where('table_id', $table_id);
+        $this->db->where('columns_name', $column_name);
+        $string = $this->db->get(self::$COLUMNS_TABLE_NAME);
+        return $string;
+
 	}
+
+	public function does_user_got_perrmission_data($user){
+
+	    //todo megcsinákni
+	    return true;
+    }
+
+	public function insert_new_line(){
+	    //todo a gombbal megcsinálkni hogy valóban új sort csináljon az adott táblűra.
+    }
 
 
 }
