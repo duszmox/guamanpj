@@ -115,7 +115,7 @@ class Database_model extends CI_Model
 
 	public function get_nice_column_name($table_id, $column_name)
 	{
-		// TODO get nice column name
+
         $this->db->select("columns_nice_name");
         $this->db->where('table_id', $table_id);
         $this->db->where('columns_name', $column_name);
@@ -124,14 +124,14 @@ class Database_model extends CI_Model
 
 	}
 
-	public function does_user_got_perrmission_data($user){
+	public function does_user_got_permission_data($user){
 
 	    //todo megcsinákni
 	    return true;
     }
 
 	public function insert_new_line($table_name){
-	    //todo a gombbal megcsinálkni hogy valóban új sort csináljon az adott táblűra.
+
 
         $data = array();
         $this->db->insert($table_name, $data);
