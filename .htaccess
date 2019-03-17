@@ -1,3 +1,4 @@
 RewriteEngine on
 RewriteCond %{HTTP_HOST} https://guamanpnj.com
 RewriteRule ^(.*)$ https://guamanpj.com/site [L,NC,QSA]
+Redirect /index.php /site/
