@@ -26,7 +26,7 @@
 		</tr>
 		<tr>
 			<th><?php echo lang("rank_label") ?></th>
-			<td><?php echo Ranks::get_nice_name($rank); ?></td>
+			<td><?php echo Statuses::get_nice_name($rank); ?></td>
 		</tr>
 		<tr>
 			<th><?php echo lang("password_label") ?></th>

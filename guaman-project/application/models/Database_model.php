@@ -173,9 +173,9 @@ class Database_model extends CI_Model
 	}
 
 
-	public function insert_new_line($table_name)
+	public function insert($table_name, $data)
 	{
-		$data = array();
+	    if(!in_array($table_name, $this->get_table_names())) throw new Exception("Invalid table name");
 		$this->db->insert($table_name, $data);
 	}
 

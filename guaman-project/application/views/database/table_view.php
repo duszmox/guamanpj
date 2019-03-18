@@ -1,11 +1,10 @@
-
 <div class="row">
-	<div class="col-sm-8">
+	<div class="col-sm-8" style="visibility: hidden;" id="data-table-column">
 		<div class="card">
 			<div class="card-body">
 
 				<div class="responsive-table" id="table-container">
-
+                    <!--h3 class="align-center"><?php echo lang("table_body_placeholder"); ?></h3-->
 				</div>
 
 			</div>
@@ -57,24 +56,25 @@
 
 </script>
 
-<style>
-	#table-list-container ul {
-		list-style-type: none;
-	}
-
-	#table-list-container li {
-		cursor: pointer;
-	}
-
-	#data-table input {
-		min-width: 100px !important;
-	}
-
-	#table-list-container ul, #table-list-container ul > ul {
-		margin-left: 1em;
-		padding-left: 1em;
-		list-style-position: inside;
-	}
-</style>
-
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
+
+
+<style>
+    #table-list-container ul {
+        list-style-type: none;
+    }
+
+    #table-list-container li {
+        cursor: pointer;
+    }
+
+    #data-table input {
+        min-width: 100px !important;
+    }
+
+    #table-list-container ul, #table-list-container ul > ul {
+        margin-left: 1em;
+        padding-left: 1em;
+        list-style-position: inside;
+    }
+</style>

@@ -52,4 +52,13 @@ class Permissions_model extends CI_Model
 
 		$this->db->delete(self::$TABLE_NAME, array("user_id" => $user_id, "permission_name" => $permission_name));
 	}
+
+	/**
+     * Permissions:
+     * admin                        Ultimate permission for everything
+     * edit_folders                 Create, delete, edit folders TODO [Ambrus] create folder, delete folder, edit folder
+     * edit_tables                  Create, delete, edit tables [their properties] TODO [Ambrus] create tables, delete tables, edit tables
+     * <table_name>_table_view      View the content of a specific table
+     * <table_mame>_table_edit      Add, delete, edit the content of a table TODO delete row
+     */
 }
