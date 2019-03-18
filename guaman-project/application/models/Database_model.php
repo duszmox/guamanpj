@@ -49,6 +49,9 @@ class Database_model extends CI_Model
 		return $result_array;
 	}
 
+	/**
+	 * @return array
+	 */
 	public function get_folders()
 	{
 		$query = $this->db->get(self::$FOLDER_TABLE_NAME);
@@ -57,10 +60,16 @@ class Database_model extends CI_Model
 		$result_array = array();
 
 
-		foreach ($array as $folder) {
-			if (has_permission($folder["folder_name"] . "_folder_view")) {
-				$result_array[] = $folder;
+		$tables = $this->get_table_names();
+
+		foreach ($array as $key1 => $folder) {
+			foreach ($tables as $key2 => $table) {
+				if (has_permission($table . "_table_view") && $this->is_parent_folder($folder["id"], $table)) {
+					$result_array[] = $folder;
+					break;
+				}
 			}
+
 		}
 		return $result_array;
 	}
@@ -168,6 +177,47 @@ class Database_model extends CI_Model
 	{
 		$data = array();
 		$this->db->insert($table_name, $data);
+	}
+
+	public function is_parent_folder($folder, $table)
+	{
+		$folders = $this->get_child_folder_ids($folder);
+		$folders[] = $folder;
+
+		foreach ($folders as $folder) {
+			$this->db->select("id");
+			$query = $this->db->get_where(self::$TABLE_NAME, array("parent_folder" => $folder, "table_name" => $table));
+			if ($query->num_rows() >= 1) {
+				return TRUE;
+			}
+		}
+		return FALSE;
+
+	}
+
+	public function get_child_folder_ids($folder)
+	{
+		$this->db->select("id");
+
+		$query = $this->db->get_where(self::$FOLDER_TABLE_NAME,
+
+			array("parent_folder" => $folder)
+
+
+		);
+
+
+		$child_folders = $query->result_array();
+
+		$result_array = array();
+		foreach ($child_folders as $key => $child_folder) {
+			$result_array[] = $child_folder["id"];
+			$temp = $this->get_child_folder_ids($child_folder["id"]);
+			foreach ($temp as $key => $item) {
+				$result_array[] = $item;
+			}
+		}
+		return $result_array;
 	}
 
 

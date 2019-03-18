@@ -46,73 +46,34 @@
 		}
 	};
 
+	var lang = {"reload_page_button": "Frissítés", "new_row_button": "Új sor hozzáadás"};
+
 	var base_url = "<?php echo base_url(); ?>";
 
 
 	var folders = <?php echo json_encode($folder_array); ?>;
 	var tables = <?php echo json_encode($table_array); ?>;
 
-	function hasThisAsParentFolder(needle, haystack) {
-		for (var i = 0; i < haystack.size; i++) {
-			if (needle === haystack[i].parent_folder) {
-				return true;
-			}
-		}
-		return false;
-	}
 
-	var output = "<ul id='table-list' class='jsl-open table-list'>";
-
-	function get_folder_title_by_id(folder_id) {
-		for (var i = 0; i < folders.length; i++) {
-			if (folders[i].id === folder_id) {
-				return folders[i].folder_title;
-			}
-		}
-		return "";
-	}
-
-	function tree(current_folder_id, level) {
-		if (level !== 0) {
-			output += "<li>";
-			output += '<i class="fa fa-folder-o" aria-hidden="true"></i>';
-			output += "<i class=\"fas fa-folder\"></i> <b>" + get_folder_title_by_id(current_folder_id) + "</b>";
-
-			// Ha a current_folder egy foldernek a parentje:
-			output += "<ul class='table-list'>";
-		}
-		for (var i = 0; i < folders.length; i++) {
-			if (current_folder_id === folders[i].parent_folder) {
-				tree(folders[i].id, level + 1);
-			}
-		}
-
-
-		// Ha a current_folder egy table-nek a parentje:
-		for (var i = 0; i < tables.length; i++) {
-			if (current_folder_id === tables[i].parent_folder) {
-				output += '<li onclick="loadTable(\'' + tables[i].table_name + '\')"><i class="fa fa-file-text-o" aria-hidden="true"></i> <i class=\'fas fa-database\'></i> ' + tables[i].table_title + "</li>";
-			}
-		}
-
-		if (level !== 0) {
-			output += "</ul>";
-			output += "</li>";
-		}
-
-	}
-
-	tree("", 0);
-
-	output += "</ul>";
-	$("#table-list-container").html(output);
-
-	JSLists.applyToList('table-list', 'ALL');
 </script>
 
 <style>
 	#table-list-container ul {
 		list-style-type: none;
+	}
+
+	#table-list-container li {
+		cursor: pointer;
+	}
+
+	#data-table input {
+		min-width: 100px !important;
+	}
+
+	#table-list-container ul, #table-list-container ul > ul {
+		margin-left: 1em;
+		padding-left: 1em;
+		list-style-position: inside;
 	}
 </style>
 
