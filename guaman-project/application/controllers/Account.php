@@ -54,11 +54,11 @@ class Account extends CI_Controller
      */
     function register()
     {
-        if (!$this->config->item("allow_registration")) {
-            redirect(base_url("account/login"));
-        }
+        if (!$this->config->item("allow_registration")) redirect(base_url("account/login"));
+
         if ($this->input->post("username") &&
-            ($this->input->post("password") && $this->input->post("email"))) {
+            ($this->input->post("password") &&
+                $this->input->post("email"))) {
             if (Validator::is_alphanumeric($this->input->post("username")) &&
                 Validator::is_alphanumeric($this->input->post("password")) &&
                 Validator::is_valid_email($this->input->post("email"))) {
@@ -97,7 +97,7 @@ class Account extends CI_Controller
      */
     function change_password()
     {
-        require_rank(Ranks::$LOGGED_IN);
+        require_status(Statuses::$LOGGED_IN);
         if ($this->input->post("current_password") && ($this->input->post("new_password") && $this->input->post("new_password_again"))) {
             if ($this->Account_model->get_user_field("password_hash", Account_model::$user_id) !== Validator::encrypt($this->input->post("current_password"))) {
                 //print_r($_POST);
@@ -114,7 +114,7 @@ class Account extends CI_Controller
                 js_alert(lang("successful_password_changing"), base_url("account/login"));
             }
         } else {
-            require_rank(Ranks::$LOGGED_IN);
+            require_status(Statuses::$LOGGED_IN);
             $this->load->view("templates/header", array("title" => lang("change_password_title")));
             $this->load->view("templates/menu");
             $this->load->view("account/change_password_view");
@@ -127,7 +127,7 @@ class Account extends CI_Controller
      */
     function profile()
     {
-        require_rank(Ranks::$LOGGED_IN);
+        require_status(Statuses::$LOGGED_IN);
         $this->load->view("templates/header", array("title" => lang("my_profile_title")));
         $this->load->view("templates/menu");
 
@@ -150,7 +150,7 @@ class Account extends CI_Controller
      */
     function settings()
     {
-        require_rank(Ranks::$LOGGED_IN);
+        require_status(Statuses::$LOGGED_IN);
         $this->load->view("templates/header", array("title" => lang("settings_title")));
 
         $this->load->view("templates/menu");
@@ -168,7 +168,7 @@ class Account extends CI_Controller
     function logout()
     {
         $this->Account_model->log_out();
-        js_alert(lang("logout_message"), base_url());
+            js_alert(lang("logout_message"), base_url("account/login"));
     }
 
     /**
@@ -176,6 +176,8 @@ class Account extends CI_Controller
      */
     function get_users()
     {
+        require_status(Statuses::$LOGGED_IN);
+
         $output = $this->Account_model->get_users(array("id", "username"));
         $this->output
             ->set_content_type('application/json')

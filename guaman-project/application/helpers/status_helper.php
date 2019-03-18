@@ -1,6 +1,6 @@
 <?php
 
-class Ranks{
+class Statuses{
     public static $LOGGED_OUT = -1;
     public static $LOGGED_IN = 0;
     public static $ADMIN = 1;
@@ -26,13 +26,13 @@ class Ranks{
 /**
  * @param $min_rank int The lowest rank for accessing the page
  */
-function require_rank($min_rank){
+function require_status($min_rank){
     if(Account_model::$rank < $min_rank) {
-        if($min_rank == Ranks::$ADMIN){
+        if($min_rank == Statuses::$ADMIN){
             js_alert("Az oldal megtekintéséhez nincs engedélyed.", base_url("account/login"));
 
         }
-        else if($min_rank == Ranks::$LOGGED_IN){
+        else if($min_rank == Statuses::$LOGGED_IN){
             js_alert("Az oldal megtekintéséhez be kell jelentkezned.", base_url("account/login"));
         }
         die();
