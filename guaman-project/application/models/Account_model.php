@@ -146,6 +146,14 @@ class Account_model extends CI_Model
 		return $query->num_rows() == 0;
 	}
 
+    public function get_users($fields)
+    {
+
+        $this->db->select($fields);
+        $query = $this->db->get(self::$TABLE_NAME);
+        return $query->result_array();
+    }
+
 
 }
 

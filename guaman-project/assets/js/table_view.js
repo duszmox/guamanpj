@@ -37,9 +37,9 @@ function loadTable(table_name) {
 			html += "<tr>";
 			console.log(data[i]);
 
-			Object.keys(data[i]).forEach(function (k) {
-				html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'><input type='text' class='form-control data-cell' value='" + data[i][k] + "'><span hidden>" + data[i][k] + "</span></td>";
-			});
+			for(var k = 0; k < columns.length; k++){
+				html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'><input type='text' class='form-control data-cell' value='" + data[i][columns[k]] + "'><span hidden>" + data[i][columns[k]] + "</span></td>";
+			}
 
 			html += "</tr>";
 		}
@@ -53,6 +53,7 @@ function loadTable(table_name) {
 			$("#data-table").DataTable({
 				language: data_table_strings
 			});
+
 			$("#data-table").parent().css("overflow-x", "scroll");
 		}, 1);
 
