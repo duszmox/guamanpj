@@ -23,8 +23,12 @@ class Database extends CI_Controller
         $this->load->view("templates/header");
         $this->load->view("templates/menu");
         $table_array = ($this->Database_model->get_tables());
-        $folder_array = ($this->Database_model->get_folders());
-        $this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
+
+
+		$folder_array = ($this->Database_model->get_folders());
+
+
+		$this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
 
 		$this->load->view("templates/footer");
 	}
@@ -118,5 +122,10 @@ class Database extends CI_Controller
 	function get_nice_column_name($table_id, $column_name)
 	{
 		echo $this->Database_model->get_nice_column_name($table_id, $column_name);
+	}
+
+	public function get_child_folders($folder)
+	{
+		print_r($this->Database_model->get_child_folder_ids($folder));
 	}
 }
