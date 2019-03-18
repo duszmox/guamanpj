@@ -96,7 +96,9 @@ class Account_model extends CI_Model
 	}
 
 	function register_user($username, $password, $email)
-	{
+    {
+        //todo Andris nem engedi a speciális karaktereket regisztálásnál
+
 		if (!$this->is_available_username($username)) {
 			throw new Exception("unavailable_username");
 		}
