@@ -29,7 +29,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
             break;
         case "guaman_telefon":
             foreach ($result_array_ as $key => $row) {
-                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['bek_brutto'];
+                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['beker_brutto'];
                 if ((float)$result_array_[$key]['kiker_brutto'] != 0){
                 $result_array_[$key]['netto_%'] = $result_array_[$key]['netto_profit'] / $result_array_[$key]['kiker_brutto'];
                 }
@@ -37,7 +37,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
             break;
         case "guaman_gadget":
             foreach ($result_array_ as $key => $row) {
-                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['bek_brutto'];
+                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['beker_brutto'];
                 if ((float)$result_array_[$key]['kiker_brutto'] != 0){
                     $result_array_[$key]['netto_%'] = $result_array_[$key]['netto_profit'] / $result_array_[$key]['kiker_brutto'];
                 }
@@ -45,7 +45,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
             break;
         case "guaman_orakkiegeszitok":
             foreach ($result_array_ as $key => $row) {
-                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['bek_brutto'];
+                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['beker_brutto'];
                 if ((float)$result_array_[$key]['kiker_brutto'] != 0){
                     $result_array_[$key]['netto_%'] = $result_array_[$key]['netto_profit'] / $result_array_[$key]['kiker_brutto'];
                 }
@@ -53,7 +53,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
             break;
         case "guaman_tablet":
             foreach ($result_array_ as $key => $row) {
-                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['bek_brutto'];
+                $result_array_[$key]['netto_profit'] = $result_array_[$key]['kiker_brutto'] - $result_array_[$key]['beker_brutto'];
                 if ((float)$result_array_[$key]['kiker_brutto'] != 0){
                     $result_array_[$key]['netto_%'] = $result_array_[$key]['netto_profit'] / $result_array_[$key]['kiker_brutto'];
                 }
