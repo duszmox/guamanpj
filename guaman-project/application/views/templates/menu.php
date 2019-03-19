@@ -30,10 +30,14 @@
         <div id="collapseDatabase" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <?php //<h6 class="collapse-header">Login Screens:</h6> ?>
-                <a class="collapse-item" href="<?php echo base_url("statistics") ?>">
+
+                <?php
+                    $statistics ='<a class="collapse-item" href="<?php echo base_url("statistics") ?>">
                     <i class="fas fa-chart-line"></i>
                     <?php echo lang("statistics_label"); ?>
-                </a>
+                </a>';
+
+                ?>
                 <a class="collapse-item" href="<?php echo base_url("database/") ?>">
                     <i class="fas fa-table"></i>
                     <?php echo lang("tables_title") ?>
@@ -48,7 +52,9 @@
     </li>
 
 
-    <?php if (has_permission("admin")) { ?>
+    <?php
+    $condition = has_permission("admin");
+    if (false) { ?>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                aria-expanded="true" aria-controls="collapsePages">
