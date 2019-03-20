@@ -35,6 +35,7 @@
                     $statistics ='<a class="collapse-item" href="<?php echo base_url("statistics") ?>">
                     <i class="fas fa-chart-line"></i>
                     <?php echo lang("statistics_label"); ?>
+                    
                 </a>';
 
                 ?>

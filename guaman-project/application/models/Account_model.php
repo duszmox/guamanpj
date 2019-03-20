@@ -21,7 +21,8 @@ class Account_model extends CI_Model
 
 		self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
 
-        $this->session->sess_expiration = '14400';// expires in 4 hours
+
+        $this->session->sess_expiration = $this->config->item("session_time");// expires in 4 hours
 
 		$username = $this->session->userdata('username');
 		$password_hash = $this->session->userdata('password_hash');
