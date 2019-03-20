@@ -11,4 +11,3 @@ $config["website_logo_url"] = "https://guamanpj.com/guaman-project/assets/img/lo
 $config["allow_registration"] = FALSE;
 $config["session_time"] = '14400';
 $config["modules"] = array();
-ł
