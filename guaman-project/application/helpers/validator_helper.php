@@ -14,6 +14,11 @@ class Validator
 	    return !preg_match('/[^a-z_\-0-9\á\í\ű\ő\ü\ö\ú\ó\é ]/i', $string);
     }
 
+    public static function is_alphanumeric_or_percentage($string)
+    {
+        return !preg_match('/[^a-z_\-0-9\á\í\ű\ő\ü\ö\ú\ó\é %]/i', $string);
+    }
+
     public static function encrypt($text)
     {
         return hash("sha256", $text);

@@ -121,7 +121,7 @@ class Database_model extends CI_Model
 		if (!Validator::is_alphanumeric($table_name)) {
 			throw new Exception("invalid_input table_name");
 		}
-		if (!Validator::is_alphanumeric($column)) {
+		if (!Validator::is_alphanumeric_or_percentage($column)) {
 			throw new Exception("invalid_input column");
 		}
 		if (!Validator::is_numeric($id)) {
