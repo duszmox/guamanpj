@@ -6,9 +6,9 @@
  */
 
 $lang["enter_valid_data_message"] = "Enter valid data!";
-$lang["successful_login_message"] = "You have succesfully logged in!";
+$lang["successful_login_message"] = "You have successfully logged in!";
 $lang["my_profile_title"] = "My profile";
-$lang["logout_message"] = "Succesfully logged out!";
+$lang["logout_message"] = "Successfully logged out!";
 
 $lang["rank_logged_out"] = "logged out";
 $lang["rank_logged_in"] = "logged in";
@@ -16,8 +16,8 @@ $lang["rank_admin"] = "admin";
 $lang["login_title"] = "Log in";
 $lang["wrong_login_message"] = "Wrong username / password!";
 $lang["used_username_message"] = "This username has already taken!";
-$lang["used_email_message"] = "This email adress has already registered!";
-$lang["successful_registration_message"] = "Succesfull registration!";
+$lang["used_email_message"] = "This email address has already registered!";
+$lang["successful_registration_message"] = "Successful registration!";
 $lang["registration_title"] = "Registration";
 $lang["language_label"] = "Choose a language";
 $lang["logout_label"] = "Log out";
@@ -66,9 +66,9 @@ $lang["submit_change_password_button"] = "Change";
 $lang["invalid_current_password"] = "Invalid password. Try again!";
 $lang["again_password_not_matching"] = "The passwords don't match.";
 $lang["invalid_new_password"] = "The new password contains invalid characters. Valid characters are: numbers, letters, _, and -.";
-$lang["successful_password_changing"] = "Password changed succesfully. Log in to continue!";
+$lang["successful_password_changing"] = "Password changed successfully. Log in to continue!";
 $lang["username_label"] = "Username: ";
-$lang["email_label"] = "Email adress: ";
+$lang["email_label"] = "Email address: ";
 $lang["password_label"] = "Password: ";
 $lang["rank_label"] = "Role: ";
 $lang["phone_number_label"] = "Phone number: ";
