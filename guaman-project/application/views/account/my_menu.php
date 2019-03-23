@@ -1,5 +1,4 @@
 <div class="container">
-	<h2><?php echo lang("settings_page_title"); ?></h2>
 
 	<ul class="nav nav-tabs">
 		<li class="nav-item">
@@ -13,4 +12,9 @@
 				echo "active";
 			} ?>" href="<?php echo base_url("account/profile") ?>"><?php echo lang("profile_title") ?></a>
 		</li>
+        <li class="nav-item">
+            <a class="nav-link <?php if ($page_active == 'admin') {
+                echo "active";
+            } ?>" href="<?php echo base_url("account/admin") ?>"><?php echo lang("admin_title") ?></a>
+        </li>
 	</ul>

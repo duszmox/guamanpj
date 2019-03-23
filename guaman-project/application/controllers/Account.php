@@ -154,7 +154,7 @@ class Account extends CI_Controller
         $this->load->view("templates/header", array("title" => lang("settings_title")));
 
         $this->load->view("templates/menu");
-
+        //todo András átadni neki az összes profile nevet
         $this->load->view("account/my_menu", array("page_active" => "settings"));
 
         $this->load->view("account/my_settings");
@@ -183,5 +183,19 @@ class Account extends CI_Controller
             ->set_content_type('application/json')
             ->set_output(json_encode($output));
 
+    }
+
+    function admin(){
+
+        require_status(Statuses::$LOGGED_IN);
+        $this->load->view("templates/header", array("title" => lang("admin_title")));
+
+        $this->load->view("templates/menu");
+
+        $this->load->view("account/my_menu", array("page_active" => "admin"));
+
+        $this->load->view("account/my_admin");
+
+        $this->load->view("templates/footer");
     }
 }

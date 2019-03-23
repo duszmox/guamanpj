@@ -81,3 +81,9 @@ $lang["table_body_placeholder"] = "A táblázat...";
 
 $lang["manage_permissions_title"] = "Jogosultságok";
 $lang["admin_menu_title"] = "Admin felület";
+
+
+//újabbak
+
+$lang["admin_title"] = "Admin";
+$lang["add_admin_label"] = "Admin jog adása felhasználónak : ";

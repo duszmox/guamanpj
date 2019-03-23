@@ -80,3 +80,7 @@ $lang["table_body_placeholder"] = "The table...";
 
 $lang["manage_permissions_title"] = "Permissions";
 $lang["admin_menu_title"] = "Admin site";
+
+//more new
+
+$lang["admin_title"] = "Admin";
