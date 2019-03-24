@@ -37,7 +37,7 @@ class Account extends CI_Controller
         } else {
             // Login user
             if (!Validator::is_alphanumeric($username) || !Validator::is_alphanumeric($password)) {
-                js_alert(lang("enter_valid_data_message") . base_url("account/login"));
+                js_alert(lang("enter_valid_data_message"), base_url("account/login"));
             }
             if ($this->Account_model->login_user($username, Validator::encrypt($password))) {
                 js_alert(lang("successful_login_message"), base_url("language/hungarian"));
