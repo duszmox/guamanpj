@@ -187,12 +187,14 @@ class Account extends CI_Controller
 
     function admin(){
 
-        require_status(Statuses::$LOGGED_IN);
+        require_permission("admin");
+
+
         $this->load->view("templates/header", array("title" => lang("admin_title")));
 
         $this->load->view("templates/menu");
-
-        $this->load->view("account/my_menu", array("page_active" => "admin"));
+        $users = $this->Account_model->get_users("username");
+        $this->load->view("account/my_menu", array("page_active" => "admin", "users" => $users));
 
         $this->load->view("account/my_admin");
 
