@@ -35,6 +35,7 @@ class Account extends CI_Controller
             $this->load->view("account/login-form");
             $this->load->view("templates/footer");
         } else {
+
             // Login user
             if (!Validator::is_alphanumeric($username) || !Validator::is_alphanumeric($password)) {
                 js_alert(lang("enter_valid_data_message"), base_url("account/login"));
