@@ -87,3 +87,4 @@ $lang["admin_menu_title"] = "Admin felület";
 
 $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Admin jog adása felhasználónak : ";
+$lang["remove_admin_label"] = "Admin jog eltávolítása felhasználónak : ";

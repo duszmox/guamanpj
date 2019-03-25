@@ -12,7 +12,8 @@
 				echo "active";
 			} ?>" href="<?php echo base_url("account/profile") ?>"><?php echo lang("profile_title") ?></a>
 		</li>
-        <li class="nav-item">
+
+        <li class="nav-item <?php if(!has_permission( "admin")){ echo "invisible";}?>">
             <a class="nav-link <?php if ($page_active == 'admin') {
                 echo "active";
             } ?>" href="<?php echo base_url("account/admin") ?>"><?php echo lang("admin_title") ?></a>

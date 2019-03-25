@@ -89,6 +89,19 @@ class Account_model extends CI_Model
 			return NULL;
 		}
 	}
+    function get_id_by_username($username)
+    {
+        $this->db->select("id");
+        $this->db->where("username", $username);
+        $this->db->limit(1);
+        $row = $this->db->get(self::$TABLE_NAME)->row();
+        if ($row != NULL) {
+            return $row->id;
+        }
+        else {
+            return NULL;
+        }
+    }
 
 	function is_available_username($username)
 	{
@@ -158,6 +171,7 @@ class Account_model extends CI_Model
         $query = $this->db->get(self::$TABLE_NAME);
         return $query->result_array();
     }
+
 
 
 }

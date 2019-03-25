@@ -169,7 +169,7 @@ class Account extends CI_Controller
     function logout()
     {
         $this->Account_model->log_out();
-            js_alert(lang("logout_message"), base_url("account/login"));
+        js_alert(lang("logout_message"), base_url("account/login"));
     }
 
     /**
@@ -186,10 +186,23 @@ class Account extends CI_Controller
 
     }
 
-    function admin(){
+    function admin()
+    {
 
         require_permission("admin");
+        $username = $this->input->post("username");
+        $user_id = $this->Account_model->get_id_by_username($username);
 
+        if ($this->input->post("username") && $this->input->post("submit_add")) {
+            if (!$this->Permissions_model->has_permission($user_id, "admin")) {
+                $this->Permissions_model->add_permission($user_id, "admin");
+            }
+        }
+        if ($this->input->post("username") && $this->input->post("submit_remove")) {
+            if ($this->Permissions_model->has_permission($user_id, "admin")) {
+                $this->Permissions_model->remove_permission($user_id, "admin");
+            }
+        }
 
         $this->load->view("templates/header", array("title" => lang("admin_title")));
 
