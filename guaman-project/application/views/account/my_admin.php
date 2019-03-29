@@ -40,6 +40,12 @@
             </td>
 
         </tr>
+        <tr>
+            <td>
+                <?php
+                ?>
+            </td>
+        </tr>
     </table>
 </div>
 

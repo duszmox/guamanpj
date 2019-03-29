@@ -9,11 +9,12 @@
 class Permissions_model extends CI_Model
 {
 	public static $TABLE_NAME = "permissions";
-
+    public static $PERMISSIONS_TABLE_NAME = "permissionsnames";
 	public function __construct()
 	{
 		parent::__construct();
 		self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
+        self::$PERMISSIONS_TABLE_NAME = $this->config->item("table_prefix") . self::$PERMISSIONS_TABLE_NAME;
 	}
 
 	public function add_permission($user_id, $permission_name)
@@ -52,6 +53,32 @@ class Permissions_model extends CI_Model
 
 		$this->db->delete(self::$TABLE_NAME, array("user_id" => $user_id, "permission_name" => $permission_name));
 	}
+	public function get_permissions_name(){
+	    $this->db->select("permission_name");
+        $query = $this->db->get(self::$PERMISSIONS_TABLE_NAME);
+        $array = $query->result_array();
+        $result_array = array();
+
+
+        foreach ($array as $table) {
+                $result_array[] = $table;
+
+        }
+        return $result_array;
+    }
+    public function get_permissions_nice_name(){
+        $this->db->select("permission_nice_name");
+        $query = $this->db->get(self::$PERMISSIONS_TABLE_NAME);
+        $array = $query->result_array();
+        $result_array = array();
+
+
+        foreach ($array as $table) {
+            $result_array[] = $table;
+
+        }
+        return $result_array;
+    }
 
 	/**
      * Permissions:

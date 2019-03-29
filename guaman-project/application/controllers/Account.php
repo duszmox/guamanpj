@@ -209,8 +209,8 @@ class Account extends CI_Controller
         $this->load->view("templates/menu");
         $users = $this->Account_model->get_users("username");
         $this->load->view("account/my_menu", array("page_active" => "admin", "users" => $users));
-
-        $this->load->view("account/my_admin");
+        $permissions_names = $this->Permissions_model->get_permissions_nice_name();
+        $this->load->view("account/my_admin", array("permissions_name" => $permissions_names));
 
         $this->load->view("templates/footer");
     }
