@@ -84,3 +84,6 @@ $lang["admin_menu_title"] = "Admin site";
 //more new
 
 $lang["admin_title"] = "Admin";
+$lang["add_admin_label"] = "Give admin rank to : ";
+$lang["remove_admin_label"] = "Remove admin rank from : ";
+$lang["day"] = "day";

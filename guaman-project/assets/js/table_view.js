@@ -48,6 +48,7 @@ function loadTable(table_name) {
                 html += "<th>" + column_nice_names[i] + "</th>";
             }
             html += "</tr></tr></thead>";
+            var type_of_input = "";
 
             html += "<tbody>";
             for (var i = 1; i < data.length; i++) {
@@ -55,9 +56,22 @@ function loadTable(table_name) {
                 console.log(data[i]);
 
                 for (var k = 0; k < columns.length; k++) {
+                switch (columns[k]) {
+                    case "datum":
+                        type_of_input = "date";
+                        break;
+                    case "szerviz_kezdet_datum":
+                        type_of_input = "date";
+                        break;
+                    case "szerviz_vege_datum":
+                        type_of_input = "date";
+                        break;
+                    default:
+                        type_of_input = "text";
 
+                }
                     html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>" +
-                        (canEdit ? ("<input type='text' class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
+                        (canEdit ? ("<input type=" + type_of_input +" class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
                         "<span hidden>" + data[i][columns[k]] + "</span>" +
                         "</td>";
                 }

@@ -137,6 +137,8 @@ class Database extends CI_Controller
         echo $this->Database_model->get_nice_column_name($table_id, $column_name);
     }
 
+
+
     public function backup()
     {
         require_permission("download_backup");
