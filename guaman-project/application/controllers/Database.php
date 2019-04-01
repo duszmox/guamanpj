@@ -163,4 +163,30 @@ class Database extends CI_Controller
         $this->load->helper('download');
         force_download($db_name, $backup);
     }
+
+    public function move(){
+        $from_table = $this->input->post("from_table");
+        $from_id = $this->input->post("from_id");
+        $to_table = $this->input->post("to_table");
+
+        if (!$from_table || !$from_id || !$to_table) js_alert(lang(""), base_url("account/login/"));
+
+        require_permission($from_table . "_table_edit");
+        require_permission($to_table . "_table_edit");
+
+        try {
+            $this->Database_model->move($from_table, $to_table, $from_id);
+        }
+        catch (Exception $exception){
+            switch ($exception->getMessage()){
+                case "not_compatible_tables_exception":
+
+                    break;
+                case "id_not_found_exception":
+            }
+        }
+        // TODO GUI JS [Ambrusnak]
+        // TODO default_move_to lekérdezéshez php api (oszlop: guaman_tables->default_move_to) [Andrisnak/Ambrusnak] (exception kezelés, permission check)
+    }
+
 }

@@ -220,5 +220,16 @@ class Database_model extends CI_Model
 		return $result_array;
 	}
 
+    public function move($from_table, $to_table, $from_id)
+    {
+        $query = $this->db->get_where($from_table, array("id" => $from_id));
+        if ($db = $query->num_rows() != 1) throw new Exception("id_not_found_exception");
+
+
+        // TODO check if the 2 tables are compatible (check column names) throw new Exception("not_compatible_tables_exception") [Andrisnak/Amrusnak] tömbösszehasonlítás algoritmus;
+
+        // TODO insert data -> delete row, if the insertion was successful [Andrinak / Ambrusnak]
+    }
+
 
 }

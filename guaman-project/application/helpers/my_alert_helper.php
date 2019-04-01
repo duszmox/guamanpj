@@ -19,3 +19,10 @@ function js_alert($text = "", $redirect_url = "")
 
 
 }
+
+function json_error($message){
+    $output = array("error" => $message);
+    $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode($output));
+}
