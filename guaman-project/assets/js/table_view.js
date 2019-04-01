@@ -65,6 +65,7 @@ function loadTable(table_name) {
                     type_of_input = "text";
                 }
 
+
                     html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>" +
                         (canEdit ? ("<input type=" + type_of_input +" class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
                         "<span hidden>" + data[i][columns[k]] + "</span>" +

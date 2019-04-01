@@ -29,7 +29,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     $result_array_[$key]['netto_profit'] = round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2);
                     $result_array_[$key]['afa'] = round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2);
                     if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]['%'] = round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 2);
+                        $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 2))*100 . " %";
                     }
                 };
             }
@@ -40,7 +40,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
 
                     $result_array_[$key]['netto_profit'] = (float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'];
                     if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'];
+                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 2))*100 . " %";
                     }
                 }
             }
@@ -51,7 +51,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 if (is_numeric((float)$result_array_[$key]['kiker_netto']) && is_numeric((float)$result_array_[$key]['beker_netto'])) {
                     $result_array_[$key]['netto_profit'] = (float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'];
                     if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'];
+                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 2))*100 . " %";
                     }
                 }
             }
@@ -62,7 +62,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
 
                     $result_array_[$key]['netto_profit'] = (float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'];
                     if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'];
+                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 2)) * 100 . " %";
                     }
                 }
             }
@@ -73,7 +73,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
 
                     $result_array_[$key]['netto_profit'] = (float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'];
                     if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'];
+                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'] , 2))*100 . " %";
                     }
                 }
             }
@@ -85,7 +85,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     $result_array_[$key]['neto_profit'] = round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2);
                     $result_array_[$key]['afa'] = round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2);
                     if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]['%'] = round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 2);
+                        $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 2) )*100 . " %";
                     };
                 }
             }
@@ -97,7 +97,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     $result_array_[$key]['netto_profit'] = round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2);
                     $result_array_[$key]['afa'] = round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2);
                     if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]['%'] = round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 2);
+                        $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 2)) *100 . " %";
                     };
                 }
             }
@@ -110,7 +110,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     $result_array_[$key]['afa'] = round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszer_ar']) - (((float)$result_array_[$key]['afa'])), 2);
                     $result_array_[$key]['netto_eladasi_ar'] = round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2);
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]['netto_%'] = round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 2);
+                        $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 2))*100 . " %";
                     };
                 }
             }
@@ -123,7 +123,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     $result_array_[$key]['afa'] = round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['netto_beszer_ar']) - (((float)$result_array_[$key]['afa'])), 2);
                     $result_array_[$key]['netto_eladasi_ar'] = round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2);
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]['netto_%'] = round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 2);
+                        $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 2))*100 . " %";
                     };
                 }
             }
@@ -145,7 +145,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     $result_array_[$key]['afa'] = round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['netto_beszerzesi_ar']) - (((float)$result_array_[$key]['afa'])), 2);
                     $result_array_[$key]['netto_eladasi_ar'] = round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2);
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]['netto_%'] = round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 2);
+                        $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 2)) * 100 . " %";
                     };
                 }
             }
