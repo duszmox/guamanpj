@@ -220,16 +220,54 @@ class Database_model extends CI_Model
 		return $result_array;
 	}
 
+    /**
+     * @param $from_table
+     * @param $to_table
+     * @param $from_id
+     * @throws Exception table_not_found_exception, id_not_found_exception, incompatible_tables_exception
+     */
     public function move($from_table, $to_table, $from_id)
     {
+        $table_names = $this->get_table_names();
+        if(!in_array($from_table, $table_names)) throw new Exception("table_not_found_exception");
+        if(!in_array($to_table, $table_names)) throw new Exception("table_not_found_exception");
+
         $query = $this->db->get_where($from_table, array("id" => $from_id));
         if ($db = $query->num_rows() != 1) throw new Exception("id_not_found_exception");
 
+        if(!$this->compatible_tables($from_table, $to_table)) throw new Exception("incompatible_tables_exception");
 
-        // TODO check if the 2 tables are compatible (check column names) throw new Exception("not_compatible_tables_exception") [Andrisnak/Amrusnak] tömbösszehasonlítás algoritmus;
 
-        // TODO insert data -> delete row, if the insertion was successful [Andrinak / Ambrusnak]
+        // TODO insert data -> delete row, if the insertion was successful
     }
 
+    /**
+     * Returns true if the 2 tables are compatible (all columns in from_table are also in to_table)
+     * @param $from_table
+     * @param $to_table
+     * @return bool
+     */
+    public function compatible_tables($from_table, $to_table){
+        $from_table_cols = $this->get_columns_by_table($from_table);
+        $to_table_cols = $this->get_columns_by_table($to_table);
 
+        foreach ($from_table_cols as $from_table_col){
+            if(!in_array($from_table_col, $to_table_cols)) return false;
+        }
+        return true;
+    }
+
+    /**
+     * @param $from_table
+     * @return array
+     * @throws Exception table_not_found_exception
+     */
+    public function get_compatible_tables($from_table){
+        $table_names = $this->get_table_names();
+        if (!in_array($from_table, $table_names)) throw new Exception("table_not_found_exception");
+
+        // TODO get all compatible tables (for each get_table_names();
+        // TODO add compatible table name to an array and return it)
+        return array();
+    }
 }

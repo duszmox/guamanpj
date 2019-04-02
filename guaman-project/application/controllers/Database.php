@@ -179,10 +179,15 @@ class Database extends CI_Controller
         }
         catch (Exception $exception){
             switch ($exception->getMessage()){
-                case "not_compatible_tables_exception":
-
+                case "incompatible_tables_exception":
+                    json_error("incompatible_tables_exception");
                     break;
                 case "id_not_found_exception":
+                    json_error("id_not_found_exception");
+                    break;
+                case "table_not_found_exception":
+                    json_error("table_not_found_exception");
+                    break;
             }
         }
         // TODO GUI JS [Ambrusnak]
