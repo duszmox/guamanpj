@@ -194,4 +194,35 @@ class Database extends CI_Controller
 
     }
 
+    /**
+     * Form for move row
+     * @param $table_name
+     * @param $row
+     */
+    public function move_row($table_name, $row){
+        require_permission($table_name . "_table_edit");
+
+        // TODO befejezni form kiíratása, compatible_tables már nice_namemel átadása neki
+
+        if($this->input->post("to_table")){
+            // Form adatok validálása, model intarakció
+        }
+        else{
+            // load views and pass data
+        }
+    }
+
+
+    // Most nem ezt használjuk, hanem lekérjük szépen php-val
+
+    /**
+     * gets compatible nice names (API)
+     * @param $from_table
+     * @throws Exception
+     */
+    public function get_compatible_tables($from_table){
+        require_permission($from_table."_table_view");
+        json_output($this->Database_model->get_compatible_tables($from_table, Account_model::$user_id));
+    }
+
 }

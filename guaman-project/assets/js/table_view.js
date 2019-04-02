@@ -33,7 +33,7 @@ function loadTable(table_name) {
 
             // Load header buttons
             html += "<div class=\'my-4\'>\n    ";
-            if(canEdit){
+            if (canEdit) {
                 html += "<button class=\'btn btn-primary\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
             }
             html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\")\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
@@ -47,6 +47,9 @@ function loadTable(table_name) {
             for (var i = 0; i < column_nice_names.length; i++) {
                 html += "<th>" + column_nice_names[i] + "</th>";
             }
+            if (canEdit) {
+                html += "<th>" + lang.actions + "</th>";
+            }
             html += "</tr></tr></thead>";
             var type_of_input = "";
 
@@ -57,21 +60,22 @@ function loadTable(table_name) {
 
                 for (var k = 0; k < columns.length; k++) {
 
-                if(columns[k].indexOf("datum") !== -1){
-                    type_of_input = "date";
-                }
-                else
-                {
-                    type_of_input = "text";
-                }
+                    if (columns[k].indexOf("datum") !== -1) {
+                        type_of_input = "date";
+                    } else {
+                        type_of_input = "text";
+                    }
 
 
                     html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>" +
-                        (canEdit ? ("<input type=" + type_of_input +" class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
+                        (canEdit ? ("<input type=" + type_of_input + " class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
                         "<span hidden>" + data[i][columns[k]] + "</span>" +
                         "</td>";
                 }
 
+                if (canEdit) {
+                    html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_button + "</a></td>";
+                }
                 html += "</tr>";
             }
             html += "</tbody></table>";

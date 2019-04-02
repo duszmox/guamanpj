@@ -268,6 +268,7 @@ class Database_model extends CI_Model
     }
 
     /**
+     * Gets the available compatible tables for the current user
      * @param $from_table
      * @return array
      * @throws Exception table_not_found_exception
@@ -276,8 +277,16 @@ class Database_model extends CI_Model
         $table_names = $this->get_table_names();
         if (!in_array($from_table, $table_names)) throw new Exception("table_not_found_exception");
 
-        // TODO get all compatible tables (for each get_table_names();
-        // TODO add compatible table name to an array and return it)
-        return array();
+        $compatible_tables = array();
+
+        foreach ($table_names as $table_name){
+            if($compatible_tables($from_table, $table_name)){
+                if(has_permission($table_name."_table_edit")){
+                    $compatible_tables[]= $table_name;
+                }
+            }
+        }
+
+        return $compatible_tables;
     }
 }
