@@ -169,7 +169,7 @@ class Database extends CI_Controller
         $from_id = $this->input->post("from_id");
         $to_table = $this->input->post("to_table");
 
-        if (!$from_table || !$from_id || !$to_table) js_alert(lang(""), base_url("account/login/"));
+        if (!$from_table || !$from_id || !$to_table) json_error("no_permission");
 
         require_permission($from_table . "_table_edit");
         require_permission($to_table . "_table_edit");
@@ -191,7 +191,7 @@ class Database extends CI_Controller
             }
         }
         // TODO GUI JS [Ambrusnak]
-        // TODO default_move_to lekérdezéshez php api (oszlop: guaman_tables->default_move_to) [Andrisnak/Ambrusnak] (exception kezelés, permission check)
+
     }
 
 }

@@ -224,6 +224,7 @@ class Database_model extends CI_Model
      * @param $from_table
      * @param $to_table
      * @param $from_id
+     * @return bool
      * @throws Exception table_not_found_exception, id_not_found_exception, incompatible_tables_exception
      */
     public function move($from_table, $to_table, $from_id)
@@ -237,8 +238,17 @@ class Database_model extends CI_Model
 
         if(!$this->compatible_tables($from_table, $to_table)) throw new Exception("incompatible_tables_exception");
 
+        $data_array = $query->result_array();
 
-        // TODO insert data -> delete row, if the insertion was successful
+        $data_array["id"] = "";
+
+        $this->db->insert($to_table, $data_array);
+        if($this->db->affected_rows() == 1){
+            $this->db->delete($from_table, array("id" => $from_id), 1);
+            return true;
+        }
+
+        return false;
     }
 
     /**
