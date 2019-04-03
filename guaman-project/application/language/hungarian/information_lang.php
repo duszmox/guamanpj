@@ -81,10 +81,12 @@ $lang["table_body_placeholder"] = "A táblázat...";
 
 $lang["manage_permissions_title"] = "Jogosultságok";
 $lang["admin_menu_title"] = "Admin felület";
+$lang["invalid_input"] = "Érvénytelen bemeneti adatok.";
 
 
 //újabbak
 
 $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Admin jog adása felhasználónak : ";
-$lang["remove_admin_label"] = "Admin jog eltávolítása felhasználónak : ";
+$lang["remove_admin_label"] = "Admin jog eltávolítása ennek a felhasználónak: ";
+$lang["day"] = "nap";

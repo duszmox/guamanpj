@@ -78,6 +78,7 @@ $lang["public"] = "Public";
 $lang["tables_label"] = "Data: ";
 $lang["not_having_permission_message"] = "You don't have permission to visit this page!";
 $lang["table_body_placeholder"] = "The table...";
+$lang["invalid_input"] = "Invalid input data.";
 
 $lang["manage_permissions_title"] = "Permissions";
 $lang["admin_menu_title"] = "Admin site";
@@ -85,3 +86,6 @@ $lang["admin_menu_title"] = "Admin site";
 //more new
 
 $lang["admin_title"] = "Admin";
+$lang["add_admin_label"] = "Give admin rank to : ";
+$lang["remove_admin_label"] = "Remove admin rank from : ";
+$lang["day"] = "day";

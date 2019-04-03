@@ -48,7 +48,6 @@ class Database extends CI_Controller
             echo "<script>alert(\"Doesnt work yet\");</script>";
         }
     }
-
     function create_table()
     {
         require_permission("edit_tables");
@@ -137,6 +136,8 @@ class Database extends CI_Controller
         echo $this->Database_model->get_nice_column_name($table_id, $column_name);
     }
 
+
+
     public function backup()
     {
         require_permission("download_backup");
@@ -161,4 +162,99 @@ class Database extends CI_Controller
         $this->load->helper('download');
         force_download($db_name, $backup);
     }
+
+
+
+    /**
+     * Form for move row
+     * @param $from_table
+     * @param $row
+     */
+    public function move_row($from_table, $from_id){
+        require_permission($from_table . "_table_edit");
+
+        // TODO befejezni form kiíratása, compatible_tables már nice_namemel átadása neki
+
+        if($this->input->post("to_table")){
+            require_permission($from_table . "_table_edit");
+            require_permission($this->input->post("to_table") . "_table_edit");
+
+            if(!Validator::is_numeric($from_id)) js_alert("Invalid id!"); // TODO replace with lang
+
+
+            try {
+                if($this->Database_model->move($from_table, $this->input->post("to_table"), $from_id)){
+                    js_alert_close_tab("Sikeres áthelyezés!"); // TODO Lang fájl
+                }
+                else{
+                    js_alert_close_tab("Sikertelen áthelyezés!"); // TODO lang fájl
+                }
+            }
+            catch (Exception $exception){
+                    switch ($exception->getMessage()){
+                        case "incompatible_tables_exception":
+                            json_error("incompatible_tables_exception");
+                            break;
+                        case "id_not_found_exception":
+                            json_error("id_not_found_exception");
+                            break;
+                        case "table_not_found_exception":
+                            json_error("table_not_found_exception");
+                            break;
+                    }
+                }
+        }
+        else{
+            require_permission($from_table . "_table_edit");
+
+            if(!Validator::is_numeric($from_id)) js_alert("Invalid id!"); // TODO replace with lang
+            try {
+                $compatible_tables_ = $this->Database_model->get_compatible_tables($from_table);
+                $compatible_tables = array();
+                foreach ($compatible_tables_ as $table_name){
+                    $compatible_tables[$table_name] = $this->Database_model->get_table_title($table_name);
+                }
+            } catch (Exception $e) {
+                switch ($e->getMessage()){
+                    case "table_not_found_exception":
+                        js_alert("Table not found!"); // TODO replace with lang
+                        break;
+                }
+                die();
+            }
+
+            // load views and pass data
+            $this->load->view("templates/header");
+            $this->load->view("templates/menu");
+
+            try {
+                $this->load->view("database/move_row", array("compatible_tables" => $compatible_tables, "id" => $from_id, "from_table_title" => $this->Database_model->get_table_title($from_table)));
+            } catch (Exception $e) {
+                switch ($e->getMessage()){
+                    case "table_not_found_exception":
+                        js_alert("Table not found!"); // TODO replace with lang
+                        break;
+                }
+                die();
+            }
+
+            $this->load->view("templates/footer");
+
+
+        }
+    }
+
+
+    // Most nem ezt használjuk, hanem lekérjük szépen php-val
+
+    /**
+     * gets compatible nice names (API)
+     * @param $from_table
+     * @throws Exception
+     */
+    public function get_compatible_tables($from_table){
+        require_permission($from_table."_table_view");
+        json_output($this->Database_model->get_compatible_tables($from_table, Account_model::$user_id));
+    }
+
 }
