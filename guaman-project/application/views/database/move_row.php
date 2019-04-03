@@ -1,14 +1,19 @@
 <form class="container" method="post">
-    <label>Sor áthelyezése ebbe a táblába:</label>
-    <select name="to_table">
-        <option value="cucc1_table">cucc1</option>
-        <option value="cucc2_table">cucc1</option>
-        <option value="cucc3_table">cucc1</option>
-        <option value="cucc4_table">cucc1</option>
-        <option value="cucc5_table">cucc1</option>
-        <option value="cucc6_table">cucc1</option>
-        <option value="cucc7_table">cucc1</option>
+    <h2>Áthelyezés</h2>    <!-- TODO language fájlba átrakni -->
+
+    <p>Forrás tábla: <?php /** @var string $from_table_title */ echo $from_table_title; ?></p>
+    <label><?php /** @var int $id */ echo $id; ?>. sor áthelyezése ebbe a táblába:</label>    <!-- TODO language fájlba átrakni -->
+
+    <select name="to_table" class="form-control d-inline-block" style="width: auto">
+        <?php
+
+        /** @var array $compatible_tables */
+        foreach ($compatible_tables as $key => $compatible_table) {
+            echo "<option value='$key'>" . htmlspecialchars($compatible_table, ENT_QUOTES) . "</option>";
+        }
+
+        ?>
     </select>
-    <input value="Áthelyezés" type="submit" class="btn btn-primary">
+    <input value="Áthelyezés" type="submit" class="btn btn-primary mt-2 d-block">
     <!-- TODO language fájlba átrakni -->
 </form>

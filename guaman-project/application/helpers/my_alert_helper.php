@@ -19,6 +19,16 @@ function js_alert($text = "", $redirect_url = "")
 
 
 }
+function js_alert_close_tab($text = "")
+{
+    die("<script>
+	alert('" . $text . "');
+    window.close();
+
+</script>");
+
+
+}
 
 function json_error($message){
     $output = array("error" => $message);
