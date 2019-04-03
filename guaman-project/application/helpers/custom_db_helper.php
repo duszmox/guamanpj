@@ -13,62 +13,62 @@ function custom_db_actions($table_name, $result_array, $column_names)
         $result_array_[$key]['legutobb_updatelve'] = date('m/d/Y h:i:s a', time());
 
 
-        if($result_array_[$key]['kiker_netto']){
-            $result_array_[$key]['kiker_netto'] = number_format($result_array_[$key]['kiker_netto'],2,".", " ");
+        if(isset($result_array_[$key]['kiker_netto'])){
+            $result_array_[$key]['kiker_netto'] = number_format((float)$result_array_[$key]['kiker_netto'],2,".", " ");
         }
-        if($result_array_[$key]['beker_netto']){
-            $result_array_[$key]['beker_netto'] = number_format($result_array_[$key]['beker_netto'],2,".", " ");
+        if(isset($result_array_[$key]['beker_netto'])){
+            $result_array_[$key]['beker_netto'] = number_format((float)$result_array_[$key]['beker_netto'],2,".", " ");
         }
-        if($result_array_[$key]['eladasi_ar']){
-            $result_array_[$key]['eladasi_ar'] = number_format($result_array_[$key]['eladasi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['eladasi_ar'])){
+            $result_array_[$key]['eladasi_ar'] = number_format((float)$result_array_[$key]['eladasi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['bekerulo_ar']){
-            $result_array_[$key]['bekerulo_ar'] = number_format($result_array_[$key]['bekerulo_ar'],2,".", " ");
+        if(isset($result_array_[$key]['bekerulo_ar'])){
+            $result_array_[$key]['bekerulo_ar'] = number_format((float)$result_array_[$key]['bekerulo_ar'],2,".", " ");
         }
-        if($result_array_[$key]['beszerzesi_ar']){
-            $result_array_[$key]['beszerzesi_ar'] = number_format($result_array_[$key]['beszerzesi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['beszerzesi_ar'])){
+            $result_array_[$key]['beszerzesi_ar'] = number_format((float)$result_array_[$key]['beszerzesi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['tervezett_eladasi_ar']){
-            $result_array_[$key]['tervezett_eladasi_ar'] = number_format($result_array_[$key]['tervezett_eladasi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['tervezett_eladasi_ar'])){
+            $result_array_[$key]['tervezett_eladasi_ar'] = number_format((float)$result_array_[$key]['tervezett_eladasi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['eladasi_ar']){
-            $result_array_[$key]['eladasi_ar'] = number_format($result_array_[$key]['eladasi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['eladasi_ar'])){
+            $result_array_[$key]['eladasi_ar'] = number_format((float)$result_array_[$key]['eladasi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['beszer_ar']){
-            $result_array_[$key]['beszer_ar'] = number_format($result_array_[$key]['beszer_ar'],2,".", " ");
+        if(isset($result_array_[$key]['beszer_ar'])){
+            $result_array_[$key]['beszer_ar'] = number_format((float)$result_array_[$key]['beszer_ar'],2,".", " ");
         }
-        if($result_array_[$key]['netto_eladasi_ar']){
-            $result_array_[$key]['netto_eladasi_ar'] = number_format($result_array_[$key]['netto_eladasi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['netto_eladasi_ar'])){
+            $result_array_[$key]['netto_eladasi_ar'] = number_format((float)$result_array_[$key]['netto_eladasi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['brutto_eladasi_ar']){
-            $result_array_[$key]['brutto_eladasi_ar'] = number_format($result_array_[$key]['brutto_eladasi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['brutto_eladasi_ar'])){
+            $result_array_[$key]['brutto_eladasi_ar'] = number_format((float)$result_array_[$key]['brutto_eladasi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['eladasi_ar']){
-            $result_array_[$key]['eladasi_ar'] = number_format($result_array_[$key]['eladasi_ar'],2,".", " ");
+        if(isset($result_array_[$key]['eladasi_ar'])){
+            $result_array_[$key]['eladasi_ar'] = number_format((float)$result_array_[$key]['eladasi_ar'],2,".", " ");
         }
-        if($result_array_[$key]['indulo_ar']){
-            $result_array_[$key]['indulo_ar'] = number_format($result_array_[$key]['indulo_ar'],2,".", " ");
+        if(isset($result_array_[$key]['indulo_ar'])){
+            $result_array_[$key]['indulo_ar'] = number_format((float)$result_array_[$key]['indulo_ar'],2,".", " ");
         }
-        if($result_array_[$key]['vegso_ar']){
-            $result_array_[$key]['vegso_ar'] = number_format($result_array_[$key]['vegso_ar'],2,".", " ");
+        if(isset($result_array_[$key]['vegso_ar'])){
+            $result_array_[$key]['vegso_ar'] = number_format((float)$result_array_[$key]['vegso_ar'],2,".", " ");
         }
-        if($result_array_[$key]['kozepar']){
-            $result_array_[$key]['kozepar'] = number_format($result_array_[$key]['kozepar'],2,".", " ");
+        if(isset($result_array_[$key]['kozepar'])){
+            $result_array_[$key]['kozepar'] = number_format((float)$result_array_[$key]['kozepar'],2,".", " ");
         }
-        if($result_array_[$key]['celar']){
-            $result_array_[$key]['celar'] = number_format($result_array_[$key]['celar'],2,".", " ");
+        if(isset($result_array_[$key]['celar'])){
+            $result_array_[$key]['celar'] = number_format((float)$result_array_[$key]['celar'],2,".", " ");
         }
-        if($result_array_[$key]['mennyi_max']){
-            $result_array_[$key]['mennyi_max'] = number_format($result_array_[$key]['mennyi_max'],2,".", " ");
+        if(isset($result_array_[$key]['mennyi_max'])){
+            $result_array_[$key]['mennyi_max'] = number_format((float)$result_array_[$key]['mennyi_max'],2,".", " ");
         }
-        if($result_array_[$key]['netto_beszer_ar']){
-            $result_array_[$key]['netto_beszer_ar'] = number_format($result_array_[$key]['netto_beszer_ar'],2,".", " ");
+        if(isset($result_array_[$key]['netto_beszer_ar'])){
+            $result_array_[$key]['netto_beszer_ar'] = number_format((float)$result_array_[$key]['netto_beszer_ar'],2,".", " ");
         }
-        if($result_array_[$key]['alkatresz_koltseg']){
-            $result_array_[$key]['alkatresz_koltseg'] = number_format($result_array_[$key]['alkatresz_koltseg'],2,".", " ");
+        if(isset($result_array_[$key]['alkatresz_koltseg'])){
+            $result_array_[$key]['alkatresz_koltseg'] = number_format((float)$result_array_[$key]['alkatresz_koltseg'],2,".", " ");
         }
-        if($result_array_[$key]['profit']){
-            $result_array_[$key]['profit'] = number_format($result_array_[$key]['profit'],2,".", " ");
+        if(isset($result_array_[$key]['profit'])){
+            $result_array_[$key]['profit'] = number_format((float)$result_array_[$key]['profit'],2,".", " ");
         }
 
 
