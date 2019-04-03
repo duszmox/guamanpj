@@ -48,7 +48,6 @@ class Database extends CI_Controller
             echo "<script>alert(\"Doesnt work yet\");</script>";
         }
     }
-
     function create_table()
     {
         require_permission("edit_tables");
@@ -199,7 +198,7 @@ class Database extends CI_Controller
      * @param $table_name
      * @param $row
      */
-    public function move_row($table_name, $row){
+    public function move_row($table_name){
         require_permission($table_name . "_table_edit");
 
         // TODO befejezni form kiíratása, compatible_tables már nice_namemel átadása neki
@@ -209,6 +208,14 @@ class Database extends CI_Controller
         }
         else{
             // load views and pass data
+            $this->load->view("templates/header");
+            $this->load->view("templates/menu");
+            $compatible_tables =
+            $this->load->view("database/move_row", array());
+
+            $this->load->view("templates/footer");
+
+
         }
     }
 

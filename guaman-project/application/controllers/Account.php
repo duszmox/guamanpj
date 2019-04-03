@@ -155,7 +155,6 @@ class Account extends CI_Controller
         $this->load->view("templates/header", array("title" => lang("settings_title")));
 
         $this->load->view("templates/menu");
-        //todo András átadni neki az összes profile nevet
         $this->load->view("account/my_menu", array("page_active" => "settings"));
 
         $this->load->view("account/my_settings");

@@ -79,6 +79,7 @@ class Database_model extends CI_Model
 		if (!in_array($table, $this->get_table_names())) die(":(");
 		if (!in_array($order_by, $this->get_columns_by_table($table))) $order_by = "id";
 		if (!in_array(strtoupper($order), array("ASC", "DESC"))) $order = "ASC";
+
 		$this->db->select($columns);
 		$this->db->order_by($order_by, $order);
 
