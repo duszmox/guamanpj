@@ -254,7 +254,7 @@ class Database extends CI_Controller
      */
     public function get_compatible_tables($from_table){
         require_permission($from_table."_table_view");
-        json_output($this->Database_model->get_compatible_tables($from_table, Account_model::$user_id));
+        json_output($this->Database_model->get_compatible_tables($from_table));
     }
 
 }
