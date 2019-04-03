@@ -89,3 +89,8 @@ $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Give admin rank to : ";
 $lang["remove_admin_label"] = "Remove admin rank from : ";
 $lang["day"] = "day";
+
+$lang['table_not_found_message'] = "Table not found!";
+$lang['invalid_id_message'] = "Invalid ID!";
+$lang['failed_move_row_message'] = "Failed to move the row!";
+$lang['successful_move_row_message'] = "Successful to move the row!";

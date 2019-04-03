@@ -90,3 +90,9 @@ $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Admin jog adása felhasználónak : ";
 $lang["remove_admin_label"] = "Admin jog eltávolítása ennek a felhasználónak: ";
 $lang["day"] = "nap";
+
+
+$lang['table_not_found_message'] = "Nem található a tábla!";
+$lang['invalid_id_message'] = "Érvénytelen id!";
+$lang['failed_move_row_message'] = "Sikertelen áthelyezés!";
+$lang['successful_move_row_message'] = "Sikeres áthelyezés!";

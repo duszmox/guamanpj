@@ -179,15 +179,15 @@ class Database extends CI_Controller
             require_permission($from_table . "_table_edit");
             require_permission($this->input->post("to_table") . "_table_edit");
 
-            if(!Validator::is_numeric($from_id)) js_alert("Invalid id!"); // TODO replace with lang
+            if(!Validator::is_numeric($from_id)) js_alert(lang('invalid_id_message'));
 
 
             try {
                 if($this->Database_model->move($from_table, $this->input->post("to_table"), $from_id)){
-                    js_alert_close_tab("Sikeres áthelyezés!"); // TODO Lang fájl
+                    js_alert_close_tab(lang('successful_move_row_message'));
                 }
                 else{
-                    js_alert_close_tab("Sikertelen áthelyezés!"); // TODO lang fájl
+                    js_alert_close_tab(lang('failed_move_row_message'));
                 }
             }
             catch (Exception $exception){
@@ -207,7 +207,7 @@ class Database extends CI_Controller
         else{
             require_permission($from_table . "_table_edit");
 
-            if(!Validator::is_numeric($from_id)) js_alert("Invalid id!"); // TODO replace with lang
+            if(!Validator::is_numeric($from_id)) js_alert(lang('invalid_id_message'));
             try {
                 $compatible_tables_ = $this->Database_model->get_compatible_tables($from_table);
                 $compatible_tables = array();
@@ -217,7 +217,7 @@ class Database extends CI_Controller
             } catch (Exception $e) {
                 switch ($e->getMessage()){
                     case "table_not_found_exception":
-                        js_alert("Table not found!"); // TODO replace with lang
+                        js_alert(lang('table_not_found_message'));
                         break;
                 }
                 die();
@@ -232,7 +232,7 @@ class Database extends CI_Controller
             } catch (Exception $e) {
                 switch ($e->getMessage()){
                     case "table_not_found_exception":
-                        js_alert("Table not found!"); // TODO replace with lang
+                        js_alert(lang("table_not_found_message"));
                         break;
                 }
                 die();
