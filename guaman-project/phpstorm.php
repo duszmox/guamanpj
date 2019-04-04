@@ -86,10 +86,11 @@ die('This file is used for development purposes only.');
  * @property Boleto                                 $boleto                              Boleto Class
  * @property Permissions_model                      Permissions_model
  * @property Account_model                          Account_model
+ * @property Database_model                         Database_model                       Database Model
  */
 class CI_Controller
 {
-	public function __construct()
+    public function __construct()
 	{
 	}
 }
