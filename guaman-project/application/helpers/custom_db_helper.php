@@ -154,26 +154,13 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 }
             }
             break;
-        case "guaman_forgalom":
-            foreach ($result_array_ as $key => $row) {
-                if (is_numeric((float)$result_array_[$key]['eladasi_ar']) && is_numeric((float)$result_array_[$key]['beszerzesi_ar'])) {
 
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] -
-                            (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2), 2, ".", " ");
-                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) -
-                        (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2), 2, ".", " ");
-                    if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4)) * 100 . " %";
-                    };
-                }
-            }
-            break;
         case "guaman_hasznaltsales":
             foreach ($result_array_ as $key => $row) {
-                if (is_numeric((float)$result_array_[$key]['beszer_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
+                if (is_numeric((float)$result_array_[$key]['beszerzesi_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
 
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszer_ar']) * 0.2126, 2), 2, ".", " ");
-                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszer_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
+                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) * 0.2126, 2), 2, ".", " ");
+                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
                     $result_array_[$key]['netto_eladasi_ar'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2), 2, ".", " ");
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
@@ -183,11 +170,11 @@ function custom_db_actions($table_name, $result_array, $column_names)
             break;
         case "guaman_partnersales":
             foreach ($result_array_ as $key => $row) {
-                if (is_numeric((float)$result_array_[$key]['netto_beszer_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
+                if (is_numeric((float)$result_array_[$key]['beszerzesi_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
 
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['netto_beszer_ar']) * 0.2126, 2), 2, ".", " ");
+                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) * 0.2126, 2), 2, ".", " ");
                     $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar']
-                            - (float)$result_array_[$key]['netto_beszer_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
+                            - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
                     $result_array_[$key]['netto_eladasi_ar'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2), 2, ".", " ");
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
