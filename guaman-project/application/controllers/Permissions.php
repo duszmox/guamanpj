@@ -58,7 +58,4 @@ class Permissions extends CI_Controller
 
         echo has_permission($this->input->post("permission_name")) ? "true" : "false";
     }
-    public function give_admin($user){
-        $this->db->insert("");
-    }
 }

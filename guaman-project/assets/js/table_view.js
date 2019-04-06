@@ -15,6 +15,9 @@ function loadTable(table_name) {
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
         $.post(base_url + "permissions/has_permission/", {permission_name: table_name + "_table_edit"}, function (canEdit) {
             canEdit = canEdit == "true";
+            if(table_name === "guaman_forgalom"){
+                canEdit = false;
+            }
 
             console.log(canEdit);
             columns = [];
@@ -66,6 +69,9 @@ function loadTable(table_name) {
                         type_of_input = "text";
                     }
 
+                    if(data[i][columns[k]] === undefined){
+                        data[i][columns[k]] = "";
+                    }
 
                     html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>" +
                         (canEdit ? ("<input type=" + type_of_input + " class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
