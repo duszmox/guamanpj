@@ -96,3 +96,10 @@ $lang['table_not_found_message'] = "Nem található a tábla!";
 $lang['invalid_id_message'] = "Érvénytelen id!";
 $lang['failed_move_row_message'] = "Sikertelen áthelyezés!";
 $lang['successful_move_row_message'] = "Sikeres áthelyezés!";
+
+
+$lang['reload_page_button_title'] = "Frissítés";
+$lang['add_row_button_title'] = "Új sor hozzáadása";
+$lang['move_row_title'] = "Áthelyezés";
+$lang['actions_button_title'] = "Műveletek";
+$lang['move_row_full_label'] = "sor áthelyezése ebbe a táblába:";

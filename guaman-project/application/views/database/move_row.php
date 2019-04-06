@@ -1,8 +1,8 @@
 <form class="container" method="post">
-    <h2>Áthelyezés</h2>    <!-- TODO language fájlba átrakni -->
+    <h2><?php echo lang("move_row_title");?></h2>
 
     <p>Forrás tábla: <?php /** @var string $from_table_title */ echo $from_table_title; ?></p>
-    <label><?php /** @var int $id */ echo $id; ?>. sor áthelyezése ebbe a táblába:</label>    <!-- TODO language fájlba átrakni -->
+    <label><?php /** @var int $id */ echo $id; echo ". ".lang("move_row_full_label");?></label>
 
     <select name="to_table" class="form-control d-inline-block" style="width: auto">
         <?php
@@ -14,6 +14,6 @@
 
         ?>
     </select>
-    <input value="Áthelyezés" type="submit" class="btn btn-primary mt-2 d-block">
-    <!-- TODO language fájlba átrakni -->
+    <input value="<?php echo lang("move_row_title");?>" type="submit" class="btn btn-primary mt-2 d-block">
+
 </form>

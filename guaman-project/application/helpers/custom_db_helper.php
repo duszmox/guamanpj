@@ -165,6 +165,12 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
                     };
+
+                    $date1 = $result_array_[$key]['beszer_datum'];
+                    $date2 = $result_array_[$key]['eladas_datum'];
+
+                    $diff = abs(strtotime($date2) - strtotime($date1));
+                    $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
                 }
             }
             break;
@@ -179,6 +185,12 @@ function custom_db_actions($table_name, $result_array, $column_names)
                     if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
                     };
+
+                    $date1 = $result_array_[$key]['beszer_datum'];
+                    $date2 = $result_array_[$key]['eladas_datum'];
+
+                    $diff = abs(strtotime($date2) - strtotime($date1));
+                    $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
                 }
             }
             break;

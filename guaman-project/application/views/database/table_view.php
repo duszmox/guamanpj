@@ -45,7 +45,7 @@
 		}
 	};
 
-	var lang = {"reload_page_button": "Frissítés", "new_row_button": "Új sor hozzáadás", "move_row_button": "Áthelyezés", "actions": "Parancsok"}; // TODO lang fájlba átrakás
+	var lang = {"reload_page_button": "<?php echo lang("reload_page_button_title");?>", "new_row_button": "<?php echo lang("add_row_button_title");?>", "move_row_button": "<?php echo lang("move_row_title");?>", "actions": "<?php echo lang("actions_button_title");?>"};
 
 	var base_url = "<?php echo base_url(); ?>";
 

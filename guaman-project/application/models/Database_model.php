@@ -79,14 +79,7 @@ class Database_model extends CI_Model
         if (!in_array($table, $this->get_table_names())) die(":(");
         if (!in_array($order_by, $this->get_columns_by_table($table))) $order_by = "id";
         if (!in_array(strtoupper($order), array("ASC", "DESC"))) $order = "ASC";
-        /*if($table = "guaman_forgalom"){
-            $this->db->select('*');
-            $this->db->from('guaman_forgalom');
-            $this->db->join('guaman_hasznaltsales', 'guaman_forgalom.id = guaman_hasznaltsales.id');
-            $this->db->join('guaman_partnersales', 'guaman_forgalom.id = guaman_partnersales.id');
-            $query = $this->db->get()->result_array();
-            return $query; // todo Ambrus , Andris vagyok. Sry nemt udtam megcsinálni. Én így gondoltam.
-        }*/
+
         $this->db->select($columns);
         $this->db->order_by($order_by, $order);
 

@@ -19,7 +19,7 @@ $lang["used_username_message"] = "This username has already taken!";
 $lang["used_email_message"] = "This email address has already registered!";
 $lang["successful_registration_message"] = "Successful registration!";
 $lang["registration_title"] = "Registration";
-$lang["language_label"] = "Choose a language";
+$lang["language_label"] = "Choose a language : ";
 $lang["logout_label"] = "Log out";
 $lang["username_placeholder"] = "Username";
 $lang["password_placeholder"] = "Password";
@@ -94,3 +94,10 @@ $lang['table_not_found_message'] = "Table not found!";
 $lang['invalid_id_message'] = "Invalid ID!";
 $lang['failed_move_row_message'] = "Failed to move the row!";
 $lang['successful_move_row_message'] = "Successful to move the row!";
+
+
+$lang['reload_page_button_title'] = "Refresh";
+$lang['add_row_button_title'] = "Add new row";
+$lang['move_row_title'] = "Move";
+$lang['actions_button_title'] = "Actions";
+$lang['move_row_full_label'] = "row move to:";
