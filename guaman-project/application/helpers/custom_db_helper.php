@@ -6,7 +6,52 @@
  * Time: 9:44 PM
  */
 
+function get_month($date){
 
+    return substr($date, -5, 2);
+}
+function datetostr($date){
+    switch ($date){
+        case "01":
+            $str = "january";
+            break;
+        case "02":
+            $str = "february";
+            break;
+        case "03":
+            $str = "march";
+            break;
+        case "04":
+            $str = "april";
+            break;
+        case "05":
+            $str = "may";
+            break;
+        case "06":
+            $str = "june";
+            break;
+        case "07":
+            $str = "july";
+            break;
+        case "08":
+            $str = "august";
+            break;
+        case "09":
+            $str = "september";
+            break;
+        case "10":
+            $str = "oktober";
+            break;
+        case "11":
+            $str = "november";
+            break;
+        case "12":
+            $str = "december";
+            break;
+
+    }
+    return $str;
+}
 function custom_db_actions($table_name, $result_array, $column_names)
 {
 
@@ -229,6 +274,21 @@ function custom_db_actions($table_name, $result_array, $column_names)
 
             }
             break;
+        case "guaman_disztribuciosreport":
+            $array = array();
+            $CI =& get_instance();
+
+            $dh = $CI->Database_model->get_table("*", "guaman_disztribucioshasznalt", "id", "ASC");
+
+            foreach($dh as $key => $value){
+                $array[] = get_month($dh[$key]["kiszallitas_datum"]);
+            }
+            foreach ($result_array_ as $key => $row) {
+
+                $result_array_[$key]['%_a'] = isset($array[$key]) ? $array[$key] : "";
+            }
+            break;
+
     }
 
     if ($table_name == "guaman_forgalom") {
@@ -247,15 +307,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
             $result_array_[] = $partner_sale;
         }
 
-        /*
-        for ($i = 0; $i < sizeof($result_array_); $i++) {
-            foreach ($result_array_[$i] as $key => $value) {
-                if ($value === null) {
-                    $result_array_[$i][$key] = "";
-                }
-            }
-        }
-        */
+
     }
 
 
