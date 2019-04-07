@@ -60,8 +60,6 @@ function custom_db_actions($table_name, $result_array, $column_names)
 {
     $result_array_ = $result_array;
     foreach ($result_array_ as $key => $row) {
-        //$result_array_[$key]['legutobb_updatelve'] = date('m/d/Y h:i:s a', time());
-
 
         if (isset($row['kiker_netto'])) {
             $result_array_[$key]['kiker_netto'] = number_format((float)$result_array_[$key]['kiker_netto'], 2, ".", " ");
@@ -130,16 +128,14 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 }
                 break;
             /*case "guaman_keszlet":
-                foreach ($result_array_ as $key => $row) {
-                    if (is_numeric((float)$result_array_[$key]['eladasi_ar']) && is_numeric((float)$result_array_[$key]['beszerzesi_ar'])) {
-                        $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2), 2, ".", " ");
-                        $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] -
-                                (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2), 2,".", " ");
-                        if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                            $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4))*100 . " %";
-                        }
-                    };
-                }
+                if (is_numeric((float)$result_array_[$key]['eladasi_ar']) && is_numeric((float)$result_array_[$key]['beszerzesi_ar'])) {
+                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2), 2, ".", " ");
+                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] -
+                            (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2), 2,".", " ");
+                    if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
+                        $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4))*100 . " %";
+                    }
+                };
                 break;*/
             case "guaman_telefon":
                 if (is_numeric((float)$result_array_[$key]['kiker_netto']) && is_numeric((float)$result_array_[$key]['beker_netto'])) {
