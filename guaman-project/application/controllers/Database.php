@@ -33,6 +33,9 @@ class Database extends CI_Controller
         $this->load->view("templates/footer");
     }
 
+    // TODO ANDRISNAK Folder & Table létrehozás
+
+
     function create_folder()
     {
         require_permission("edit_folders");
