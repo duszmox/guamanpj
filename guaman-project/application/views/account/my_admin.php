@@ -8,9 +8,10 @@
                     <select name="username">
                         <?php
 
-                        foreach ($users as $key => $value) {
+                        foreach ($users_not_admin as $key => $value) {
+
                             $active = $key == '0' ? "selected" : "";
-                            echo "<option selected='" . $active . "' value=" . $value['username'] . ">" . $value['username'] . "</option>\n";
+                            echo "<option selected='" . $active . "' value=" . $value . ">" . $value . "</option>\n";
                         }
 
                         ?>
@@ -28,9 +29,9 @@
                     <select name="username">
                         <?php
 
-                        foreach ($users as $key => $value) {
+                        foreach ($users_admin as $key => $value) {
                             $active = $key == '0' ? "selected" : "";
-                            echo "<option selected='" . $active . "' value=" . $value['username'] . ">" . $value['username'] . "</option>\n";
+                            echo "<option selected='" . $active . "' value=" . $value . ">" . $value. "</option>\n";
                         }
 
                         ?>
@@ -42,8 +43,7 @@
         </tr>
         <tr>
             <td>
-                <?php
-                ?>
+                <a href="<?php echo base_url("account/give_permissions")?>"><?php echo lang("give_permissions_title")?> <i class="fas fa-external-link-alt"></i></a>
             </td>
         </tr>
     </table>

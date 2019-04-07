@@ -207,10 +207,31 @@ class Account extends CI_Controller
 
         $this->load->view("templates/menu");
         $users = $this->Account_model->get_users("username");
-        $this->load->view("account/my_menu", array("page_active" => "admin", "users" => $users));
+        $users_admin = array();
+        $users_not_admin = array();
+        foreach($users as $key => $value){
+            if($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")){
+                $users_admin[] = $value['username'];
+            }else{
+                $users_not_admin[] = $value['username'];
+            }
+        }
+        $this->load->view("account/my_menu", array("page_active" => "admin", "users_admin" => $users_admin, "users_not_admin" => $users_not_admin));
         $permissions_names = $this->Permissions_model->get_permissions_nice_name();
         $this->load->view("account/my_admin", array("permissions_name" => $permissions_names));
 
+        $this->load->view("templates/footer");
+    }
+    function give_permissions(){
+        require_permission("admin");
+        $this->load->view("templates/header", array("title" => lang("give_permissions_title")));
+//todo feltölteni a változtatásokat, és leellenőrizni hogy egyáltalán van e.
+        $this->load->view("templates/menu");
+        $user_permission = $this->Permissions_model->get_user_permission(Account_model::$user_id);
+        $permission_nice_name = $this->Permissions_model->get_permissions_nice_name();
+        $permission_name = $this->Permissions_model->get_permissions_name();
+
+        $this->load->view("account/give_permissions_view", array("user_permission" => $user_permission, "permission_name" => $permission_name, "permission_nice_name" => $permission_nice_name));
         $this->load->view("templates/footer");
     }
 }

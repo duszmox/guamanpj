@@ -101,3 +101,6 @@ $lang['add_row_button_title'] = "Add new row";
 $lang['move_row_title'] = "Move";
 $lang['actions_button_title'] = "Actions";
 $lang['move_row_full_label'] = "row move to:";
+
+
+$lang['give_permissions_title'] = "Give permissions to users";

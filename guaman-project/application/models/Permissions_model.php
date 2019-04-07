@@ -79,6 +79,22 @@ class Permissions_model extends CI_Model
         }
         return $result_array;
     }
+    public function get_user_permission($user_id){
+        $this->db->select("permission_name");
+        $this->db->where("user_id", $user_id);
+        $query = $this->db->get(self::$TABLE_NAME);
+        $array = $query->result_array();
+        $result_array = array();
+
+
+        foreach ($array as $table) {
+            $result_array[] = $table;
+
+        }
+        return $result_array;
+    }
+
+
 
 	/**
      * Permissions:

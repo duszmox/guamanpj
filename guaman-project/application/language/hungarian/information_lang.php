@@ -103,3 +103,6 @@ $lang['add_row_button_title'] = "Új sor hozzáadása";
 $lang['move_row_title'] = "Áthelyezés";
 $lang['actions_button_title'] = "Műveletek";
 $lang['move_row_full_label'] = "sor áthelyezése ebbe a táblába:";
+
+
+$lang['give_permissions_title'] = "Jogok adása felhasználóknak";
