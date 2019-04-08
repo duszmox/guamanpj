@@ -235,7 +235,7 @@ class Account extends CI_Controller
         $active_user = "";
         $users = array();
         $users_raw = $this->Account_model->get_users('username');
-        foreach($users_raw as $key => $value){
+        foreach ($users_raw as $key => $value) {
             $users[] = $users_raw[$key]['username'];
         }
 
@@ -245,22 +245,23 @@ class Account extends CI_Controller
             $permission_name = $this->Permissions_model->get_permissions_name();
             $active_user = $this->input->post("username");
         }
-        foreach ($this->input->post() as $key => $value) {
+        if ($this->input->post('submit_permissions') == "OK") {
+            foreach ($this->input->post() as $key => $value) {
 
-                if (!($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key)) && ($this->input->post('username') != $key)) {
+                if (!($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key)) && ($this->input->post('username') !== $value)) {
                     $this->Permissions_model->add_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key);
                 }
             }
-        foreach ($user_permission as $key => $value){
-            if(!in_array($value, $this->input->post())){
-                //todo befejezni
-                $this->Permissions_model->remove_permission($this->Account_model->get_id_by_username($this->input->post('username')), $value['permission_name']);
+            foreach ($user_permission as $key => $value) {
+                if (!in_array($value, $this->input->post())) {
+                    //todo befejezni
+                    $this->Permissions_model->remove_permission($this->Account_model->get_id_by_username($this->input->post('username')), $value['permission_name']);
+                }
             }
         }
 
 
-
-        $this->load->view("account/give_permissions_view", array("active_user" => $active_user,"user_permission" => $user_permission, "users" => $users_raw, "permission_name" => $permission_name, "permission_nice_name" => $permission_nice_name));
+        $this->load->view("account/give_permissions_view", array("active_user" => $active_user, "user_permission" => $user_permission, "users" => $users_raw, "permission_name" => $permission_name, "permission_nice_name" => $permission_nice_name));
         $this->load->view("templates/footer");
     }
 }

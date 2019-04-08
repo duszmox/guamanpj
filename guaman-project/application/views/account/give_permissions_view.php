@@ -18,7 +18,7 @@
             <input type="submit" value="OK">
         </form>
         <form method="post">
-                <br><input type="submit" value="OK">
+                <br><input type="submit" name="submit_permissions" value="OK">
                 <?php
                 if(isset($permission_name) && isset($permission_nice_name) && isset($user_permission)) {
                     foreach ($permission_name as $key => $value) {
@@ -35,6 +35,7 @@
                 ?>
             <input class="invisible" name="username" value="<?php echo $active_user;?>">
 
+            <input class="invisible" name="done" value="<?php echo $active_user;?>">
 
         </form>
     </table>
