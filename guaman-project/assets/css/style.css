@@ -19,3 +19,9 @@
     display:block;
 }
 
+  input:checked + label {
+      color: red;
+  }
+
+
+

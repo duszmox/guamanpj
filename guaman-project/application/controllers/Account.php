@@ -209,10 +209,10 @@ class Account extends CI_Controller
         $users = $this->Account_model->get_users("username");
         $users_admin = array();
         $users_not_admin = array();
-        foreach($users as $key => $value){
-            if($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")){
+        foreach ($users as $key => $value) {
+            if ($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")) {
                 $users_admin[] = $value['username'];
-            }else{
+            } else {
                 $users_not_admin[] = $value['username'];
             }
         }
@@ -222,16 +222,45 @@ class Account extends CI_Controller
 
         $this->load->view("templates/footer");
     }
-    function give_permissions(){
+
+    function give_permissions()
+    {
         require_permission("admin");
         $this->load->view("templates/header", array("title" => lang("give_permissions_title")));
-//todo feltölteni a változtatásokat, és leellenőrizni hogy egyáltalán van e.
+//todo Változtatások kezelése összevetni a users-el
         $this->load->view("templates/menu");
-        $user_permission = $this->Permissions_model->get_user_permission(Account_model::$user_id);
-        $permission_nice_name = $this->Permissions_model->get_permissions_nice_name();
-        $permission_name = $this->Permissions_model->get_permissions_name();
+        $user_permission = array();
+        $permission_name = array();
+        $permission_nice_name = array();
+        $active_user = "";
+        $users = array();
+        $users_raw = $this->Account_model->get_users('username');
+        foreach($users_raw as $key => $value){
+            $users[] = $users_raw[$key]['username'];
+        }
 
-        $this->load->view("account/give_permissions_view", array("user_permission" => $user_permission, "permission_name" => $permission_name, "permission_nice_name" => $permission_nice_name));
+        if (in_array($this->input->post("username"), $users)) {
+            $user_permission = $this->Permissions_model->get_user_permission($this->Account_model->get_id_by_username($this->input->post("username")));
+            $permission_nice_name = $this->Permissions_model->get_permissions_nice_name();
+            $permission_name = $this->Permissions_model->get_permissions_name();
+            $active_user = $this->input->post("username");
+        }
+        foreach ($this->input->post() as $key => $value) {
+
+                if (!($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key)) && ($this->input->post('username') != $key)) {
+                    $this->Permissions_model->add_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key);
+                }
+            }
+        foreach ($user_permission as $key => $value){
+            if(!in_array($value, $this->input->post())){
+                //todo befejezni
+                $this->Permissions_model->remove_permission($this->Account_model->get_id_by_username($this->input->post('username')), $value['permission_name']);
+            }
+        }
+
+
+
+        $this->load->view("account/give_permissions_view", array("active_user" => $active_user,"user_permission" => $user_permission, "users" => $users_raw, "permission_name" => $permission_name, "permission_nice_name" => $permission_nice_name));
         $this->load->view("templates/footer");
     }
 }

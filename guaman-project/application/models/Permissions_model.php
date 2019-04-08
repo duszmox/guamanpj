@@ -93,6 +93,19 @@ class Permissions_model extends CI_Model
         }
         return $result_array;
     }
+    function get_id_by_permission($permission)
+    {
+        $this->db->select("id");
+        $this->db->where("permission_name", $permission);
+        $this->db->limit(1);
+        $row = $this->db->get(self::$PERMISSIONS_TABLE_NAME)->row();
+        if ($row != NULL) { // todo biztosan jó e?
+            return $row->id;
+        }
+        else {
+            return NULL;
+        }
+    }
 
 
 

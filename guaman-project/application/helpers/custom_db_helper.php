@@ -51,6 +51,8 @@ function datetostr($date)
         case "12":
             $str = "december";
             break;
+        default:
+            $str = "unknown";
 
     }
     return $str;

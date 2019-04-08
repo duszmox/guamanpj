@@ -106,3 +106,4 @@ $lang['move_row_full_label'] = "sor áthelyezése ebbe a táblába:";
 
 
 $lang['give_permissions_title'] = "Jogok adása felhasználóknak";
+$lang['username_label'] = "Felhasználó : ";
