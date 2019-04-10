@@ -31,7 +31,7 @@ class Account extends CI_Controller
 
         if (!$username || !$password) {
             // Load login form
-            $this->load->view("templates/header", array(lang("login_title")));
+            $this->load->view("templates/header", array("title" => lang("login_title")));
             $this->load->view("account/login-form");
             $this->load->view("templates/footer");
         } else {
@@ -103,19 +103,15 @@ class Account extends CI_Controller
             if ($this->Account_model->get_user_field("password_hash", Account_model::$user_id) !== Validator::encrypt($this->input->post("current_password"))) {
                 //print_r($_POST);
                 js_alert(lang("invalid_current_password"), base_url("account/change_password"));
-                die;
             } else if ($this->input->post("new_password") !== $this->input->post("new_password_again")) {
                 js_alert(lang("again_password_not_matching"), base_url("account/change_password"));
-                die;
             } else if (!Validator::is_alphanumeric($this->input->post("new_password"))) {
                 js_alert(lang("invalid_new_password"));
-                die;
             } else {
                 $this->Account_model->set_user_field("password_hash", Account_model::$user_id, Validator::encrypt($this->input->post("new_password")));
                 js_alert(lang("successful_password_changing"), base_url("account/login"));
             }
         } else {
-            require_status(Statuses::$LOGGED_IN);
             $this->load->view("templates/header", array("title" => lang("change_password_title")));
             $this->load->view("templates/menu");
             $this->load->view("account/change_password_view");
@@ -223,51 +219,66 @@ class Account extends CI_Controller
         $this->load->view("templates/footer");
     }
 
-    function give_permissions()
-    {
+    /**
+     * Loads the permission form with the all possible permission
+     */
+    function edit_permissions(){
         require_permission("admin");
-        $this->load->view("templates/header", array("title" => lang("give_permissions_title")));
 
-        //todo Változtatások kezelése összevetni a users-el
+        $this->load->view("templates/header", array("title" => "Jogok szerkesztése" )); // TODO lang
         $this->load->view("templates/menu");
-        $user_permission = array();
-        $permission_name = array();
-        $permission_nice_name = array();
-        $active_user = "";
-        $users = array();
-        $users_raw = $this->Account_model->get_users('username');
-        foreach ($users_raw as $key => $value) {
-            $users[] = $users_raw[$key]['username'];
+        $this->load->view("account/edit_permissions", array("users" => $this->Account_model->get_users("username, id")));
+        $this->load->view("templates/footer");
+    }
+
+    /**
+     * @param int $user_id
+     * @throws Exception
+     */
+    function get_permissions($user_id = null){
+        require_permission("admin");
+
+        if(!Validator::is_numeric($user_id)) json_error("Invalid user_id!"); // Todo lang
+        $permissions = $this->Permissions_model->get_permissions();
+
+        foreach ($permissions as $key => $permission){
+            $permissions[$key]["has_permission"] = $this->Permissions_model->has_permission($user_id, $permission["permission_name"]);
         }
 
-        if (in_array($this->input->post("username"), $users)) {
-            $user_permission = $this->Permissions_model->get_user_permission($this->Account_model->get_id_by_username($this->input->post("username")));
-            $permission_nice_name = $this->Permissions_model->get_permissions_nice_name();
-            $permission_name = $this->Permissions_model->get_permissions_name();
-            $active_user = $this->input->post("username");
-        }
-        $data = array();
-        foreach($_POST as $key => $value){
-            $data[$key] = $this->input->post($key);
+        json_output($permissions);
+    }
+
+    /**
+     * Adds or removes the specific permissions
+     */
+    function save_permissions($user_id = null){
+        require_permission("admin");
+
+        if(!Validator::is_numeric($user_id)) json_error("Invalid user_id!"); // Todo lang
+
+        $permission_names = $this->Permissions_model->get_permission_names();
+
+        $in_permissions = $this->input->post("permissions");
+
+        foreach ($in_permissions as $in_permission){
+            if(!in_array($in_permission["name"], $permission_names)) json_error("Invalid permission name"); // TODO LANG
         }
 
-        if ($this->input->post('submit_permissions') == "OK") {
-            foreach ($data as $key => $value) {
-                if(null !== $this->input->post($key)){
-                if (!($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key)) && ($this->input->post('username') !== $value) && ($this->input->post('done') !== $value)) {
-                    $this->Permissions_model->add_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key);
-                }}
-            }
-            foreach ($user_permission as $key => $value) {
-                if (!in_array($value, $data)) {
-                    //todo befejezni
-                    $this->Permissions_model->remove_permission($this->Account_model->get_id_by_username($this->input->post('username')), $value['permission_name']);
+
+        try {
+            $this->Permissions_model->remove_permissions($user_id);
+        } catch (Exception $e) {
+            json_error($e->getMessage());
+        }
+
+        foreach ($in_permissions as $in_permission){
+            if($in_permission["value"] === "on") {
+                try {
+                    $this->Permissions_model->add_permission($user_id, $in_permission["name"]);
+                } catch (Exception $e) {
+                    json_error($e->getMessage());
                 }
             }
         }
-
-
-        $this->load->view("account/give_permissions_view", array("active_user" => $active_user, "user_permission" => $user_permission, "users" => $users_raw, "permission_name" => $permission_name, "permission_nice_name" => $permission_nice_name));
-        $this->load->view("templates/footer");
     }
 }

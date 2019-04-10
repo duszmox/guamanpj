@@ -26,13 +26,17 @@ if (!isset($title)) {
 	<script src="<?php echo js_url("jquery.dataTables.min.js"); ?>"></script>
 	<script src="<?php echo js_url("dataTables.bootstrap4.min.js"); ?>"></script>
 	<script src="<?php echo js_url("jsLists.min.js"); ?>"></script>
-
-	<link rel="icon" href="<?php echo img_url("logo.png") ?>" type="image/x-icon"/>
-	<link rel="shortcut icon" href="<?php echo img_url("logo.png") ?>" type="image/x-icon"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/js/i18n/defaults-hu_HU.min.js"></script>
 
 
-	<link rel="apple-touch-icon" sizes="180x180"
+    <link rel="icon" href="<?php echo img_url("logo.png") ?>" type="image/x-icon"/>
+    <link rel="shortcut icon" href="<?php echo img_url("logo.png") ?>" type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.7/dist/css/bootstrap-select.min.css">
+    <link rel="apple-touch-icon" sizes="180x180"
 		  href="https://guamanpj.com/guaman-project/favicon/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32"
 		  href="https://guamanpj.com/guaman-project/favicon/favicon-32x32.png">

@@ -30,8 +30,9 @@ class Validator
         return (filter_var($email, FILTER_VALIDATE_EMAIL));
     }
 
-    public static function is_numeric($id)
+    public static function is_numeric($input)
     {
-        return is_numeric($id);
+
+        return is_numeric($input) && !is_null($input);
     }
 }

@@ -19,6 +19,7 @@ function js_alert($text = "", $redirect_url = "")
 
 
 }
+
 function js_alert_close_tab($text = "")
 {
     die("<script>
@@ -26,17 +27,16 @@ function js_alert_close_tab($text = "")
     window.close();
 
 </script>");
-
-
 }
 
-function json_error($message){
+function json_error($message)
+{
     $output = array("error" => $message);
     json_output($output);
 }
 
-function json_output($data){
-    $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode($data));
+function json_output($data)
+{
+    header('Content-Type: application/json');
+    die (json_encode($data));
 }

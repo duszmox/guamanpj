@@ -4,6 +4,7 @@
  * User: Fazekas RoboTeam
  * Date: 3/16/2019
  * Time: 8:00 PM
+ * @property Database_model Database_model
  */
 
 class Permissions_model extends CI_Model
@@ -21,6 +22,8 @@ class Permissions_model extends CI_Model
 	{
 		if (!Validator::is_numeric($user_id)) throw new Exception("invalid_field: user_id");
 		if (!Validator::is_alphanumeric($permission_name)) throw new Exception("invalid_field: permission_type");
+		if(!in_array($permission_name, $this->get_permission_names())) throw new Exception("invalid permission type");
+
 		$this->db->insert(self::$TABLE_NAME, array("user_id" => $user_id, "permission_name" => $permission_name));
 	}
 
@@ -53,6 +56,16 @@ class Permissions_model extends CI_Model
 
 		$this->db->delete(self::$TABLE_NAME, array("user_id" => $user_id, "permission_name" => $permission_name));
 	}
+
+    /**
+     * @param $user_id
+     * @throws Exception
+     */
+    public function remove_permissions($user_id){
+        if (!Validator::is_numeric($user_id)) throw new Exception("invalid_field: user_id");
+        $this->db->delete(self::$TABLE_NAME, array("user_id" => $user_id));
+    }
+
 	public function get_permissions_name(){
 	    $this->db->select("permission_name");
         $query = $this->db->get(self::$PERMISSIONS_TABLE_NAME);
@@ -107,6 +120,52 @@ class Permissions_model extends CI_Model
         }
     }
 
+    function get_permissions(){
+	    $permissions = array();
+
+	    // Edit/view tables:
+        $this->load->model("Database_model");
+        foreach ($this->Database_model->get_table_names() as $table_name    ){
+            $permissions[] = array(
+                "permission_name" => $table_name . "_table_edit",
+                "permission_nice_name" => htmlspecialchars($this->Database_model->get_table_title($table_name) . " tábla szerkesztése", ENT_QUOTES) // TODO lang
+            );
+
+            $permissions[] = array(
+                "permission_name" => $table_name . "_table_view",
+                "permission_nice_name" => htmlspecialchars($this->Database_model->get_table_title($table_name) . " tábla megtekintése", ENT_QUOTES) // TODO lang
+            );
+        }
+
+        $permissions[] = array(
+            "permission_name" => "edit_folders",
+            "permission_nice_name" => htmlspecialchars("Mappák szerkesztése", ENT_QUOTES) // TODO lang
+        );
+
+        $permissions[] = array(
+            "permission_name" => "edit_tables",
+            "permission_nice_name" => htmlspecialchars("Táblák struktúrájának szerkesztése", ENT_QUOTES) // TODO lang
+        );
+
+        $permissions[] = array(
+            "permission_name" => "admin",
+            "permission_nice_name" => htmlspecialchars("Admin", ENT_QUOTES) // TODO lang
+        );
+
+        return $permissions;
+    }
+
+    /**
+     * @return array
+     */
+    function get_permission_names (){
+	    $permissions = $this->get_permissions();
+	    $permission_names = array();
+	    foreach ($permissions as $permission){
+	        $permission_names[] = $permission["permission_name"];
+        }
+	    return $permission_names;
+    }
 
 
 	/**
