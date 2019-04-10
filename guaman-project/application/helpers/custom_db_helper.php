@@ -281,6 +281,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 break;
 
             case "guaman_forgalom":
+                // TODO befejezni
                 $result_array_ = array();
 
                 $CI =& get_instance();
@@ -295,6 +296,8 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 foreach ($partner_sales as $partner_sale) {
                     $result_array_[] = $partner_sale;
                 }
+
+                return $result_array_;
                 break;
 
         }
