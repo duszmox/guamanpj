@@ -246,15 +246,20 @@ class Account extends CI_Controller
             $permission_name = $this->Permissions_model->get_permissions_name();
             $active_user = $this->input->post("username");
         }
-        if ($this->input->post('submit_permissions') == "OK") {
-            foreach ($this->input->post() as $key => $value) {
+        $data = array();
+        foreach($_POST as $key => $value){
+            $data[$key] = $this->input->post($key);
+        }
 
-                if (!($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key)) && ($this->input->post('username') !== $value)) {
+        if ($this->input->post('submit_permissions') == "OK") {
+            foreach ($data as $key => $value) {
+                if(null !== $this->input->post($key)){
+                if (!($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key)) && ($this->input->post('username') !== $value) && ($this->input->post('done') !== $value)) {
                     $this->Permissions_model->add_permission($this->Account_model->get_id_by_username($this->input->post('username')), $key);
-                }
+                }}
             }
             foreach ($user_permission as $key => $value) {
-                if (!in_array($value, $this->input->post())) {
+                if (!in_array($value, $data)) {
                     //todo befejezni
                     $this->Permissions_model->remove_permission($this->Account_model->get_id_by_username($this->input->post('username')), $value['permission_name']);
                 }
