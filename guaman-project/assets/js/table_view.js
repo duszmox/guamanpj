@@ -14,23 +14,26 @@ $(document).ready(function () {
 function loadTable(table_name) {
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
         $.post(base_url + "permissions/has_permission/", {permission_name: table_name + "_table_edit"}, function (canEdit) {
-            canEdit = canEdit == "true";
-            if(table_name === "guaman_forgalom"){
+            canEdit = canEdit === "true";
+            if (table_name === "guaman_forgalom") {
                 canEdit = false;
             }
 
             console.log(canEdit);
-            columns = [];
-            column_nice_names = [];
+            let columns = [];
+            let column_nice_names = [];
+            let col_types = [];
+
 
             Object.keys(data[0]).forEach(function (k) {
                 columns.push(k);
-                column_nice_names.push(data[0][k]);
+                column_nice_names.push(data[0][k].nice_name);
+                col_types.push(data[0][k].type);
             });
 
             $("#data-table").dataTable().remove();
             $("#table-container").html("");
-            html = "";
+            let html = "";
             html += "<h2>" + get_nice_table_name(table_name) + "</h2>";
 
 
@@ -47,38 +50,76 @@ function loadTable(table_name) {
 
             // Display table headers
             html += "<thead><tr><tr>";
-            for (var i = 0; i < column_nice_names.length; i++) {
+            for (let i = 0; i < column_nice_names.length; i++) {
                 html += "<th>" + column_nice_names[i] + "</th>";
             }
             if (canEdit) {
                 html += "<th>" + lang.actions + "</th>";
             }
             html += "</tr></tr></thead>";
-            var type_of_input = "";
 
             html += "<tbody>";
-            for (var i = 1; i < data.length; i++) {
+            for (let i = 1; i < data.length; i++) {
                 html += "<tr>";
-                console.log(data[i]);
-
-                for (var k = 0; k < columns.length; k++) {
-
-                    if (columns[k].indexOf("datum") !== -1) {
-                        type_of_input = "date";
-                    } else {
-                        type_of_input = "text";
-                    }
-
-                    if(data[i][columns[k]] === undefined){
+                for (let k = 0; k < columns.length; k++) {
+                    if (data[i][columns[k]] === undefined) {
                         data[i][columns[k]] = "";
                     }
 
 
+                    html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>";
 
-                    html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>" +
-                        (canEdit ? ("<input type=" + type_of_input + " class='form-control data-cell' value='" + data[i][columns[k]] + "'>") : ("<span>" + data[i][columns[k]] + "</span>")) +
-                        "<span hidden>" + data[i][columns[k]] + "</span>" +
-                        "</td>";
+                    let cell_body = "";
+                    switch (col_types[k]) {
+                        case "text":
+                            if (canEdit) {
+                                cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
+                                cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
+                            } else {
+                                cell_body = "<span>" + data[i][columns[k]] + "</span>";
+                            }
+                            break;
+                        case "date":
+                            if (canEdit) {
+                                cell_body = "<input type=\"date\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
+                                cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
+                            } else {
+                                cell_body = "<span>" + data[i][columns[k]] + "</span>";
+                            }
+                            break;
+                        case "money":
+                            let cell_value = data[i][columns[k]];
+                            if (isNumeric(cell_value)) {
+                                cell_value = numberWithSpaces(cell_value);
+
+
+                            } else {
+                                cell_value = "0";
+                                data[i][columns[k]] = "0";
+                            }
+
+                            if (canEdit) {
+                                // language=HTML
+                                cell_body = "<input type=\"text\" pattern=\'[0-9]|\\s\' value=\'" + cell_value + "\' class=\'form-control\'/>";
+                                cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
+
+                            } else {
+                                cell_body += "<span>" + cell_value + "</span>";
+                                cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
+                            }
+                            break;
+                        default:
+                            if (canEdit) {
+                                cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
+                                cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
+                            } else {
+                                cell_body = "<span>" + data[i][columns[k]] + "</span>";
+                            }
+                    }
+
+                    html += cell_body;
+
+                    html += "</td>";
                 }
 
                 if (canEdit) {
@@ -88,7 +129,6 @@ function loadTable(table_name) {
             }
             html += "</tbody></table>";
 
-            console.log(html);
             $("#table-container").html(html);
             setTimeout(function () {
                 $("#data-table").DataTable({
@@ -100,10 +140,25 @@ function loadTable(table_name) {
                 $("#data-table-column").css("visibility", "visible");
             }, 1);
 
-
             $(".data-cell-container").focusout(function () {
-                newValue = $(this).children().eq(0).val();
-                update_table_field(table_name, $(this).data("column"), $(this).data("id"), newValue);
+                let newValue = $(this).children().eq(0).val();
+                let column = $(this).data("column");
+
+                let col_id;
+                for (let b = 0; b < columns.length; b++) {
+                    if (columns[b] === column) {
+                        col_id = b;
+                        break;
+                    }
+                }
+
+                switch (col_types[col_id]) {
+                    case "money":
+                        newValue = newValue.toLowerCase();
+                        newValue = newValue.replace(/\s/g, '');
+                        newValue = newValue.replace("/ft/g", ""); // TODO (?) global currency
+                }
+                update_table_field(table_name, column, $(this).data("id"), newValue);
             });
 
         })
@@ -115,7 +170,7 @@ function loadTable(table_name) {
             })
     });
 
-};
+}
 
 /**
  *
@@ -136,7 +191,7 @@ function update_table_field(table_name, column, id, newValue) {
 }
 
 function get_nice_table_name(table_name) {
-    for (var i = 0; i < tables.length; i++) {
+    for (let i = 0; i < tables.length; i++) {
         if (tables[i].table_name === table_name) return tables[i].table_title;
     }
     return "";
@@ -177,7 +232,7 @@ function tree(current_folder_id, level) {
 
 
     // Ha a current_folder egy table-nek a parentje:
-    for (var a = 0; a < tables.length; a++) {
+    for (let a = 0; a < tables.length; a++) {
         if (current_folder_id === tables[a].parent_folder) {
             output += '<li onclick="loadTable(\'' + tables[a].table_name + '\')"><i class="fa fa-file-text-o" aria-hidden="true"></i> <i class=\'fas fa-database\'></i> ' + tables[a].table_title + "</li>";
         }
@@ -202,4 +257,14 @@ function insertRow(table_name) {
     }).always(function () {
         loadTable(table_name);
     });
+}
+
+function numberWithSpaces(number) {
+    let parts = number.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    return parts.join(".");
+}
+
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
 }

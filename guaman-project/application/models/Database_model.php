@@ -99,6 +99,17 @@ class Database_model extends CI_Model
         return $column_names;
     }
 
+    public function get_col_types($table_id, $column_names)
+    {
+        $types = array();
+
+        foreach ($column_names as $column_name) {
+            $result_array = $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" => $table_id, "column_name" => $column_name), 1)->result_array();
+            $types[] = $result_array[0]["type"];
+        }
+        return $types;
+    }
+
     public function get_nice_column_names_by_table($table_name)
     {
         $columns = $this->get_columns_by_table($table_name);
@@ -107,6 +118,11 @@ class Database_model extends CI_Model
             $nice_column_names[] = $this->get_nice_column_name($this->get_table_id($table_name), $column_name);
         }
         return $nice_column_names;
+    }
+
+    public function get_column_types($table, $col)
+    {
+
     }
 
     public function get_table_id($table_name)
