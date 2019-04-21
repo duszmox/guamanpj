@@ -281,6 +281,15 @@
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             <?php echo lang("profile_label"); ?>
                         </a>
+                        <?php
+                            if($condition){
+                                echo "<a class=\"dropdown-item\" href=\"".base_url("account/admin")."\">
+                            <i class=\"fas fa-at fa-sm fa-fw mr-2 text-gray-400\"></i>
+                            ".lang("admin_label")."
+                        </a>";
+                            }
+                        ?>
+
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?php echo base_url("account/logout") ?>">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

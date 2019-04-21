@@ -31,7 +31,7 @@ class Account extends CI_Controller
 
         if (!$username || !$password) {
             // Load login form
-            $this->load->view("templates/header", array("title" => lang("login_title")));
+            $this->load->view("templates/header", array(lang("login_title")));
             $this->load->view("account/login-form");
             $this->load->view("templates/footer");
         } else {
@@ -41,6 +41,7 @@ class Account extends CI_Controller
                 js_alert(lang("enter_valid_data_message"), base_url("account/login"));
             }
             if ($this->Account_model->login_user($username, Validator::encrypt($password))) {
+                $this->Account_model->login_log($username);
                 js_alert(lang("successful_login_message"), base_url("language/hungarian"));
             } else {
                 js_alert(lang("wrong_login_message"), base_url("account/login"));
@@ -50,12 +51,13 @@ class Account extends CI_Controller
 
     }
 
+
     /**
      * Register page
      */
     function register()
     {
-        if (!$this->config->item("allow_registration")) redirect(base_url("account/login"));
+        if (!$this->config->item("allow_registration") && (require_permission("admin"))) redirect(base_url("account/login"));
 
         if ($this->input->post("username") &&
             ($this->input->post("password") &&
@@ -103,15 +105,19 @@ class Account extends CI_Controller
             if ($this->Account_model->get_user_field("password_hash", Account_model::$user_id) !== Validator::encrypt($this->input->post("current_password"))) {
                 //print_r($_POST);
                 js_alert(lang("invalid_current_password"), base_url("account/change_password"));
+                die;
             } else if ($this->input->post("new_password") !== $this->input->post("new_password_again")) {
                 js_alert(lang("again_password_not_matching"), base_url("account/change_password"));
+                die;
             } else if (!Validator::is_alphanumeric($this->input->post("new_password"))) {
                 js_alert(lang("invalid_new_password"));
+                die;
             } else {
                 $this->Account_model->set_user_field("password_hash", Account_model::$user_id, Validator::encrypt($this->input->post("new_password")));
                 js_alert(lang("successful_password_changing"), base_url("account/login"));
             }
         } else {
+            require_status(Statuses::$LOGGED_IN);
             $this->load->view("templates/header", array("title" => lang("change_password_title")));
             $this->load->view("templates/menu");
             $this->load->view("account/change_password_view");
@@ -188,16 +194,7 @@ class Account extends CI_Controller
         $username = $this->input->post("username");
         $user_id = $this->Account_model->get_id_by_username($username);
 
-        if ($this->input->post("username") && $this->input->post("submit_add")) {
-            if (!$this->Permissions_model->has_permission($user_id, "admin")) {
-                $this->Permissions_model->add_permission($user_id, "admin");
-            }
-        }
-        if ($this->input->post("username") && $this->input->post("submit_remove")) {
-            if ($this->Permissions_model->has_permission($user_id, "admin")) {
-                $this->Permissions_model->remove_permission($user_id, "admin");
-            }
-        }
+
 
         $this->load->view("templates/header", array("title" => lang("admin_title")));
 
@@ -205,15 +202,16 @@ class Account extends CI_Controller
         $users = $this->Account_model->get_users("username");
         $users_admin = array();
         $users_not_admin = array();
-        foreach ($users as $key => $value) {
-            if ($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")) {
+        foreach($users as $key => $value){
+            if($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")){
                 $users_admin[] = $value['username'];
-            } else {
+            }else{
                 $users_not_admin[] = $value['username'];
             }
         }
-        $this->load->view("account/my_menu", array("page_active" => "admin", "users_admin" => $users_admin, "users_not_admin" => $users_not_admin));
+        $this->load->view("account/my_menu", array("page_active" => "admin"));
         $permissions_names = $this->Permissions_model->get_permissions_nice_name();
+
         $this->load->view("account/my_admin", array("permissions_name" => $permissions_names));
 
         $this->load->view("templates/footer");
@@ -281,4 +279,10 @@ class Account extends CI_Controller
             }
         }
     }
+    function delete_user($userid){
+        $this->Account_model->delete_user($userid);
+        redirect(base_url("account/admin"));
+    }
+
+
 }

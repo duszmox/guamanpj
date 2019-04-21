@@ -73,6 +73,7 @@ class Database extends CI_Controller
     function get_table($table_name, $order_by = "id", $order = "ASC")
     {
         require_permission($table_name . "_table_view");
+        require_status(Statuses::$LOGGED_IN);
 
         $rows = $this->Database_model->get_table("*", $table_name, $order_by, $order);
         $output = array();
@@ -257,6 +258,9 @@ class Database extends CI_Controller
     {
         require_permission($from_table . "_table_view");
         json_output($this->Database_model->get_compatible_tables($from_table));
+    }
+    public function change(){
+        $this->Database_model->change();
     }
 
 }

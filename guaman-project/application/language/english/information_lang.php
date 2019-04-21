@@ -103,5 +103,6 @@ $lang['actions_button_title'] = "Actions";
 $lang['move_row_full_label'] = "row move to:";
 
 
-$lang['give_permissions_title'] = "Give permissions to users";
+$lang['edit_permissions_title'] = "Give permissions to users";
 $lang['username_label'] = "Username : ";
+$lang['admin_label'] = "Admin";

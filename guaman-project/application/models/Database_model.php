@@ -318,4 +318,21 @@ class Database_model extends CI_Model
         $query = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name), 1);
         return $query->first_row()->table_title;
     }
+    public function change(){
+        $this->db->select("*");
+        $query = $this->db->get("guaman_table_columns")->result_array();
+        foreach ($query as $key => $value){
+
+            if(strpos($value['column_name'], 'datum')){
+                $this->db->update("guaman_table_columns", array("type" => "date"), array("column_name" => $value['column_name']));
+            }
+            if((strpos($value['nice_column_name'], 'ár')) || (strpos($value['nice_column_name'], 'Ár'))){
+                if(strpos($value['nice_column_name'], 'Város'))
+                echo $value['column_name']."->ar";
+                echo "<br>";
+            }
+
+        }
+
+    }
 }
