@@ -13,7 +13,21 @@
 	<div class="col-sm-4">
 		<div class="card">
 			<div class="card-header">
-				<h2><?php echo lang("tables_label"); ?></h2>
+				<h2 class="d-inline"><?php echo lang("tables_label"); ?></h2>
+                <?php $tables_button = "Hide"; ?>
+
+                <form method="post" class="d-inline"  name="hide_show">
+                    <input type="button" value="<?php echo $tables_button;?>" class="d-inline btn btn-primary" style="margin-bottom: 10px; float: right;">
+                </form>
+                <?php
+                if($_POST) {
+
+                    $tables_button = "Show";
+                    echo $tables_button;
+                }
+                ?>
+
+
 			</div>
 			<div class="card-body" id="table-list-container">
 				...

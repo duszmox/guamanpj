@@ -76,6 +76,7 @@ $lang["phone_number_label"] = "Telefonszám: ";
 $lang["change_password_button"] = "Jelszó megváltoztatása";
 $lang["public"] = "Publikus";
 $lang["tables_label"] = "Adatok: ";
+$lang["tables_button"] = "Gomb";
 $lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";
 $lang["table_body_placeholder"] = "A táblázat...";
 
