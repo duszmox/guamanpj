@@ -58,68 +58,11 @@ function datetostr($date)
     return $str;
 }
 
-function custom_db_actions($table_name, $result_array, $column_names)
+function custom_db_actions($table_name, $result_array, $column_names, $columns)
 {
     $result_array_ = $result_array;
     foreach ($result_array_ as $key => $row) {
 
-        if (isset($row['kiker_netto'])) {
-            $result_array_[$key]['kiker_netto'] = number_format((float)$result_array_[$key]['kiker_netto'], 2, ".", " ");
-        }
-        if (isset($row['beker_netto'])) {
-            $result_array_[$key]['beker_netto'] = number_format((float)$result_array_[$key]['beker_netto'], 2, ".", " ");
-        }
-        if (isset($row['eladasi_ar'])) {
-            $result_array_[$key]['eladasi_ar'] = number_format((float)$result_array_[$key]['eladasi_ar'], 2, ".", " ");
-        }
-        if (isset($row['bekerulo_ar'])) {
-            $result_array_[$key]['bekerulo_ar'] = number_format((float)$result_array_[$key]['bekerulo_ar'], 2, ".", " ");
-        }
-        if (isset($row['beszerzesi_ar'])) {
-            $result_array_[$key]['beszerzesi_ar'] = number_format((float)$result_array_[$key]['beszerzesi_ar'], 2, ".", " ");
-        }
-        if (isset($row['tervezett_eladasi_ar'])) {
-            $result_array_[$key]['tervezett_eladasi_ar'] = number_format((float)$result_array_[$key]['tervezett_eladasi_ar'], 2, ".", " ");
-        }
-        if (isset($row['eladasi_ar'])) {
-            $result_array_[$key]['eladasi_ar'] = number_format((float)$result_array_[$key]['eladasi_ar'], 2, ".", " ");
-        }
-        if (isset($row['beszer_ar'])) {
-            $result_array_[$key]['beszer_ar'] = number_format((float)$result_array_[$key]['beszer_ar'], 2, ".", " ");
-        }
-        if (isset($row['netto_eladasi_ar'])) {
-            $result_array_[$key]['netto_eladasi_ar'] = number_format((float)$result_array_[$key]['netto_eladasi_ar'], 2, ".", " ");
-        }
-        if (isset($row['brutto_eladasi_ar'])) {
-            $result_array_[$key]['brutto_eladasi_ar'] = number_format((float)$result_array_[$key]['brutto_eladasi_ar'], 2, ".", " ");
-        }
-        if (isset($row['eladasi_ar'])) {
-            $result_array_[$key]['eladasi_ar'] = number_format((float)$result_array_[$key]['eladasi_ar'], 2, ".", " ");
-        }
-        if (isset($row['indulo_ar'])) {
-            $result_array_[$key]['indulo_ar'] = number_format((float)$result_array_[$key]['indulo_ar'], 2, ".", " ");
-        }
-        if (isset($row['vegso_ar'])) {
-            $result_array_[$key]['vegso_ar'] = number_format((float)$result_array_[$key]['vegso_ar'], 2, ".", " ");
-        }
-        if (isset($row['kozepar'])) {
-            $result_array_[$key]['kozepar'] = number_format((float)$result_array_[$key]['kozepar'], 2, ".", " ");
-        }
-        if (isset($row['celar'])) {
-            $result_array_[$key]['celar'] = number_format((float)$result_array_[$key]['celar'], 2, ".", " ");
-        }
-        if (isset($row['mennyi_max'])) {
-            $result_array_[$key]['mennyi_max'] = number_format((float)$result_array_[$key]['mennyi_max'], 2, ".", " ");
-        }
-        if (isset($row['netto_beszer_ar'])) {
-            $result_array_[$key]['netto_beszer_ar'] = number_format((float)$result_array_[$key]['netto_beszer_ar'], 2, ".", " ");
-        }
-        if (isset($row['alkatresz_koltseg'])) {
-            $result_array_[$key]['alkatresz_koltseg'] = number_format((float)$result_array_[$key]['alkatresz_koltseg'], 2, ".", " ");
-        }
-        if (isset($row['profit'])) {
-            $result_array_[$key]['profit'] = number_format((float)$result_array_[$key]['profit'], 2, ".", " ");
-        }
 
         switch ($table_name) {
 
@@ -177,18 +120,17 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 }
                 break;
             case "guaman_keszlet":
-                try {
+
                     if (is_numeric((float)$result_array_[$key]['eladasi_ar']) && is_numeric((float)$result_array_[$key]['beszerzesi_ar'])) {
 
                         $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2), 2, ".", " ");
                         $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2), 2, ".", " ");
-                        if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                            $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4)) * 100 . " %";
-                        };
+                        if (((float)$result_array_[$key]['eladasi_ar'] != 0) and (float)$result_array_[$key]['netto_profit'] != 0) {
+
+                            $result_array_[$key]['%'] = ((round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4)) * 100) . " %";
+                        }
                     }
-                }
-                catch (Exception $exception){
-                }
+
                 break;
 
             case "guaman_hasznaltsales":
@@ -283,6 +225,13 @@ function custom_db_actions($table_name, $result_array, $column_names)
 
                 $result_array_[$key]["szemelyes_atvetel"] = $szemelyesAtvetelCount;
                 $result_array_[$key]["futar"] = $futarCount;
+                if (isset($szemelyesAtvetelCount) && isset($futarCount)) {
+                    if(($szemelyesAtvetelCount + $futarCount) != 0){
+                    $result_array_[$key]["%_a"] = round($szemelyesAtvetelCount / ($szemelyesAtvetelCount + $futarCount)*100,2) . " %" ;
+                    $result_array_[$key]["%_b"] = round($futarCount / ($szemelyesAtvetelCount + $futarCount)*100, 2) . " %";
+                    }
+                }
+
                 break;
 
             case "guaman_forgalom":
@@ -307,7 +256,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                 $CI =& get_instance();
                 $result_array_ = array();
 
-                $keszlet = $CI->Database_model->get_table("*", "guaman_keszlet","id", "ASC");
+                $keszlet = $CI->Database_model->get_table("*", "guaman_keszlet", "id", "ASC");
 
                 for ($current_month = 1; $current_month <= 12; $current_month++) {
                     $i = $current_month - 1;
@@ -345,7 +294,7 @@ function custom_db_actions($table_name, $result_array, $column_names)
                         $result_array_[$i]["facebook_marketplace_db"];
 
                     // 0-val nem osztunk még 0-t sem!
-                    if($sum == 0){
+                    if ($sum == 0) {
                         $sum = 1;
                     }
 

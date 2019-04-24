@@ -86,7 +86,8 @@ class Database_model extends CI_Model
         $resultArray = $this->db->get($table)->result_array();
 
         $this->load->helper("custom_db_helper");
-        return custom_db_actions($table, $resultArray, $this->get_columns_by_table($table));
+        return custom_db_actions($table, $resultArray, $this->get_columns_by_table($table), $columns);
+        //todo Andris
     }
 
     public function get_columns_by_table($table_name)
@@ -318,18 +319,33 @@ class Database_model extends CI_Model
         $query = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name), 1);
         return $query->first_row()->table_title;
     }
-    public function change(){
+
+    public function change()
+    {
         $this->db->select("*");
         $query = $this->db->get("guaman_table_columns")->result_array();
-        foreach ($query as $key => $value){
+        foreach ($query as $key => $value) {
 
-            if(strpos($value['column_name'], 'datum')){
+            if (strpos($value['column_name'], 'datum') || $value['column_name'] == "datum") {
                 $this->db->update("guaman_table_columns", array("type" => "date"), array("column_name" => $value['column_name']));
+                true;
             }
-            if((strpos($value['nice_column_name'], 'ár')) || (strpos($value['nice_column_name'], 'Ár'))){
-                if(strpos($value['nice_column_name'], 'Város'))
-                echo $value['column_name']."->ar";
-                echo "<br>";
+            if ((strpos($value['nice_column_name'], 'ár')) || (strpos($value['nice_column_name'], 'Ár')) || ((strpos($value['nice_column_name'], 'Nettó')) || (strpos($value['nice_column_name'], 'Bruttó')))) {
+                if (!strpos($value['nice_column_name'], 'Város')) {
+                    if (!strpos($value['column_name'], 'nap')) {
+                        if (!strpos($value['column_name'], 'ros')) {
+                            if (!strpos($value['column_name'], 'tar')) {
+                                if ($value['column_name'] == "futar") continue;
+                                if ($value['column_name'] == "tarolas_helyszine") continue;
+                                if ($value['column_name'] == "tarolasi_helyszine") continue;
+                                if ($value['column_name'] == "tarhely") continue;
+                                echo $value['nice_column_name'] . " : " . $value['column_name'] . " -> " . $value['type'];
+                                $this->db->update("guaman_table_columns", array("type" => "money"), array("column_name" => $value['column_name']));
+                                echo "<br>";
+                            }
+                        }
+                    }
+                }
             }
 
         }

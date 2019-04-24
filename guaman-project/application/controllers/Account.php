@@ -57,7 +57,7 @@ class Account extends CI_Controller
      */
     function register()
     {
-        if (!$this->config->item("allow_registration") && (require_permission("admin"))) redirect(base_url("account/login"));
+        if (!$this->config->item("allow_registration") && (!has_permission("admin"))) redirect(base_url("account/login"));
 
         if ($this->input->post("username") &&
             ($this->input->post("password") &&
