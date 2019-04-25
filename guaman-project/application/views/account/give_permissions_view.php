@@ -1,6 +1,4 @@
-<?php
-//todo checkboxokkal kiíratni ami már megvan, és utánna formal , visszaküldeni
-?>
+
 <div class="px-4 py-4 bg-white shadow">
     <table>
         <form method="post">

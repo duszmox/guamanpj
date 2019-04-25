@@ -217,13 +217,11 @@ class Account extends CI_Controller
         $this->load->view("templates/footer");
     }
 
-    /**
-     * Loads the permission form with the all possible permission
-     */
-    function edit_permissions(){
+    function give_permissions()
+    {
         require_permission("admin");
-
-        $this->load->view("templates/header", array("title" => "Jogok szerkesztése" )); // TODO lang
+        $this->load->view("templates/header", array("title" => lang("give_permissions_title")));
+//todo Változtatások kezelése összevetni a users-el
         $this->load->view("templates/menu");
         $this->load->view("account/edit_permissions", array("users" => $this->Account_model->get_users("username, id")));
         $this->load->view("templates/footer");
@@ -236,7 +234,7 @@ class Account extends CI_Controller
     function get_permissions($user_id = null){
         require_permission("admin");
 
-        if(!Validator::is_numeric($user_id)) json_error("Invalid user_id!"); // Todo lang
+        if(!Validator::is_numeric($user_id)) json_error(lang("invalid_user_id_label"));
         $permissions = $this->Permissions_model->get_permissions();
 
         foreach ($permissions as $key => $permission){

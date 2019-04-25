@@ -11,6 +11,16 @@
                 <a href="<?php echo base_url("account/register")?>">REGISTER <i class="fas fa-external-link-alt"></i></a> <!--todo lang file-->
             </td>
         </tr>
+        <tr>
+            <td>
+                <a href="<?php echo base_url("account/create_table")?>"><?php echo lang("create_table_title")?> <i class="fas fa-external-link-alt"></i></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <a href="<?php echo base_url("account/create_folder")?>"><?php echo lang("create_folder_title")?> <i class="fas fa-external-link-alt"></i></a>
+            </td>
+        </tr>
     </table>
 </div>
 

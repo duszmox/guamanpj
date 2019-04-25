@@ -29,7 +29,7 @@ class Statistics extends CI_Controller
             }
         }
 
-        if(!sizeof($result_array))js_alert("Nincsen joga egyetlen a statisztikához sem.", base_url('database/'));//todo lang
+        if(!sizeof($result_array))js_alert("Nincsen joga egyetlen statisztikához sem.", base_url('database/'));//todo lang
 
         $this->load->view("templates/header", array("title" => "Statistics")); // todo lang
         $this->load->view("templates/menu");
@@ -69,4 +69,3 @@ class Statistics extends CI_Controller
 
 }
 
-?>
