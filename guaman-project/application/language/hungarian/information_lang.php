@@ -99,6 +99,7 @@ $lang['failed_move_row_message'] = "Sikertelen áthelyezés!";
 $lang['successful_move_row_message'] = "Sikeres áthelyezés!";
 
 
+
 $lang['reload_page_button_title'] = "Frissítés";
 $lang['add_row_button_title'] = "Új sor hozzáadása";
 $lang['move_row_title'] = "Áthelyezés";
