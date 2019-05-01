@@ -14,13 +14,17 @@
 		<div class="card">
 			<div class="card-header">
 				<h2 class="d-inline"><?php echo lang("tables_label"); ?></h2>
+
                <div class="hideshowbtn d-inline">
-                   <input class="btn btn-primary d-inline" style="margin-bottom: 10px; float: right;"  type="button" value="Hide" onclick="return change(this);" />
+                   <form class="d-inline" action="" method="post">
+                       <input name="zero" class="btn btn-primary d-inline" style="margin-bottom: 10px; float: right;"  type="button" value="Hide" onclick="return change(this); <?php echo "lol";?>" />
+                   </form>
                    <script>
                        function change( el )
                        {
                            if ( el.value === "<?php echo lang("tables_button_hide")?>" )
                                el.value = "<?php echo lang("tables_button_show")?>";
+
                            else
                                el.value = "<?php echo lang("tables_button_hide")?>";
                        }
