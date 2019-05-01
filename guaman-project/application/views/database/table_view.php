@@ -14,23 +14,25 @@
 		<div class="card">
 			<div class="card-header">
 				<h2 class="d-inline"><?php echo lang("tables_label"); ?></h2>
-                <?php $tables_button = "Hide"; ?>
+               <div class="hideshowbtn d-inline">
+                   <input class="btn btn-primary d-inline" style="margin-bottom: 10px; float: right;"  type="button" value="Hide" onclick="return change(this);" />
+                   <script>
+                       function change( el )
+                       {
+                           if ( el.value === "<?php echo lang("tables_button_hide")?>" )
+                               el.value = "<?php echo lang("tables_button_show")?>";
+                           else
+                               el.value = "<?php echo lang("tables_button_hide")?>";
+                       }
+                   </script>
 
-                <form method="post" class="d-inline"  name="hide_show">
-                    <input type="button" value="<?php echo $tables_button;?>" class="d-inline btn btn-primary" style="margin-bottom: 10px; float: right;">
-                </form>
-                <?php
-                if($_POST) {
-
-                    $tables_button = "Show";
-                    echo $tables_button;
-                }
-                ?>
+               </div>
 
 
 			</div>
 			<div class="card-body" id="table-list-container">
-				...
+				..
+                .
 			</div>
 		</div>
 	</div>
