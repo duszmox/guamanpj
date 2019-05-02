@@ -9,7 +9,10 @@
 
 </style>
 <body>
-Meleg vagy
+<div class="card">
+    <div class="card-body">
+This site is under construct! Please try again some hours later. Thank You    </div>
+</div>
 
 
 
