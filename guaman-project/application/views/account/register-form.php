@@ -18,6 +18,11 @@
                                     <input type="text" class="form-control form-control-user" name="username" id="exampleFirstName" placeholder="<?php echo lang("username_placeholder");?>">
                                 </div>
                             </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                    <input type="text" class="form-control form-control-user" name="nice_username" id="exampleFirstName" placeholder="<?php echo lang("nice_username_placeholder");?>">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <input type="email" class="form-control form-control-user" name="email" id="exampleInputEmail" placeholder="<?php echo lang("email_placeholder");?>">
                             </div>

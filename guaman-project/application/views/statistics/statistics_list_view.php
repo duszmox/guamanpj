@@ -1,14 +1,15 @@
 <div class="container bg-white shadow">
     <h2>
-        Statistics <!--todo lang-->
+        <?php lang("statistics_title") ?>
         <?php
-            if(has_permission("admin")){
-                echo "<a href='".base_url("statistics/add")."'>Add Statistics</a>";//todo lang
+        if (has_permission("admin")) {
+            echo "<a href='" . base_url("statistics/add") . "'> " . lang("add_statistics") . " </a>";
+
             }
         ?>
     </h2>
     <?php
-    //todo gyulus gui az adott array alapján $data
+    // todo gyulus gui az adott array alapján $data
     echo "<table class='table'>";
     foreach ($data as $key => $value) {
         echo "<thead><tr>\n";
@@ -35,8 +36,8 @@
     <?php
 
     foreach ($data as $key => $value) {
-        echo "$(\"#getStatistics".$value["id"]."\").on(\"click\", function(){
-        window.location.href = \"".base_url('statistics/view/'.$value["id"])."\";
+        echo "$(\"#getStatistics" . $value["id"] . "\").on(\"click\", function(){
+        window.location.href = \"" . base_url('statistics/view/' . $value["id"]) . "\";
     });";
     }
     ?>
