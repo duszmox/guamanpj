@@ -1,4 +1,4 @@
-<?php
+ <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -89,7 +89,7 @@ $autoload['drivers'] = array("session");
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array("asset_helper", "url", "validator_helper", "my_alert_helper", "status_helper", "permission_helper");
+$autoload['helper'] = array("asset_helper", "url", "validator_helper", "my_alert_helper", "status_helper", "permission_helper", "form");
 
 /*
  *
