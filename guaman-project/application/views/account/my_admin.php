@@ -8,7 +8,7 @@
         </tr>
         <tr>
             <td>
-                <a href="<?php echo base_url("account/register")?>">REGISTER <i class="fas fa-external-link-alt"></i></a> <!--todo lang file-->
+                <a href="<?php echo base_url("account/register")?>"><?php echo lang("create_table_register")?><i class="fas fa-external-link-alt"></i></a>
             </td>
         </tr>
         <tr>
