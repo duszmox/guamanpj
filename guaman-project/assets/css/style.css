@@ -26,5 +26,12 @@ input:checked + label {
     display:block;
 }
 
+.adds_statistics {
+   font-size: 20px;
+    padding-top: 20px;
 
+}
+.adds_statistics:hover {
+    font-size: 20px;
 
+}

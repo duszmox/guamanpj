@@ -1,9 +1,9 @@
 <div class="container bg-white shadow">
     <h2>
-        <?php lang("statistics_title") ?>
+        <?php echo lang("statistics_title") ?>
         <?php
         if (has_permission("admin")) {
-            echo "<a href='" . base_url("statistics/add") . "'> " . lang("add_statistics") . " </a>";
+            echo "<button class='adds_statistics btn btn-primary float-right' href='" . base_url("statistics/add") . "'> " . lang("add_statistics") . " </button>";
 
             }
         ?>
@@ -44,11 +44,12 @@
 </script>
 <style>
 
+
     <?php
 
     foreach ($data as $key => $value) {
         echo "#getStatistics".$value["id"].":hover{
-            background-color:red;
+            background-color:#F8F8F8;
         }";
     }
     ?>
