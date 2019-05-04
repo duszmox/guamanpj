@@ -78,7 +78,8 @@ $lang["public"] = "Publikus";
 $lang["tables_label"] = "Adatok: ";
 $lang["statistics_title"] = "Statistics";
 $lang['create_table_register'] = "REGISTER ";
-$lang['manage_permissions'] = "Jogok szerkesztése "
+$lang['manage_permissions'] = "Jogok szerkesztése ";
+$lang['add_statistics'] = "Add Statistics";
 
 $lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";
 $lang["table_body_placeholder"] = "A táblázat...";
