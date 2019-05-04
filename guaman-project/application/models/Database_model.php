@@ -123,7 +123,7 @@ class Database_model extends CI_Model
 
     public function get_column_types($table, $col)
     {
-
+//todo
     }
 
     public function get_table_id($table_name)
@@ -310,7 +310,20 @@ class Database_model extends CI_Model
 
         return $compatible_tables;
     }
+    public function get_id_by_table_name($table_name){
+            $this->db->select("id");
+            $result = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name))->result_array();
+            if(sizeof($result) > 0){return $result[0]['id'];};
+            return "false";
 
+    }
+    public function get_table_name_by_id($id){
+        $this->db->select("table_name");
+        $result = $this->db->get_where(self::$TABLE_NAME, array("id" => $id))->result_array();
+        if(sizeof($result) > 0){return $result[0]['table_name'];};
+        return "false";
+
+    }
     public function get_table_title($table_name)
     {
         if (!in_array($table_name, $this->get_table_names())) throw new Exception("table_not_found_exception");

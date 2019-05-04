@@ -35,4 +35,6 @@ class Validator
 
         return is_numeric($input) && !is_null($input);
     }
+
+
 }

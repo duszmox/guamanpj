@@ -13,162 +13,171 @@ $(document).ready(function () {
 
 function loadTable(table_name) {
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
-        $.post(base_url + "permissions/has_permission/", {permission_name: table_name + "_table_edit"}, function (canEdit) {
-            canEdit = canEdit === "true";
-            if (table_name === "guaman_forgalom") {
-                canEdit = false;
-            }
+            $.post(base_url + "permissions/has_permission/", {permission_name: table_name + "_table_edit"}, function (canEdit) {
 
-            console.log(canEdit);
-            let columns = [];
-            let column_nice_names = [];
-            let col_types = [];
-
-
-            Object.keys(data[0]).forEach(function (k) {
-                columns.push(k);
-                column_nice_names.push(data[0][k].nice_name);
-                col_types.push(data[0][k].type);
-            });
-
-            $("#data-table").dataTable().remove();
-            $("#table-container").html("");
-            let html = "";
-            html += "<h2>" + get_nice_table_name(table_name) + "</h2>";
-
-
-            // Load header buttons
-            html += "<div class=\'my-4\'>\n    ";
-            if (canEdit) {
-                html += "<button class=\'btn btn-primary\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
-            }
-            html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\")\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
-            html += "\n</div>";
-
-
-            html += "<table class=\"table table\" id=\"data-table\" >";
-
-            // Display table headers
-            html += "<thead><tr><tr>";
-            for (let i = 0; i < column_nice_names.length; i++) {
-                html += "<th>" + column_nice_names[i] + "</th>";
-            }
-            if (canEdit) {
-                html += "<th>" + lang.actions + "</th>";
-            }
-            html += "</tr></tr></thead>";
-
-            html += "<tbody>";
-            for (let i = 1; i < data.length; i++) {
-                html += "<tr>";
-                for (let k = 0; k < columns.length; k++) {
-                    if (data[i][columns[k]] === undefined) {
-                        data[i][columns[k]] = "";
-                    }
-
-
-                    html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>";
-
-                    let cell_body = "";
-                    switch (col_types[k]) {
-                        case "text":
-                            if (canEdit) {
-                                cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
-                                cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
-                            } else {
-                                cell_body = "<span>" + data[i][columns[k]] + "</span>";
-                            }
-                            break;
-                        case "date":
-                            if (canEdit) {
-                                cell_body = "<input type=\"date\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
-                                cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
-                            } else {
-                                cell_body = "<span>" + data[i][columns[k]] + "</span>";
-                            }
-                            break;
-                        case "money":
-                            let cell_value = data[i][columns[k]];
-                            if (isNumeric(cell_value)) {
-                                cell_value = numberWithSpaces(cell_value);
-
-
-                            } else {
-                                cell_value = "0";
-                                data[i][columns[k]] = "0";
-                            }
-
-                            if (canEdit) {
-                                // language=HTML
-                                cell_body = "<input type=\"text\" pattern=\'[0-9]|\\s\' value=\'" + cell_value + "\' class=\'form-control\'/>";
-                                cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
-
-                            } else {
-                                cell_body += "<span>" + cell_value + "</span>";
-                                cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
-                            }
-                            break;
-                        default:
-                            if (canEdit) {
-                                cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
-                                cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
-                            } else {
-                                cell_body = "<span>" + data[i][columns[k]] + "</span>";
-                            }
-                    }
-
-                    html += cell_body;
-
-                    html += "</td>";
+                if (canEdit == "true") {
+                    canEdit = true;
+                } else {
+                    canEdit = false;
                 }
 
-                if (canEdit) {
-                    html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_button + "</a></td>";
+                if (table_name === "guaman_forgalom") {
+                    canEdit = false;
                 }
-                html += "</tr>";
-            }
-            html += "</tbody></table>";
 
-            $("#table-container").html(html);
-            setTimeout(function () {
-                $("#data-table").DataTable({
-                    language: data_table_strings
+                console.log(canEdit);
+                let columns = [];
+                let column_nice_names = [];
+                let col_types = [];
+
+
+                Object.keys(data[0]).forEach(function (k) {
+                    columns.push(k);
+                    column_nice_names.push(data[0][k].nice_name);
+                    col_types.push(data[0][k].type);
                 });
 
-                $("#data-table").parent().css("overflow-x", "scroll");
+                $("#data-table").dataTable().remove();
+                $("#table-container").html("");
+                let html = "";
+                html += "<h2>" + get_nice_table_name(table_name) + "</h2>";
 
-                $("#data-table-column").css("visibility", "visible");
-            }, 1);
 
-            $(".data-cell-container").focusout(function () {
-                let newValue = $(this).children().eq(0).val();
-                let column = $(this).data("column");
+                // Load header buttons
+                html += "<div class=\'my-4\'>\n    ";
+                if (canEdit) {
+                    html += "<button class=\'btn btn-primary\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
+                }
+                html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\")\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
+                html += "\n</div>";
 
-                let col_id;
-                for (let b = 0; b < columns.length; b++) {
-                    if (columns[b] === column) {
-                        col_id = b;
-                        break;
+
+                html += "<table class=\"table table\" id=\"data-table\" >";
+
+                // Display table headers
+                html += "<thead><tr><tr>";
+                for (let i = 0; i < column_nice_names.length; i++) {
+                    html += "<th>" + column_nice_names[i] + "</th>";
+                }
+                if (canEdit) {
+                    html += "<th>" + lang.actions + "</th>";
+                }
+                html += "</tr></tr></thead>";
+
+                html += "<tbody>";
+                for (let i = 1; i < data.length; i++) {
+                    html += "<tr>";
+                    for (let k = 0; k < columns.length; k++) {
+                        if (data[i][columns[k]] === undefined) {
+                            data[i][columns[k]] = "";
+                        }
+
+
+                        html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>";
+
+                        let cell_body = "";
+                        switch (col_types[k]) {
+                            case "text":
+                                if (canEdit) {
+                                    cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
+                                    cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
+                                } else {
+                                    cell_body = "<span>" + data[i][columns[k]] + "</span>";
+                                }
+                                break;
+                            case "date":
+                                if (canEdit) {
+                                    cell_body = "<input type=\"date\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
+                                    cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
+                                } else {
+                                    cell_body = "<span>" + data[i][columns[k]] + "</span>";
+                                }
+                                break;
+                            case "money":
+                                let cell_value = data[i][columns[k]];
+                                if (isNumeric(cell_value)) {
+                                    cell_value = numberWithSpaces(cell_value);
+
+
+                                } else {
+                                    cell_value = "0";
+                                    data[i][columns[k]] = "0";
+                                }
+
+
+                                if (canEdit) {
+                                    // language=HTML
+                                    cell_body = "<input type=\"text\" pattern=\'[0-9]|\\s\' value=\'" + cell_value + "\' class=\'form-control\'/>";
+                                    cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
+
+                                } else {
+                                    cell_body += "<span>" + cell_value + "</span>";
+                                    cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
+                                }
+                                break;
+                            default:
+                                if (canEdit) {
+                                    cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
+                                    cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
+                                } else {
+                                    cell_body = "<span>" + data[i][columns[k]] + "</span>";
+                                }
+                        }
+
+                        html += cell_body;
+
+                        html += "</td>";
                     }
-                }
 
-                switch (col_types[col_id]) {
-                    case "money":
-                        newValue = newValue.toLowerCase();
-                        newValue = newValue.replace(/\s/g, '');
-                        newValue = newValue.replace("/ft/g", ""); // TODO (?) global currency
+                    if (canEdit) {
+                        html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_button + "</a></td>";
+                    }
+                    html += "</tr>";
                 }
-                update_table_field(table_name, column, $(this).data("id"), newValue);
-            });
+                html += "</tbody></table>";
 
-        })
-            .done(function () {
-                console.log("success");
+                $("#table-container").html(html);
+                setTimeout(function () {
+                    $("#data-table").DataTable({
+                        language: data_table_strings
+                    });
+
+                    $("#data-table").parent().css("overflow-x", "scroll");
+
+                    $("#data-table-column").css("visibility", "visible");
+                }, 1);
+
+                $(".data-cell-container").focusout(function () {
+                    let newValue = $(this).children().eq(0).val();
+                    let column = $(this).data("column");
+
+                    let col_id;
+                    for (let b = 0; b < columns.length; b++) {
+                        if (columns[b] === column) {
+                            col_id = b;
+                            break;
+                        }
+                    }
+
+                    switch (col_types[col_id]) {
+                        case "money":
+                            newValue = newValue.toLowerCase();
+                            newValue = newValue.replace(/\s/g, '');
+                            newValue = newValue.replace("/ft/g", ""); // TODO (?) global currency
+                    }
+                    update_table_field(table_name, column, $(this).data("id"), newValue);
+                });
+
             })
-            .fail(function () {
-                console.log("error");
-            })
-    });
+                .done(function () {
+                    console.log("success");
+                })
+                .fail(function () {
+                    console.log("error");
+                })
+        }
+    )
+    ;
 
 }
 

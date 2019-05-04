@@ -29,8 +29,10 @@ class Account extends CI_Controller
         $username = $this->input->post("username");
         $password = $this->input->post("password");
 
+
         if (!$username || !$password) {
             // Load login form
+
             $this->load->view("templates/header", array(lang("login_title")));
             $this->load->view("account/login-form");
             $this->load->view("templates/footer");

@@ -29,6 +29,7 @@ class Statistics extends CI_Controller
             }
         }
 
+
         if(!sizeof($result_array))js_alert("Nincsen joga egyetlen statisztikához sem.", base_url('database/'));//todo lang
 
         $this->load->view("templates/header", array("title" => "Statistics")); // todo lang
@@ -61,6 +62,27 @@ class Statistics extends CI_Controller
         $this->load->view("statistics/view_statistics", array("data" => $result_array));
 
         $this->load->view("templates/footer");
+    }
+    public function add(){
+        //todo get post datas from form
+        $statistics_name = "";
+        $statistics_type = "";
+        $source_table = "";
+        $selected_columns = "";
+        $order = "";
+        $order_by = "";
+        $statistics_config = "";
+
+        try {
+            $result_array = array();
+            $result_array = $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order,$order_by,$statistics_config);
+        } catch (Exception $e) {
+            if($e->getMessage() == "wrong_statistics_type")js_alert("Statistics type not found", base_url("statistics/")); //todo lang
+            if($e->getMessage() == "wrong_source_table")js_alert("Statistics Source table not found", base_url("statistics/")); //todo lang
+            if($e->getMessage() == "wrong_selected_columns")js_alert("Statistics Selected Columns not found", base_url("statistics/")); //todo lang
+            if($e->getMessage() == "wrong_order")js_alert("Statistics Order not found", base_url("statistics/")); //todo lang
+            if($e->getMessage() == "wrong_order_by")js_alert("Statistics Order By not found", base_url("statistics/")); //todo lang
+        }
     }
 
 

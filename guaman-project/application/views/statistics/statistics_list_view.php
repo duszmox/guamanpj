@@ -4,21 +4,22 @@
     //todo gyulus gui az adott array alapján $data
     echo "<table class='table'>";
     foreach ($data as $key => $value) {
-        echo "<tr>\n";
+        echo "<thead><tr>\n";
         foreach ($value as $key2 => $value2) {
-            echo "<th class='col'>" . $key2 . " \n";
+            echo "<th class='col'>" . $key2 . " </th>\n";
         }
-        echo "</tr>";
+        echo "</tr></thead>";
         break;
     }
     foreach ($data as $key => $value) {
 
-        echo "<div id='getStatistics" . $value["id"] . "'>\n<tr>\n";
+        echo "\n<tr  id='getStatistics" . $value["id"] . "'>\n";
         foreach ($value as $key2 => $value2) {
-            echo "<td class='col'>\n" . $value2 . " \n";
+            echo "<td class='col'>" . $value2 . " </td>\n";
         }
-        echo "</tr></div>\n";
+        echo "</tr>\n";
     }//todo error van
+    echo "</tbody></table>";
     ?>
 
 </div>
@@ -27,9 +28,20 @@
     <?php
 
     foreach ($data as $key => $value) {
-        echo "$(\"#getStatistics".$value[$id]."\").on(\"click\", function(){
-        window.location.href = \"".base_url('statistics/view/'.$value[$id])."\";
+        echo "$(\"#getStatistics".$value["id"]."\").on(\"click\", function(){
+        window.location.href = \"".base_url('statistics/view/'.$value["id"])."\";
     });";
     }
     ?>
 </script>
+<style>
+
+    <?php
+
+    foreach ($data as $key => $value) {
+        echo "#getStatistics".$value["id"].":hover{
+            background-color:red;
+        }";
+    }
+    ?>
+</style>

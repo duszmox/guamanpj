@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="52d5da4d-f7a3-4bb1-bc55-b1c37ecd3db8" name="Guaman Project" url="http://ftpx.forpsi.com">
-        <fileTransfer host="ftpx.forpsi.com" port="21">
+        <fileTransfer host="ftpx.forpsi.com" port="21" rootFolder="/www/developer-edition/">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>

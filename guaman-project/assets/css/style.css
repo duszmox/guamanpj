@@ -1,27 +1,32 @@
-.website-logo{
+.website-logo {
     width: 60px;
     height: 60px;
 }
 
-:root{
+:root {
     --primary-color: #3F51B5;
     --primary-dark-color: #303F9F;
 }
-.language-logo{
+
+.language-logo {
     max-width: 100%;
     height: 40px;
 }
 
-.invisible{
-    display:none;
-}
-.visible{
-    display:block;
+.invisible {
+    display: none;
 }
 
-  input:checked + label {
-      color: red;
-  }
+.visible {
+    display: block;
+}
+
+input:checked + label {
+    color: red;
+}
+#statistics-table-div{
+    display:block;
+}
 
 
 

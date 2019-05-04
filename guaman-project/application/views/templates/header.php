@@ -1,8 +1,8 @@
 <?php
 if (!isset($title)) {
-	$pageTitle = "Guaman Project";
+	$pageTitle = "GP DEV";
 } else {
-	$pageTitle = $title . " - Guaman Project";
+	$pageTitle = $title . " - GP DEV";
 }
 ?>
 <html>

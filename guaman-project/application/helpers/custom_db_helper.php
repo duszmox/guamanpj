@@ -12,54 +12,9 @@ function get_month($date)
     return substr($date, -5, 2);
 }
 
-function datetostr($date)
-{
-    switch ($date) {
-        case "01":
-            $str = "january";
-            break;
-        case "02":
-            $str = "february";
-            break;
-        case "03":
-            $str = "march";
-            break;
-        case "04":
-            $str = "april";
-            break;
-        case "05":
-            $str = "may";
-            break;
-        case "06":
-            $str = "june";
-            break;
-        case "07":
-            $str = "july";
-            break;
-        case "08":
-            $str = "august";
-            break;
-        case "09":
-            $str = "september";
-            break;
-        case "10":
-            $str = "october";
-            break;
-        case "11":
-            $str = "november";
-            break;
-        case "12":
-            $str = "december";
-            break;
-        default:
-            $str = "unknown";
-
-    }
-    return $str;
-}
-
 function custom_db_actions($table_name, $result_array, $column_names, $columns)
 {
+
     $result_array_ = $result_array;
     foreach ($result_array_ as $key => $row) {
 
@@ -67,181 +22,106 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         switch ($table_name) {
 
             case "guaman_keresesilista":
-                if (is_numeric((float)$result_array_[$key]['indulo_ar']) && is_numeric((float)$result_array_[$key]['vegso_ar'])) {
-                    $result_array_[$key]['kozepar'] = number_format(((float)$result_array_[$key]['indulo_ar'] + (float)$result_array_[$key]['vegso_ar']) / 2, 2, ".", " ");
-                    $result_array_[$key]['celar'] = number_format((float)$result_array_[$key]['kozepar'] * 0.8, 2, ".", " ");
+
+                if (is_numeric($result_array_[$key]['indulo_ar']) AND is_numeric($result_array_[$key]['vegso_ar'])) {
+                    $result_array_[$key]["kozepar"] = ($result_array_[$key]["indulo_ar"] + $result_array_[$key]["vegso_ar"]) / 2;
+                    $result_array_[$key]["celar"] = $result_array_[$key]["indulo_ar"] * 0.8;
                 }
+
                 break;
-            /*case "guaman_keszlet":
-                if (is_numeric((float)$result_array_[$key]['eladasi_ar']) && is_numeric((float)$result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2), 2, ".", " ");
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] -
-                            (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2), 2,".", " ");
-                    if ((float)$result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]['%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4))*100 . " %";
-                    }
-                };
-                break;*/
             case "guaman_telefon":
-                if (is_numeric((float)$result_array_[$key]['kiker_netto']) && is_numeric((float)$result_array_[$key]['beker_netto'])) {
-                    $result_array_[$key]['netto_profit'] = number_format((float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'], 2, ".", " ");
-                    if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 4)) * 100 . " %";
-                    }
-
-
-                }
-
-                break;
-            case "guaman_gadget":
-                if (is_numeric((float)$result_array_[$key]['kiker_netto']) && is_numeric((float)$result_array_[$key]['beker_netto'])) {
-                    $result_array_[$key]['netto_profit'] = number_format((float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'], 2, ".", " ");
-                    if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 4)) * 100 . " %";
-                    }
-                }
-                break;
-            case "guaman_orakkiegeszitok":
-                if (is_numeric((float)$result_array_[$key]['kiker_netto']) && is_numeric((float)$result_array_[$key]['beker_netto'])) {
-
-                    $result_array_[$key]['netto_profit'] = number_format((float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'], 2, ".", " ");
-                    if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 4)) * 100 . " %";
-                    }
-                }
-                break;
             case "guaman_tablet":
-                if (is_numeric((float)$result_array_[$key]['kiker_netto']) && is_numeric((float)$result_array_[$key]['beker_netto'])) {
-
-                    $result_array_[$key]['netto_profit'] = number_format((float)$result_array_[$key]['kiker_netto'] - (float)$result_array_[$key]['beker_netto'], 2, ".", " ");
-                    if ((float)$result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['kiker_netto'], 4)) * 100 . " %";
+            case "guaman_orakkiegeszitok":
+            case "guaman_gadget":
+                if (is_numeric($result_array_[$key]['beker_netto']) AND is_numeric($result_array_[$key]['kiker_netto'])) {
+                    $result_array_[$key]["netto_profit"] = $result_array_[$key]["kiker_netto"] - $result_array_[$key]["beker_netto"];
+                    if ($result_array_[$key]['kiker_netto'] != 0) {
+                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]), 4) * 100 . ' %';
                     }
                 }
-                break;
-            case "guaman_keszlet":
-
-                    if (is_numeric((float)$result_array_[$key]['eladasi_ar']) && is_numeric((float)$result_array_[$key]['beszerzesi_ar'])) {
-
-                        $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27, 2), 2, ".", " ");
-                        $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) / 1.27), 2), 2, ".", " ");
-                        if (((float)$result_array_[$key]['eladasi_ar'] != 0) and (float)$result_array_[$key]['netto_profit'] != 0) {
-
-                            $result_array_[$key]['%'] = ((round((float)$result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['eladasi_ar'], 4)) * 100) . " %";
-                        }
-                    }
-
                 break;
 
             case "guaman_hasznaltsales":
-                if (is_numeric((float)$result_array_[$key]['beszerzesi_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
-
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) * 0.2126, 2), 2, ".", " ");
-                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
-                    $result_array_[$key]['netto_eladasi_ar'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2), 2, ".", " ");
-                    if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
-                    };
-
+            case "guaman_partnersales" :
+            case "guaman_tartozeksales" :
+                if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
+                    $result_array_[$key]['netto_profit'] = round((($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
+                    $result_array_[$key]['afa'] = ($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
+                    $result_array_[$key]['netto_eladasi_ar'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['afa']), 2);
+                    if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
+                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"]), 4) * 100 . ' %';
+                    }
                     $date1 = $result_array_[$key]['beszer_datum'];
                     $date2 = $result_array_[$key]['eladas_datum'];
-
                     $diff = abs(strtotime($date2) - strtotime($date1));
                     $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
                 }
                 break;
-            case "guaman_partnersales":
-                if (is_numeric((float)$result_array_[$key]['beszerzesi_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
 
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['beszerzesi_ar']) * 0.2126, 2), 2, ".", " ");
-                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar']
-                            - (float)$result_array_[$key]['beszerzesi_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
-                    $result_array_[$key]['netto_eladasi_ar'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2), 2, ".", " ");
-                    if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
-                    };
-
-                    $date1 = $result_array_[$key]['beszer_datum'];
-                    $date2 = $result_array_[$key]['eladas_datum'];
-
-                    $diff = abs(strtotime($date2) - strtotime($date1));
-                    $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
-                }
-                break;
-            case "guaman_szervizsales":
-                if (is_numeric((float)$result_array_[$key]['jav_ara']) && is_numeric((float)$result_array_[$key]['alkatresz_koltseg'])) {
-
-                    $result_array_[$key]['profit'] = number_format(round(((float)$result_array_[$key]['jav_ara'] - (float)$result_array_[$key]['alkatresz_koltseg']), 2), 2, ".", " ");
-
-                }
-                break;
-            case "guaman_tartozeksales":
-                if (is_numeric((float)$result_array_[$key]['netto_beszerzesi_ar']) && is_numeric((float)$result_array_[$key]['brutto_eladasi_ar'])) {
-
-                    $result_array_[$key]['netto_profit'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] -
-                            (float)$result_array_[$key]['netto_beszerzesi_ar']) * 0.2126, 2), 2, ".", " ");
-                    $result_array_[$key]['afa'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] -
-                            (float)$result_array_[$key]['netto_beszerzesi_ar']) - (((float)$result_array_[$key]['afa'])), 2), 2, ".", " ");
-                    $result_array_[$key]['netto_eladasi_ar'] = number_format(round(((float)$result_array_[$key]['brutto_eladasi_ar'] - (float)$result_array_[$key]['afa']), 2), 2, ".", " ");
-                    if ((float)$result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]['netto_%'] = (round($result_array_[$key]['netto_profit'] / (float)$result_array_[$key]['netto_eladasi_ar'], 4)) * 100 . " %";
-                    };
-                }
-                break;
             case "guaman_szerviznaplo":
-
                 $date1 = $result_array_[$key]['szerviz_kezdet_datum'];
                 $date2 = $result_array_[$key]['szerviz_vege_datum'];
-
                 $diff = abs(strtotime($date2) - strtotime($date1));
-                $result_array_[$key]['jav_ido'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
-
+                $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
                 break;
+
+            case "guaman_keszlet":
+                if (is_numeric($result_array_[$key]['eladasi_ar']) || is_numeric($result_array_[$key]['beszerzesi_ar'])) {
+                    $result_array_[$key]['netto_profit'] = round((($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
+                    $result_array_[$key]['afa'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
+                    if ($result_array_[$key]['eladasi_ar'] != 0) {
+                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]), 4) * 100 . ' %';
+                    }
+                }
+                break;
+
+
             case "guaman_disztribuciosreport":
                 // TODO befejezni
-                $CI =& get_instance();
+                $ci =& get_instance();
 
                 $current_month = $row["honap"]; // 01, 02, 03...
-                $szemelyesAtvetelCount = 0;
-                $futarCount = 0;
+                $szemelyesatvetelcount = 0;
+                $futarcount = 0;
 
-                $dh = $CI->Database_model->get_table("kiszallitas_datum, szallitasi_megjegyzes", "guaman_disztribucioshasznalt", "id", "ASC");
+                $dh = $ci->Database_model->get_table("kiszallitas_datum, szallitasi_megjegyzes", "guaman_disztribucioshasznalt", "id", "asc");
                 foreach ($dh as $dh_row) {
-                    if (get_month($dh_row["kiszallitas_datum"]) == $current_month && $dh_row["szallitasi_megjegyzes"] == "Személyes átvétel") {
-                        $szemelyesAtvetelCount++;
-                    } else if (get_month($dh_row["kiszallitas_datum"]) == $current_month && $dh_row["szallitasi_megjegyzes"] == "Posta") {
-                        $futarCount++;
+                    if (get_month($dh_row["kiszallitas_datum"]) == $current_month && $dh_row["szallitasi_megjegyzes"] == "személyes átvétel") {
+                        $szemelyesatvetelcount++;
+                    } else if (get_month($dh_row["kiszallitas_datum"]) == $current_month && $dh_row["szallitasi_megjegyzes"] == "posta") {
+                        $futarcount++;
                     }
                 }
 
-                $dp = $CI->Database_model->get_table("kiszallitas_datum, szallitasi_megjegyzes", "guaman_disztribuciospartnerkeszulekek", "id", "ASC");
+                $dp = $ci->Database_model->get_table("kiszallitas_datum, szallitasi_megjegyzes", "guaman_disztribuciospartnerkeszulekek", "id", "asc");
                 foreach ($dp as $dp_row) {
-                    if (get_month($dp_row["kiszallitas_datum"]) == $current_month && $dp_row["szallitasi_megjegyzes"] == "Személyes átvétel") {
-                        $szemelyesAtvetelCount++;
-                    } else if (get_month($dp_row["kiszallitas_datum"]) == $current_month && $dp_row["szallitasi_megjegyzes"] == "Posta") {
-                        $futarCount++;
+                    if (get_month($dp_row["kiszallitas_datum"]) == $current_month && $dp_row["szallitasi_megjegyzes"] == "személyes átvétel") {
+                        $szemelyesatvetelcount++;
+                    } else if (get_month($dp_row["kiszallitas_datum"]) == $current_month && $dp_row["szallitasi_megjegyzes"] == "posta") {
+                        $futarcount++;
                     }
                 }
 
-                $result_array_[$key]["szemelyes_atvetel"] = $szemelyesAtvetelCount;
-                $result_array_[$key]["futar"] = $futarCount;
-                if (isset($szemelyesAtvetelCount) && isset($futarCount)) {
-                    if(($szemelyesAtvetelCount + $futarCount) != 0){
-                    $result_array_[$key]["%_a"] = round($szemelyesAtvetelCount / ($szemelyesAtvetelCount + $futarCount)*100,2) . " %" ;
-                    $result_array_[$key]["%_b"] = round($futarCount / ($szemelyesAtvetelCount + $futarCount)*100, 2) . " %";
+                $result_array_[$key]["szemelyes_atvetel"] = $szemelyesatvetelcount;
+                $result_array_[$key]["futar"] = $futarcount;
+                if (isset($szemelyesatvetelcount) && isset($futarcount)) {
+                    if (($szemelyesatvetelcount + $futarcount) != 0) {
+                        $result_array_[$key]["%_a"] = round($szemelyesatvetelcount / ($szemelyesatvetelcount + $futarcount) * 100, 2) . " %";
+                        $result_array_[$key]["%_b"] = round($futarcount / ($szemelyesatvetelcount + $futarcount) * 100, 2) . " %";
                     }
+
                 }
 
                 break;
 
             case "guaman_forgalom":
-                // TODO befejezni
+
                 $result_array_ = array();
 
-                $CI =& get_instance();
+                $ci =& get_instance();
 
-                $hasznalt_sales = $CI->Database_model->get_table("*", "guaman_hasznaltsales", "id", "ASC");
-                $partner_sales = $CI->Database_model->get_table("*", "guaman_partnersales", "id", "ASC");
+                $hasznalt_sales = $ci->Database_model->get_table("*", "guaman_hasznaltsales", "id", "asc");
+                $partner_sales = $ci->Database_model->get_table("*", "guaman_partnersales", "id", "asc");
 
                 foreach ($hasznalt_sales as $hasznalt_sale) {
                     $result_array_[] = $hasznalt_sale;
@@ -307,7 +187,6 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
 
-                return $result_array_;
         }
 
 

@@ -40,7 +40,8 @@ class Permissions_model extends CI_Model
 		if (!Validator::is_alphanumeric($permission_name)) throw new Exception("invalid_field: permission_type");
 
 		$query = $this->db->get_where(self::$TABLE_NAME, array("user_id" => $user_id, "permission_name" => $permission_name), 1);
-		if ($query->num_rows() >= 1) {
+		$query_admin = $this->db->get_where(self::$TABLE_NAME, array("user_id" => $user_id, "permission_name" => "admin"), 1);
+		if ($query->num_rows() >= 1 || $query_admin->num_rows() >= 1) {
 			return TRUE;
 		}
 		else {

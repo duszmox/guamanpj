@@ -1,3 +1,6 @@
+<?php
+$condition = has_permission("admin");
+?>
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -32,11 +35,8 @@
                 <?php //<h6 class="collapse-header">Login Screens:</h6> ?>
 
                 <?php
-                    $statistics ='<a class="collapse-item" href="<?php echo base_url("statistics") ?>">
-                    <i class="fas fa-chart-line"></i>
-                    <?php echo lang("statistics_label"); ?>
-                    
-                </a>';
+                    $statistics ='<a class="collapse-item" href="'.base_url("statistics").'"><i class="fas fa-chart-line"></i> '.lang("statistics_label").'</a>';
+                    echo ($condition)?$statistics:"";
 
                 ?>
                 <a class="collapse-item" href="<?php echo base_url("database/") ?>">
@@ -54,7 +54,7 @@
 
 
     <?php
-    $condition = has_permission("admin");
+
     if (false) { ?>
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
