@@ -13,19 +13,16 @@ $(document).ready(function () {
 
 function loadTable(table_name) {
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
-            $.post(base_url + "permissions/has_permission/", {permission_name: table_name + "_table_edit"}, function (canEdit) {
+            $.post(base_url + "permissions/has_permission/"+ table_name + "_table_edit", function (canEdit) {
 
-                if (canEdit == "true") {
-                    canEdit = true;
-                } else {
-                    canEdit = false;
-                }
 
                 if (table_name === "guaman_forgalom") {
                     canEdit = false;
                 }
 
                 console.log(canEdit);
+                console.log(table_name);
+                console.log(base_url + "permissions/has_permission/"+ table_name + "_table_edit");
                 let columns = [];
                 let column_nice_names = [];
                 let col_types = [];

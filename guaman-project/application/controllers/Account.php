@@ -45,7 +45,8 @@ class Account extends CI_Controller
             }
             if ($this->Account_model->login_user($username, Validator::encrypt($password))) {
                 $this->Account_model->login_log($username);
-                $url_post = ($this->input->post("url") != "")?$this->input->post("url"):base_url("account/profile");
+                $normal_url = str_replace("--", "/", $this->input->post("url"));
+                $url_post = ($normal_url != "")?$normal_url:base_url("account/profile");
                 js_alert(lang("successful_login_message"), $url_post);
             } else {
                 js_alert(lang("wrong_login_message"), base_url("account/login"));
