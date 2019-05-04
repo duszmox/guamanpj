@@ -28,12 +28,11 @@ class Statuses{
  */
 function require_status($min_rank){
     if(Account_model::$rank < $min_rank) {
-        if($min_rank == Statuses::$ADMIN){
-            js_alert("Az oldal megtekintéséhez nincs engedélyed.", base_url("account/login"));
 
-        }
-        else if($min_rank == Statuses::$LOGGED_IN){
-            js_alert("Az oldal megtekintéséhez be kell jelentkezned.", base_url("account/login"));
+        if($min_rank == Statuses::$LOGGED_IN){
+            $url = site_url(uri_string());
+            $url = str_replace("/", '--', $url);
+            js_alert("Az oldal megtekintéséhez be kell jelentkezned.", base_url("account/login/".$url));
         }
         die();
     }

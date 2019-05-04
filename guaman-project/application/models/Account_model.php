@@ -11,6 +11,7 @@ class Account_model extends CI_Model
     public static $TABLE_NAME = "users";
     public static $TABLE_LOG_LOGIN_NAME = "login_log";
     public static $username = "";
+    public static $nice_username = "";
     public static $user_id = 0;
     public static $logged_in = FALSE;
     public static $rank = -1; // [logged out: -1; logged in: 0; admin: 1] (--> Rank helper)
@@ -35,7 +36,7 @@ class Account_model extends CI_Model
 
     function login($username, $password_hash, $print_error = FALSE)
     {
-        $this->db->select("id");
+        $this->db->select("");
         $this->db->where("username", $username);
         $this->db->where("password_hash", $password_hash);
         $this->db->limit(1);
@@ -44,6 +45,7 @@ class Account_model extends CI_Model
         if ($row) {
             self::$user_id = $row->id;
             self::$username = $username;
+            self::$nice_username = ($query->result_array())[0]['nice_username'];
             self::$logged_in = TRUE;
             self::$rank = $this->get_user_field("rank", self::$user_id);
             return TRUE;

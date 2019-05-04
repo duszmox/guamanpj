@@ -19,6 +19,11 @@
 			<th><?php echo lang("username_label") ?></th>
 			<td><?php echo $username; ?></td>
 		</tr>
+        <tr>
+            <th><?php echo lang("nice_username_label") ?></th>
+            <td><?php /** @var ßnice_username $nice_username */
+                echo $nice_username; ?></td>
+        </tr>
 		<tr>
 			<th><?php echo lang("email_label") ?></th>
 			<td><?php echo $email; ?></td>

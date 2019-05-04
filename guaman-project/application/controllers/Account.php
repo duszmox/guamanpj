@@ -23,18 +23,19 @@ class Account extends CI_Controller
     /**
      * Login page
      */
-    function login()
+    function login($url = "")
     {
 
         $username = $this->input->post("username");
         $password = $this->input->post("password");
 
 
+
         if (!$username || !$password) {
             // Load login form
 
             $this->load->view("templates/header", array(lang("login_title")));
-            $this->load->view("account/login-form");
+            $this->load->view("account/login-form", array("url" => $url));
             $this->load->view("templates/footer");
         } else {
 
@@ -44,7 +45,8 @@ class Account extends CI_Controller
             }
             if ($this->Account_model->login_user($username, Validator::encrypt($password))) {
                 $this->Account_model->login_log($username);
-                js_alert(lang("successful_login_message"), base_url("language/hungarian"));
+                $url_post = ($this->input->post("url") != "")?$this->input->post("url"):base_url("account/profile");
+                js_alert(lang("successful_login_message"), $url_post);
             } else {
                 js_alert(lang("wrong_login_message"), base_url("account/login"));
             }
@@ -139,6 +141,7 @@ class Account extends CI_Controller
         $this->load->view("account/my_menu", array("page_active" => "profile"));
         $this->load->view("account/my_profile", array(
             "username" => Account_model::$username,
+            "nice_username" => Account_model::$nice_username,
             "user_id" => Account_model::$user_id,
             "rank" => Account_model::$rank,
             "email" => $this->Account_model->get_user_field("email", Account_model::$user_id),

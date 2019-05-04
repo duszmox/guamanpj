@@ -26,6 +26,8 @@
 										       id="exampleInputPassword" name="password"
 										       placeholder="<?php echo lang("password_placeholder"); ?>">
 									</div>
+                                    <input type="hidden" name="url" value="<?php /** @var $url $url */
+                                    echo $url?>">
 
 									<input type="submit" class="btn btn-primary btn-user btn-block"
 									       value="<?php echo lang("send_login_message") ?>">
