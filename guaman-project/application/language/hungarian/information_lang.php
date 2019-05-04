@@ -80,6 +80,7 @@ $lang["statistics_title"] = "Statistics";
 $lang['create_table_register'] = "REGISTER ";
 $lang['manage_permissions'] = "Jogok szerkesztése ";
 $lang['add_statistics'] = "Add Statistics";
+$lang['nice_username_placeholder'] = "Név";
 
 $lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";
 $lang["table_body_placeholder"] = "A táblázat...";
