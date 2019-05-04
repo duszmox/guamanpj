@@ -76,16 +76,16 @@ $lang["phone_number_label"] = "Telefonszám: ";
 $lang["change_password_button"] = "Jelszó megváltoztatása";
 $lang["public"] = "Publikus";
 $lang["tables_label"] = "Adatok: ";
-$lang["statistics_title"] = "Statistics";
-$lang['create_table_register'] = "REGISTER ";
+$lang["statistics_title"] = "Statisztikák";
+$lang['create_table_register'] = "REGISZTRÁCIÓ ";
 $lang['manage_permissions'] = "Jogok szerkesztése ";
-$lang['add_statistics'] = "Add Statistics";
+$lang['add_statistics'] = "Statisztikák hozzáadása";
 $lang['nice_username_placeholder'] = "Név";
 
 $lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";
 $lang["table_body_placeholder"] = "A táblázat...";
-$lang["tables_button_hide"] = "Hide";
-$lang["tables_button_show"] = "Show";
+$lang["tables_button_hide"] = "Elrejtés";
+$lang["tables_button_show"] = "Mutat";
 
 
 $lang["manage_permissions_title"] = "Jogosultságok";
