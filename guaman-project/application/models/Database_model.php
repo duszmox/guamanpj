@@ -120,7 +120,15 @@ class Database_model extends CI_Model
         }
         return $nice_column_names;
     }
+    public function has_column_in_table($column, $table){
+        $columns_of_table = self::get_columns_by_table($table);
+        if(in_array($column, $columns_of_table)){
+            return true;
+        }else{
+            return false;
+        }
 
+    }
     public function get_column_types($table, $col)
     {
 //todo
@@ -332,6 +340,7 @@ class Database_model extends CI_Model
         $query = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name), 1);
         return $query->first_row()->table_title;
     }
+
 
     public function change()
     {

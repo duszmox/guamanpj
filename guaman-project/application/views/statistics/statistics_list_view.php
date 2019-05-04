@@ -1,5 +1,12 @@
 <div class="container bg-white shadow">
-    <h2>Statistics</h2> <!--todo lang-->
+    <h2>
+        Statistics <!--todo lang-->
+        <?php
+            if(has_permission("admin")){
+                echo "<a href='".base_url("statistics/add")."'>Add Statistics</a>";//todo lang
+            }
+        ?>
+    </h2>
     <?php
     //todo gyulus gui az adott array alapján $data
     echo "<table class='table'>";
