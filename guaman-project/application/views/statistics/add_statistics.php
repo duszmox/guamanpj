@@ -13,7 +13,7 @@ $input_normal[0] = array(
     "type" => "text",
     'name'  => 'statistics_name',
     'id'    => 'statistics_name',
-    'placeholder' => 'Statistics name', // todo lang "Statistics name" to language
+    'placeholder' => 'Statistics name', //  todo lang "Statistics name" to language
     'class' => ''
 );
 $input_normal[1] = array(

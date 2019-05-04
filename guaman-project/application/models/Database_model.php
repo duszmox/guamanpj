@@ -129,9 +129,13 @@ class Database_model extends CI_Model
         }
 
     }
-    public function get_column_types($table, $col)
+    public function get_type_of_column($col)
     {
-//todo
+
+        $this->db->select('type');
+        $query = $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("column_name" => $col), 1);
+        $arr = $query->result_array();
+        return $arr[0]["type"];
     }
 
     public function get_table_id($table_name)
@@ -162,12 +166,7 @@ class Database_model extends CI_Model
         $this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
     }
 
-    public function create_table()
-    {
-        //todo permissions táblához is hozzá kell adni, emellett táblaként létre kell hozni, és a tables-be is fel kell tölteni.
-    }
-
-    public function get_database_type_name($string)
+   public function get_database_type_name($string)
     {
 
         $string = strtolower($string);

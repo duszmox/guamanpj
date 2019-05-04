@@ -1,5 +1,5 @@
 <div class="bg-white m-4 p-4 shadow">
-    <h2><?php echo lang("manage_permissions") ?></h2><!-- TODO lang fájl -->
+    <h2><?php echo lang("manage_permissions") ?></h2>
     <label>
         Felhasználó:
         <select name="username" id="select-user" class="form-control w-auto d-inline-block selectpicker"

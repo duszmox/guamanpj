@@ -18,7 +18,7 @@
                 <div class="hideshowbtn d-inline">
                     <form class="d-inline" action="" method="post">
                         <input name="zero" class="btn btn-primary d-inline" style="margin-bottom: 10px; float: right;"
-                               type="button" value="Hide" onclick="return change(this)"/>
+                               type="button" value="Hide" onclick="change(this)"/>
                     </form>
                     <script>
                         function change(el) {
@@ -26,7 +26,7 @@
                                 el.value = "<?php echo lang("tables_button_show")?>";
                                 $("div.tables-container").toggle("fast", function(){
 
-                                );
+                                    });
 
                             }
                         else{

@@ -9,7 +9,7 @@
         ?>
     </h2>
     <?php
-    //todo gyulus gui az adott array alapján $data
+    // todo gyulus gui az adott array alapján $data
     echo "<table class='table'>";
     foreach ($data as $key => $value) {
         echo "<thead><tr>\n";
