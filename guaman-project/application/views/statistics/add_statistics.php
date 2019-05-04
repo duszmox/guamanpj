@@ -39,18 +39,38 @@ $input_normal[3] = array(
 );
 $input_normal[4] = array(
     "type" => "text",
-    'name'  => 'selected_columns',
-    'id'    => 'selected_columns',
-    'placeholder' => 'Selected Columns Separated with ONLY ,', // todo lang "Statistics name" to language
+    'name'  => 'order_by',
+    'id'    => 'order_by',
+    'placeholder' => 'Column Order By', // todo lang "Statistics name" to language
     'class' => ''
 );
-$input_options = array(
+$input_normal[6] = array(
+    "type" => "text",
+    'name'  => 'statistics_config',
+    'id'    => 'statistics_config',
+    'placeholder' => 'Statistics Config JSON', // todo lang "Statistics name" to language
+    'class' => ''
+);
 
+$input_options = array(
+    "ASC" => "ASC",
+    "DESC" => "DESC"
 );
 echo form_open("statistics/add", "class='".$form_class."' id='".$form_id."'");
 foreach ($input_normal as $key => $value){
-    echo form_input($value);
+
+    echo form_input($value) . "<br>";
 }
+echo form_dropdown('order_by', $input_options, 'ASC')."<br>";
+$input_submit = array(
+    "type" => "submit",
+    'name'  => 'submit',
+    'id'    => 'submit',
+    'value' => 'OK', // todo lang "Statistics name" to language
+    'class' => ''
+);
+echo form_input($input_submit);
+
 ?>
 
 
