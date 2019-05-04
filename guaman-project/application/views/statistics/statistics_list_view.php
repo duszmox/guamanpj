@@ -1,33 +1,35 @@
 <div class="container bg-white shadow">
-    <h2>
-        <?php echo lang("statistics_title") ?>
+    <h2 class="statistics-h2">
+        <p><?php echo lang("statistics_title") ?></p>
+    </h2>
         <?php
         if (has_permission("admin")) {
-            echo "<button class='adds_statistics btn btn-primary float-right' href='" . base_url("statistics/add") . "'> " . lang("add_statistics") . " </button>";
+            echo "<a class='adds_statistics btn btn-primary float-right' href='" . base_url("statistics/add") . "'> " . lang("add_statistics") . " </a>";
 
             }
         ?>
-    </h2>
+
     <?php
     // todo gyulus gui az adott array alapján $data
-    echo "<table class='table'>";
+    echo "<div class='statistics-div'><table class='table'>";
     foreach ($data as $key => $value) {
-        echo "<thead><tr>\n";
+        echo "<thead class='statistics-table'><tr>\n";
         foreach ($value as $key2 => $value2) {
             echo "<th class='col'>" . $key2 . " </th>\n";
         }
-        echo "</tr></thead>";
+        echo "</tr></thead><tbody >";
         break;
     }
     foreach ($data as $key => $value) {
 
-        echo "\n<tr  id='getStatistics" . $value["id"] . "'>\n";
+        echo "\n<tr class='' id='getStatistics" . $value["id"] .  "'>
+        \n";
         foreach ($value as $key2 => $value2) {
             echo "<td class='col'>" . $value2 . " </td>\n";
         }
         echo "</tr>\n";
     }//todo error van
-    echo "</tbody></table>";
+    echo "</tbody></table></div>";
     ?>
 
 </div>
@@ -49,7 +51,8 @@
 
     foreach ($data as $key => $value) {
         echo "#getStatistics".$value["id"].":hover{
-            background-color:#F8F8F8;
+            background-color:#F5F5F5	;
+            
         }";
     }
     ?>

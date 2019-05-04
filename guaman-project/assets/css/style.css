@@ -28,10 +28,14 @@ input:checked + label {
 
 .adds_statistics {
    font-size: 20px;
-    padding-top: 20px;
+    display: inline-block;
 
+    margin-top: 20px;
 }
-.adds_statistics:hover {
-    font-size: 20px;
-
+.statistics-h2 {
+display: inline-block;
+    padding-top: 20px;
+}
+.statistics-div {
+    padding-bottom: 20px;
 }
