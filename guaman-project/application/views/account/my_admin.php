@@ -3,7 +3,7 @@
 
         <tr>
             <td>
-                <a href="<?php echo base_url("account/edit_permissions")?>"><?php echo lang("edit_permissions_title")?> <i class="fas fa-external-link-alt"></i></a>
+                <a href="<?php echo base_url("account/give_permissions")?>"><?php echo lang("edit_permissions_title")?> <i class="fas fa-external-link-alt"></i></a>
             </td>
         </tr>
         <tr>
