@@ -12,6 +12,7 @@ $(document).ready(function () {
 
 
 function loadTable(table_name) {
+    change(document.getElementById('show-or-hide-btn'));
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
             $.post(base_url + "permissions/has_permission/"+ table_name + "_table_edit", function (canEdit) {
 

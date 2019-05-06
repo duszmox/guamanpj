@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-8" style="visibility: hidden;" id="data-table-column">
+    <div class="col-sm-12 table-div-container" style="visibility: hidden;" id="data-table-column">
         <div class="card">
             <div class="card-body">
 
@@ -10,30 +10,38 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-auto folder-div-container" style="position: absolute; right:0;">
         <div class="card">
             <div class="card-header">
-                <h2 class="d-inline"><?php echo lang("tables_label"); ?></h2>
+                <h2 class="d-inline tables_label"><?php echo lang("tables_label"); ?></h2>
 
                 <div class="hideshowbtn d-inline">
                     <form class="d-inline" action="" method="post">
-                        <input name="zero" class="btn btn-primary d-inline" style="margin-bottom: 10px; float: right;"
-                               type="button" value="Hide" onclick="change(this)"/>
+                        <input name="zero" class="btn btn-primary d-inline" id="show-or-hide-btn" style="margin-bottom: 10px; float: right;"
+                               type="button" value="<?php echo lang("tables_button_hide")?>" onclick="change(getElementById('show-or-hide-btn'))"/>
                     </form>
                     <script>
                         function change(el) {
                             if (el.value === "<?php echo lang("tables_button_hide")?>") {
                                 el.value = "<?php echo lang("tables_button_show")?>";
-                                $("div.tables-container").toggle("fast", function(){
+                                var folderContainer = $("div.folders-container");
+                                folderContainer.toggle("fast", function(){
 
                                     });
+                                var tableDivContainer = $(".table-div-container");
+
+
+
+                                $(".tables_label").text("");
+
 
                             }
                         else{
                             el.value = "<?php echo lang("tables_button_hide")?>";
-                            $("div.tables-container").toggle("fast", function(){
+                            $("div.folders-container").toggle("fast", function(){
 
                             });
+                                $(".tables_label").text("<?php echo lang("tables_title")?>");
                         }
                         }
                     </script>
@@ -42,7 +50,7 @@
 
 
             </div>
-            <div class="card-body tables-container" id="table-list-container">
+            <div class="card-body folders-container" id="table-list-container">
                 ..
                 .
             </div>
