@@ -49,7 +49,7 @@ class Account extends CI_Controller
                 $url_post = ($normal_url != "")?$normal_url:base_url("account/profile");
                 js_alert(lang("successful_login_message"), $url_post);
             } else {
-                js_alert(lang("wrong_login_message"), base_url("account/login"));
+                js_alert(lang("wrong_login_message"), base_url("account/login/").$this->input->post("url"));
             }
         }
 
