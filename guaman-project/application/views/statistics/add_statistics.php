@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Created by PhpStorm.
@@ -51,17 +52,6 @@ $input_normal[6] = array(
     'placeholder' => 'Statistics Config JSON', // todo lang "Statistics name" to language
     'class' => ''
 );
-
-$input_options = array(
-    "ASC" => "ASC",
-    "DESC" => "DESC"
-);
-echo form_open("statistics/add", "class='".$form_class."' id='".$form_id."'");
-foreach ($input_normal as $key => $value){
-
-    echo form_input($value) . "<br>";
-}
-echo form_dropdown('order', $input_options, 'ASC')."<br>";
 $input_submit = array(
     "type" => "submit",
     'name'  => 'submit',
@@ -69,8 +59,22 @@ $input_submit = array(
     'value' => 'OK', // todo lang "Statistics name" to language
     'class' => ''
 );
-echo form_input($input_submit);
 
+$input_options = array(
+    "ASC" => "ASC",
+    "DESC" => "DESC"
+);
+echo form_open("statistics/add", "class='".$form_class."' id='".$form_id."'");
+echo "<div>";
+foreach ($input_normal as $key => $value){
+
+    echo form_input($value) . "<br>";
+}
+echo form_dropdown('order', $input_options, 'ASC')."<br>";
+
+echo form_input($input_submit);
+echo "</div>";
+echo "<form>";
 ?>
 
 
