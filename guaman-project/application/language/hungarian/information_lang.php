@@ -84,8 +84,8 @@ $lang['nice_username_placeholder'] = "Név";
 
 $lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";
 $lang["table_body_placeholder"] = "A táblázat...";
-$lang["tables_button_hide"] = "Elrejtés ^";
-$lang["tables_button_show"] = "Mutat ⌄";
+$lang["tables_button_hide"] = "Elrejtés ⮝";
+$lang["tables_button_show"] = "Mutat ⮟";
 
 
 $lang["manage_permissions_title"] = "Jogosultságok";

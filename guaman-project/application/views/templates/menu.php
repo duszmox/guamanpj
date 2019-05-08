@@ -265,7 +265,7 @@ $condition = has_permission("admin");
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span
                                 class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo Account_model::$nice_username ?></span>
-                        <img class="img-profile rounded-circle" src="<?php echo img_url("avatar.png") ?>">
+                        <img class="img-profile rounded-circle" src="<?php echo  img_url("avatar.png") ?>"> <?php //todo profkep gyuluskanak ?>
 
                     </a>
                     <!-- Dropdown - User Information -->
