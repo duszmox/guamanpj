@@ -129,28 +129,28 @@ class Permissions_model extends CI_Model
         foreach ($this->Database_model->get_table_names() as $table_name    ){
             $permissions[] = array(
                 "permission_name" => $table_name . "_table_edit",
-                "permission_nice_name" => htmlspecialchars($this->Database_model->get_table_title($table_name) . " tábla szerkesztése", ENT_QUOTES) // TODO lang
+                "permission_nice_name" => htmlspecialchars($this->Database_model->get_table_title($table_name) . lang("table_edit"), ENT_QUOTES)
             );
 
             $permissions[] = array(
                 "permission_name" => $table_name . "_table_view",
-                "permission_nice_name" => htmlspecialchars($this->Database_model->get_table_title($table_name) . " tábla megtekintése", ENT_QUOTES) // TODO lang
+                "permission_nice_name" => htmlspecialchars($this->Database_model->get_table_title($table_name) . lang("table_show"), ENT_QUOTES)
             );
         }
 
         $permissions[] = array(
             "permission_name" => "edit_folders",
-            "permission_nice_name" => htmlspecialchars("Mappák szerkesztése", ENT_QUOTES) // TODO lang
+            "permission_nice_name" => htmlspecialchars(lang("folders_edit"), ENT_QUOTES)
         );
 
         $permissions[] = array(
             "permission_name" => "edit_tables",
-            "permission_nice_name" => htmlspecialchars("Táblák struktúrájának szerkesztése", ENT_QUOTES) // TODO lang
+            "permission_nice_name" => htmlspecialchars(lang("tables_structure_edit"), ENT_QUOTES)
         );
 
         $permissions[] = array(
             "permission_name" => "admin",
-            "permission_nice_name" => htmlspecialchars("Admin", ENT_QUOTES) // TODO lang
+            "permission_nice_name" => htmlspecialchars(lang("admin_title"), ENT_QUOTES)
         );
 
         return $permissions;

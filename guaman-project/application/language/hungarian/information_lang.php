@@ -116,3 +116,7 @@ $lang["statistics_order_by_missing"] = "Statistics Order By not found";
 $lang["timetable_label"] = "Timetable";
 $lang["tables_button_hide"] = "Elrejtés ⮝";
 $lang["tables_button_show"] = "Mutat ⮟";
+$lang["tables_structure_edit"] = "Táblák struktúrájának szerkesztése";
+$lang["folders_edit"] = "Mappák szerkesztése";
+$lang["table_show"] = " táblák megtekintése";
+$lang["table_edit"] = " táblák szerkesztése";
