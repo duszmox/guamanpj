@@ -227,7 +227,7 @@ class Account extends CI_Controller
     {
         require_permission("admin");
         $this->load->view("templates/header", array("title" => lang("give_permissions_title")));
-//todo Változtatások kezelése összevetni a users-el
+
         $this->load->view("templates/menu");
         $this->load->view("account/give_permissions", array("users" => $this->Account_model->get_users("username, id")));
         $this->load->view("templates/footer");

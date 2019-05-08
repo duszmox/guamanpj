@@ -68,30 +68,34 @@ class Statistics extends CI_Controller
 
     public function add()
     {
-        //todo get post datas from form
         require_permission("admin");
-        if (((NULL !== $this->input->post("statistics_name") && NULL !== $this->input->post("statistics_type") &&
-                (NULL !== $this->input->post("selected_columns") && NULL !== $this->input->post("source_table"))) &&
-            (NULL !== $this->input->post("order_by") && NULL !== $this->input->post("order")) &&
-            NULL !== $this->input->post("statistics_config")
-        )) {
-            $statistics_name = "";
-            $statistics_type = "";
-            $source_table = "";
-            $selected_columns = "";
-            $order = "";
-            $order_by = "";
-            $statistics_config = "";
+        if (NULL !== $this->input->post("statistics_name") && (NULL !== $this->input->post("statistics_type"))) {
+            if (NULL !== $this->input->post("selected_columns") && NULL !== $this->input->post("source_table")) {
+                if (NULL !== $this->input->post("order_by") && NULL !== $this->input->post("order")) {
+                    if (NULL !== $this->input->post("statistics_config")) {
 
-            try {
-                $result_array = array();
-                $result_array = $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config);
-            } catch (Exception $e) {
-                if ($e->getMessage() == "wrong_statistics_type") js_alert(lang("statistics_type_not_found"), base_url("statistics/"));
-                if ($e->getMessage() == "wrong_source_table") js_alert(lang("statistics_source_table_missing"), base_url("statistics/"));
-                if ($e->getMessage() == "wrong_selected_columns") js_alert(lang("statistics_select_columns_missing"), base_url("statistics/"));
-                if ($e->getMessage() == "wrong_order") js_alert(lang("statistics_order_missing"), base_url("statistics/"));
-                if ($e->getMessage() == "wrong_order_by") js_alert(lang("statistics_order_by_missing"), base_url("statistics/"));
+
+                        $statistics_name = $this->input->post("statistics_name");
+                        $statistics_type = $this->input->post("statistics_type");
+                        $source_table = $this->input->post("source_table");
+                        $selected_columns = $this->input->post("selected_columns");
+                        $order = $this->input->post("order");
+                        $order_by = $this->input->post("order_by");
+                        $statistics_config = $this->input->post("statistics_config");
+
+                        try {
+                            $result_bool = false;
+                            $result_bool = $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config);
+                        } catch (Exception $e) {
+                            if ($e->getMessage() == "wrong_statistics_type") js_alert(lang("statistics_type_not_found"), base_url("statistics/"));
+                            if ($e->getMessage() == "wrong_source_table") js_alert(lang("statistics_source_table_missing"), base_url("statistics/"));
+                            if ($e->getMessage() == "wrong_selected_columns") js_alert(lang("statistics_select_columns_missing"), base_url("statistics/"));
+                            if ($e->getMessage() == "wrong_order") js_alert(lang("statistics_order_missing"), base_url("statistics/"));
+                            if ($e->getMessage() == "wrong_order_by") js_alert(lang("statistics_order_by_missing"), base_url("statistics/"));
+                        }
+                        if($result_bool)js_alert("Sikeres statisztika felvitel", base_url("statistics/")); //todo lang
+                    }
+                }
             }
         } else {
             $this->load->view("templates/header", array("title" => lang("statistics_title")));
@@ -109,4 +113,5 @@ class Statistics extends CI_Controller
 
 
 }
+
 

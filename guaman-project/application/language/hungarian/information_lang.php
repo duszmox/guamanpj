@@ -89,7 +89,7 @@ $lang["statistics_no_permission"] = "Nincsen joga egyetlen statisztikához sem."
 $lang["manage_permissions_title"] = "Jogosultságok";
 $lang["admin_menu_title"] = "Admin felület";
 $lang["invalid_input"] = "Érvénytelen bemeneti adatok.";
-//újabbak
+//újabbak(20190508)
 $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Admin jog adása felhasználónak : ";
 $lang["remove_admin_label"] = "Admin jog eltávolítása ennek a felhasználónak: ";

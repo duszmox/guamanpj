@@ -47,7 +47,7 @@ class Timetable extends CI_Controller
     public function manage_event($event = "")
     {
         if ($event == "") {
-            $data = array();
+            $data = array(array());
         } else {
             $data = $this->Timetable_model->get_event($event);
             if (empty($data)) {

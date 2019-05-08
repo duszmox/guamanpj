@@ -61,7 +61,7 @@ foreach ($input_normal as $key => $value){
 
     echo form_input($value) . "<br>";
 }
-echo form_dropdown('order_by', $input_options, 'ASC')."<br>";
+echo form_dropdown('order', $input_options, 'ASC')."<br>";
 $input_submit = array(
     "type" => "submit",
     'name'  => 'submit',
