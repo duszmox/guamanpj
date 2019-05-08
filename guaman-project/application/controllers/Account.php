@@ -256,14 +256,14 @@ class Account extends CI_Controller
     function save_permissions($user_id = null){
         require_permission("admin");
 
-        if(!Validator::is_numeric($user_id)) json_error("Invalid user_id!"); // Todo lang
+        if(!Validator::is_numeric($user_id)) json_error(lang("invalid_user_id"));
 
         $permission_names = $this->Permissions_model->get_permission_names();
 
         $in_permissions = $this->input->post("permissions");
 
         foreach ($in_permissions as $in_permission){
-            if(!in_array($in_permission["name"], $permission_names)) json_error("Invalid permission name"); // TODO LANG
+            if(!in_array($in_permission["name"], $permission_names)) json_error(lang("invalid_permission_name"));
         }
 
 

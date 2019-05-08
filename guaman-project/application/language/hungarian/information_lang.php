@@ -9,7 +9,6 @@ $lang["enter_valid_data_message"] = "Adj meg érvényes adatokat!";
 $lang["successful_login_message"] = "Sikeres bejelentkezés!";
 $lang["my_profile_title"] = "Profilom";
 $lang["logout_message"] = "Sikeresen kijelentkezve!";
-
 $lang["rank_logged_out"] = "kijelentkezve";
 $lang["rank_logged_in"] = "bejelentkezve";
 $lang["rank_admin"] = "admin";
@@ -76,46 +75,42 @@ $lang["phone_number_label"] = "Telefonszám: ";
 $lang["change_password_button"] = "Jelszó megváltoztatása";
 $lang["public"] = "Publikus";
 $lang["tables_label"] = "Adatok: ";
-$lang["statistics_title"] = "Statisztikák";
+$lang["statistics_title"] = "Statistics";
 $lang['create_table_register'] = "REGISZTRÁCIÓ ";
 $lang['manage_permissions'] = "Jogok szerkesztése ";
 $lang['add_statistics'] = "Statisztikák hozzáadása";
 $lang['nice_username_placeholder'] = "Név";
-
 $lang["not_having_permission_message"] = "Az oldal megtekintéséhez nincs jogosultságod!";
 $lang["table_body_placeholder"] = "A táblázat...";
 $lang["tables_button_hide"] = "Elrejtés ⮝";
 $lang["tables_button_show"] = "Mutat ⮟";
-
-
+$lang["invalid_user_id"] = "Invalid userd_id!";
+$lang["invalid_permission_name"] = "Invalid Permission name!";
+$lang["statistics_no_permission"] = "Nincsen joga egyetlen statisztikához sem.";
 $lang["manage_permissions_title"] = "Jogosultságok";
 $lang["admin_menu_title"] = "Admin felület";
 $lang["invalid_input"] = "Érvénytelen bemeneti adatok.";
-
-
 //újabbak
-
 $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Admin jog adása felhasználónak : ";
 $lang["remove_admin_label"] = "Admin jog eltávolítása ennek a felhasználónak: ";
 $lang["day"] = "nap";
-
-
 $lang['table_not_found_message'] = "Nem található a tábla!";
 $lang['invalid_id_message'] = "Érvénytelen id!";
 $lang['failed_move_row_message'] = "Sikertelen áthelyezés!";
 $lang['successful_move_row_message'] = "Sikeres áthelyezés!";
-
-
-
 $lang['reload_page_button_title'] = "Frissítés";
 $lang['add_row_button_title'] = "Új sor hozzáadása";
 $lang['move_row_title'] = "Áthelyezés";
 $lang['actions_button_title'] = "Műveletek";
 $lang['move_row_full_label'] = "sor áthelyezése ebbe a táblába:";
-
-
 $lang['edit_permissions_title'] = "Jogok adása felhasználóknak";
 $lang['username_label'] = "Felhasználó : ";
 $lang['admin_label'] = "Admin";
 $lang['nice_username_label'] = "Név : ";
+$lang["statistics_not_found_message"] = "Statistikák nem találva";
+$lang["statistics_type_not_found"] = "Statistics type not found";
+$lang["statistics_source_table_missing"] = "Statistics Source table not found";
+$lang["statistics_select_columns_missing"] = "Statistics Selected Columns not found";
+$lang["statistics_order_missing"] = "Statistics Order not found";
+$lang["statistics_order_by_missing"] = "Statistics Order By not found";

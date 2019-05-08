@@ -4,12 +4,10 @@
  * Date: 2019.03.14.
  * Time: 03:19
  */
-
 $lang["enter_valid_data_message"] = "Enter valid data!";
 $lang["successful_login_message"] = "You have successfully logged in!";
 $lang["my_profile_title"] = "My profile";
 $lang["logout_message"] = "Successfully logged out!";
-
 $lang["rank_logged_out"] = "logged out";
 $lang["rank_logged_in"] = "logged in";
 $lang["rank_admin"] = "admin";
@@ -79,30 +77,25 @@ $lang["tables_label"] = "Data: ";
 $lang["not_having_permission_message"] = "You don't have permission to visit this page!";
 $lang["table_body_placeholder"] = "The table...";
 $lang["invalid_input"] = "Invalid input data.";
-
 $lang["manage_permissions_title"] = "Permissions";
 $lang["admin_menu_title"] = "Admin site";
-
 //more new
-
 $lang["admin_title"] = "Admin";
 $lang["add_admin_label"] = "Give admin rank to : ";
 $lang["remove_admin_label"] = "Remove admin rank from : ";
 $lang["day"] = "day";
-
 $lang['table_not_found_message'] = "Table not found!";
 $lang['invalid_id_message'] = "Invalid ID!";
 $lang['failed_move_row_message'] = "Failed to move the row!";
 $lang['successful_move_row_message'] = "Successful to move the row!";
-
-
 $lang['reload_page_button_title'] = "Refresh";
 $lang['add_row_button_title'] = "Add new row";
 $lang['move_row_title'] = "Move";
 $lang['actions_button_title'] = "Actions";
 $lang['move_row_full_label'] = "row move to:";
-
-
 $lang['edit_permissions_title'] = "Give permissions to users";
 $lang['username_label'] = "Username : ";
 $lang['admin_label'] = "Admin";
+$lang["tables_button_hide"] = "Hide ⮝";
+$lang["tables_button_show"] = "Show ⮟";
+// todo ha van egy fölös 1 órád akkor jó szarakodást!!

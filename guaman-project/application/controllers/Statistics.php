@@ -31,9 +31,9 @@ class Statistics extends CI_Controller
         }
 
 
-        if (!sizeof($result_array)) js_alert("Nincsen joga egyetlen statisztikához sem.", base_url('database/'));//todo lang
+        if (!sizeof($result_array)) js_alert(lang("statistics_no_permission"), base_url('database/'));
 
-        $this->load->view("templates/header", array("title" => "Statistics")); // todo lang
+        $this->load->view("templates/header", array("title" => lang("statistics_title")));
         $this->load->view("templates/menu");
 
         $this->load->view("statistics/statistics_list_view", array("data" => $result_array));
@@ -47,18 +47,18 @@ class Statistics extends CI_Controller
     {
         require_status(Statuses::$LOGGED_IN);
 
-        if (!Validator::is_numeric($id) OR $id == NULL) js_alert("Invalid id", base_url("statistics/")); //todo lang
-        if (!has_permission($id . "_stat_view")) js_alert("Dont have permission", base_url("statistics/")); //todo lang
+        if (!Validator::is_numeric($id) OR $id == NULL) js_alert(lang("invalid_id_message"), base_url("statistics/"));
+        if (!has_permission($id . "_stat_view")) js_alert(lang("not_having_permission_message"), base_url("statistics/"));
 
         try {
             $result_array = array();
             $result_array = $this->Statistics_model->get_statistics_by_id($id);
         } catch (Exception $e) {
-            if ($e->getMessage() == "statistics_not_found") js_alert("Statistics not found", base_url("statistics/")); //todo lang
+            if ($e->getMessage() == "statistics_not_found") js_alert(lang("statistics_not_found_message"), base_url("statistics/"));
         }
 
 
-        $this->load->view("templates/header", array("title" => "Statistics")); // todo lang
+        $this->load->view("templates/header", array("title" => lang("statistics_title")));
         $this->load->view("templates/menu");
 
         $this->load->view("statistics/view_statistics", array("data" => $result_array));
@@ -87,14 +87,14 @@ class Statistics extends CI_Controller
                 $result_array = array();
                 $result_array = $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config);
             } catch (Exception $e) {
-                if ($e->getMessage() == "wrong_statistics_type") js_alert("Statistics type not found", base_url("statistics/")); //todo lang
-                if ($e->getMessage() == "wrong_source_table") js_alert("Statistics Source table not found", base_url("statistics/")); //todo lang
-                if ($e->getMessage() == "wrong_selected_columns") js_alert("Statistics Selected Columns not found", base_url("statistics/")); //todo lang
-                if ($e->getMessage() == "wrong_order") js_alert("Statistics Order not found", base_url("statistics/")); //todo lang
-                if ($e->getMessage() == "wrong_order_by") js_alert("Statistics Order By not found", base_url("statistics/")); //todo lang
+                if ($e->getMessage() == "wrong_statistics_type") js_alert(lang("statistics_type_not_found"), base_url("statistics/"));
+                if ($e->getMessage() == "wrong_source_table") js_alert(lang("statistics_source_table_missing"), base_url("statistics/"));
+                if ($e->getMessage() == "wrong_selected_columns") js_alert(lang("statistics_select_columns_missing"), base_url("statistics/"));
+                if ($e->getMessage() == "wrong_order") js_alert(lang("statistics_order_missing"), base_url("statistics/"));
+                if ($e->getMessage() == "wrong_order_by") js_alert(lang("statistics_order_by_missing"), base_url("statistics/"));
             }
         } else {
-            $this->load->view("templates/header", array("title" => "Statistics")); // todo lang
+            $this->load->view("templates/header", array("title" => lang("statistics_title")));
             $this->load->view("templates/menu");
 
             $this->load->view("statistics/add_statistics");

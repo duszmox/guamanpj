@@ -1,6 +1,6 @@
 <div class="container bg-white shadow">
     <h2 class="statistics-h2">
-        <p><?php echo lang("statistics_title") ?></p>
+        <p><?php echo lang("statistics_label") ?></p>
     </h2>
         <?php
         if (has_permission("admin")) {
