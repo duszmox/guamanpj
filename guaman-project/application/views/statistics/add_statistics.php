@@ -15,7 +15,7 @@ $input_normal[0] = array(
     'name'  => 'statistics_name',
     'id'    => 'statistics_name',
     'placeholder' => 'Statistics name', //  todo lang "Statistics name" to language
-    'class' => ''
+    'class' => 'roundeded'
 );
 $input_normal[1] = array(
     "type" => "number",
@@ -57,7 +57,7 @@ $input_submit = array(
     'name'  => 'submit',
     'id'    => 'submit',
     'value' => 'OK', // todo lang "Statistics name" to language
-    'class' => ''
+    'class' => 'btn btn-primary'
 );
 
 $input_options = array(
@@ -65,7 +65,8 @@ $input_options = array(
     "DESC" => "DESC"
 );
 echo form_open("statistics/add", "class='".$form_class."' id='".$form_id."'");
-echo "<div>";
+echo "<div class='card statistics-add-card container'>";
+echo "<div class='card-body'>";
 foreach ($input_normal as $key => $value){
 
     echo form_input($value) . "<br>";
@@ -73,6 +74,7 @@ foreach ($input_normal as $key => $value){
 echo form_dropdown('order', $input_options, 'ASC')."<br>";
 
 echo form_input($input_submit);
+echo "</div>";
 echo "</div>";
 echo "<form>";
 ?>
