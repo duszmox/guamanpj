@@ -68,6 +68,7 @@ class Statistics extends CI_Controller
 
     public function add()
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission("admin");
         if (NULL !== $this->input->post("statistics_name") && (NULL !== $this->input->post("statistics_type"))) {
             if (NULL !== $this->input->post("selected_columns") && NULL !== $this->input->post("source_table")) {

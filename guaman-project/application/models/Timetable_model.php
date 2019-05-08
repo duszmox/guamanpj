@@ -123,6 +123,14 @@ class Timetable_model extends CI_Model{
         $this->db->insert(self::$TABLE_NAME);
         return true;
     }
+    public function get_max_id(){
+        $max_id = 0;
+        $result_array = $this->db->get(self::$TABLE_NAME)->result_array();
+        foreach($result_array as $key => $value){
+            if($value['id'] > $max_id)$max_id = $value['id'];
+        }
+        return $max_id;
+    }
 
     /**
      * @param $user_array

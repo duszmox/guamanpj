@@ -46,18 +46,24 @@ class Timetable extends CI_Controller
 
     public function manage_event($event = "")
     {
+        $event_types = $this->Timetable_model->get_timetable_event_types();
         if ($event == "") {
             $data = array(array());
+
         } else {
             $data = $this->Timetable_model->get_event($event);
+
             if (empty($data)) {
                 js_alert("Invalid event id", base_url("timetable/"));
             }
         }
+
+
+
         $this->load->view("templates/header", array('page_title' => "Manage Event"));
         $this->load->view("templates/menu");
 
-        $this->load->view("timetable/manage_event", array("data" => $data[0]));
+        $this->load->view("timetable/manage_event", array("data" => $data[0], "event_types" => $event_types));
         $this->load->view("templates/footer");
     }
 
