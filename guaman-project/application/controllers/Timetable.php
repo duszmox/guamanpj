@@ -26,7 +26,7 @@ class Timetable extends CI_Controller
         $this->load->model("Account_model");
         $user = $this->Account_model::$user_id;
 
-        $this->load->view("templates/header", array("page_title" => "Timetable")); // todo lang (a "Timetable")-t
+        $this->load->view("templates/header", array("page_title" => lang("timetable_label")));
         $this->load->view("templates/menu");
         $events_array = $this->Timetable_model->get_events_by_user($user);
 
