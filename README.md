@@ -1,4 +1,4 @@
 # Guaman Project
 
 
-Ez Egy project pont.
+Ez Egy project pont
