@@ -8,20 +8,20 @@ $inputs_array[0] = array(
     "type" => "text",
     'name' => 'event_title',
     'id' => 'event_title',
-    'placeholder' => "Event Title", // todo lang "Statistics name" to language
+    'placeholder' => lang('event_title'),
     'class' => ''
 );
 $inputs_array[1] = array(
     "type" => "text",
     'name' => 'event_place',
     'id' => 'event_place',
-    'placeholder' => "Event Place", // todo lang "Statistics name" to language
+    'placeholder' => lang('event_place'),
     'class' => ''
 );
 
 $inputs_options[0] = array(
-    "TRUE" => "TRUE", //todo lang
-    "FALSE" => "FALSE", //todo lang
+    "TRUE" => lang('event_true'),
+    "FALSE" => lang('event_false'),
 );
 $inputs_array[2] = array(
     "type" => "datetime-local",
@@ -41,7 +41,7 @@ $inputs_array[4] = array(
     "type" => "text",
     'name' => 'event_comment',
     'id' => 'event_comment',
-    'placeholder' => "Event comment", // todo lang
+    'placeholder' => lang('event_comment'),
     'class' => ''
 );
 
@@ -54,7 +54,7 @@ $input_submit = array(
     "type" => "submit",
     'name'  => 'submit_add',
     'id'    => 'submit_add',
-    'value' => 'ADD', // todo lang "Statistics name" to language
+    'value' => lang('event_add'),
     'class' => ''
 );
 
@@ -84,13 +84,13 @@ echo "<div>";
 
 foreach ($inputs_array as $key => $value) {
     if($value['name'] == "event_start"){
-        echo "Event Start : "; //todo lang
+        echo lang("event_start");
     }
     if($value['name'] == "event_end"){
-        echo "Event End : "; //todo lang
+        echo lang("event_end");
     }
     if($value['name'] == "event_title"){
-        echo ""; //todo lang
+        echo lang("event_title");
     }
 
     //normal

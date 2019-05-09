@@ -130,3 +130,13 @@ $lang["statistics_config_json"] = "Statistics Config JSON";
 $lang["big_ok"] = "OK";
 $lang["small_ok"] = "ok";
 $lang["normail_ok"] = "Ok";
+$lang["event_title"] = "Event Title";
+$lang["event_start"] = "Event Start: ";
+$lang["event_end"] = "Event End: ";
+$lang["event_place"] = "Event Place";
+$lang["event_true"] = "TRUE";
+$lang["event_false"] = "FALSE";
+$lang["event_ADD"] = "ADD";
+$lang["event_comment"] = "Event Comment";
+
+
