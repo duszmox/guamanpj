@@ -15,42 +15,42 @@ $input_normal[0] = array(
     'name'  => 'statistics_name',
     'id'    => 'statistics_name',
     'placeholder' => lang('statistics_name'),
-    'class' => 'roundeded'
+    'class' => 'rounded-2'
 );
 $input_normal[1] = array(
     "type" => "number",
     'name'  => 'statistics_type',
     'id'    => 'statistics_type',
     'placeholder' => lang('statistics_type_id'),
-    'class' => ''
+    'class' => 'rounded-2'
 );
 $input_normal[2] = array(
     "type" => "number",
     'name'  => 'source_table',
     'id'    => 'source_table',
     'placeholder' => lang('source_table_id'),
-    'class' => ''
+    'class' => 'rounded-2'
 );
 $input_normal[3] = array(
     "type" => "text",
     'name'  => 'selected_columns',
     'id'    => 'selected_columns',
     'placeholder' => lang('selected_columns_only'),
-    'class' => ''
+    'class' => 'rounded-2'
 );
 $input_normal[4] = array(
     "type" => "text",
     'name'  => 'order_by',
     'id'    => 'order_by',
     'placeholder' => lang('columns_order_by'),
-    'class' => ''
+    'class' => 'rounded-2'
 );
 $input_normal[6] = array(
     "type" => "text",
     'name'  => 'statistics_config',
     'id'    => 'statistics_config',
     'placeholder' => lang('statistics_config_json'),
-    'class' => ''
+    'class' => 'rounded-2'
 );
 $input_submit = array(
     "type" => "submit",
@@ -62,7 +62,8 @@ $input_submit = array(
 
 $input_options = array(
     "ASC" => "ASC",
-    "DESC" => "DESC"
+    "DESC" => "DESC",
+    'class' => 'list'
 );
 echo form_open("statistics/add", "class='".$form_class."' id='".$form_id."'");
 echo "<div class='card statistics-add-card container'>";

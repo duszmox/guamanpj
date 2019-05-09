@@ -138,5 +138,3 @@ $lang["event_true"] = "TRUE";
 $lang["event_false"] = "FALSE";
 $lang["event_ADD"] = "ADD";
 $lang["event_comment"] = "Event Comment";
-
-
