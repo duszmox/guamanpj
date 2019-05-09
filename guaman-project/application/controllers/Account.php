@@ -75,7 +75,8 @@ class Account extends CI_Controller
                     $this->Account_model->register_user(
                         $this->input->post("username"),
                         $this->input->post("password"),
-                        $this->input->post("email")
+                        $this->input->post("email"),
+                        $this->input->post("nice_username")
                     );
                 } catch (Exception $exception) {
                     switch ($exception->getMessage()) {

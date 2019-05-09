@@ -118,7 +118,7 @@ class Account_model extends CI_Model
         return $query->num_rows() == 0;
     }
 
-    function register_user($username, $password, $email)
+    function register_user($username, $password, $email, $nice_username)
     {
 
         if (!$this->is_available_username($username)) {
@@ -129,7 +129,8 @@ class Account_model extends CI_Model
             $this->db->insert(self::$TABLE_NAME, array(
                 "username" => $username,
                 "password_hash" => Validator::encrypt($password),
-                "email" => $email
+                "email" => $email,
+                "nice_username" => $nice_username
             ));
             return ($this->db->affected_rows() == 1) ? TRUE : FALSE;
         }

@@ -19,11 +19,12 @@ class Timetable extends CI_Controller
     }
 
     /**
-     * @param int $user
+     * @param string $user
      */
     public function index($user = "")
     {
         $this->load->model("Account_model");
+        /** @var string $user_id */
         $user = $this->Account_model::$user_id;
 
         $this->load->view("templates/header", array("page_title" => lang("timetable_label")));
