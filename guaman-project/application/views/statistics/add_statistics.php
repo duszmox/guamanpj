@@ -14,49 +14,49 @@ $input_normal[0] = array(
     "type" => "text",
     'name'  => 'statistics_name',
     'id'    => 'statistics_name',
-    'placeholder' => 'Statistics name', //  todo lang "Statistics name" to language
+    'placeholder' => lang('statistics_name'),
     'class' => 'roundeded'
 );
 $input_normal[1] = array(
     "type" => "number",
     'name'  => 'statistics_type',
     'id'    => 'statistics_type',
-    'placeholder' => 'Statistics type ID', // todo lang "Statistics name" to language
+    'placeholder' => lang('statistics_type_id'),
     'class' => ''
 );
 $input_normal[2] = array(
     "type" => "number",
     'name'  => 'source_table',
     'id'    => 'source_table',
-    'placeholder' => 'Source Table ID', // todo lang "Statistics name" to language
+    'placeholder' => lang('source_table_id'),
     'class' => ''
 );
 $input_normal[3] = array(
     "type" => "text",
     'name'  => 'selected_columns',
     'id'    => 'selected_columns',
-    'placeholder' => 'Selected Columns Separated with ONLY ,', // todo lang "Statistics name" to language
+    'placeholder' => lang('selected_columns_only'),
     'class' => ''
 );
 $input_normal[4] = array(
     "type" => "text",
     'name'  => 'order_by',
     'id'    => 'order_by',
-    'placeholder' => 'Column Order By', // todo lang "Statistics name" to language
+    'placeholder' => lang('columns_order_by'),
     'class' => ''
 );
 $input_normal[6] = array(
     "type" => "text",
     'name'  => 'statistics_config',
     'id'    => 'statistics_config',
-    'placeholder' => 'Statistics Config JSON', // todo lang "Statistics name" to language
+    'placeholder' => lang('statistics_config_json'),
     'class' => ''
 );
 $input_submit = array(
     "type" => "submit",
     'name'  => 'submit',
     'id'    => 'submit',
-    'value' => 'OK', // todo lang "Statistics name" to language
+    'value' => lang('big_ok'),
     'class' => 'btn btn-primary'
 );
 

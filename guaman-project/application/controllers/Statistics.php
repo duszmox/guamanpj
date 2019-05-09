@@ -94,7 +94,7 @@ class Statistics extends CI_Controller
                             if ($e->getMessage() == "wrong_order") js_alert(lang("statistics_order_missing"), base_url("statistics/"));
                             if ($e->getMessage() == "wrong_order_by") js_alert(lang("statistics_order_by_missing"), base_url("statistics/"));
                         }
-                        if($result_bool)js_alert("Sikeres statisztika felvitel", base_url("statistics/")); //todo lang
+                        if($result_bool)js_alert(lang('succesful_add_statistics'), base_url("statistics/"));
                     }
                 }
             }
