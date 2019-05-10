@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-12 table-div-container" style="visibility: hidden;" id="data-table-column">
+    <div class="col-sm-12 table-div-container" style="visibility: hidden;position: absolute;z-index: 1" id="data-table-column" >
         <div class="card">
             <div class="card-body">
 
@@ -10,49 +10,48 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-auto folder-div-container" style="position: absolute; right:0;">
-        <div class="card">
-            <div class="card-header">
+    <div class="" style="position: absolute;right:20px ;z-index: 1;background-color: #ffffff !important;">
+        <div class="card col-sm-auto" >
+            <div class="card-header card-header-2 ">
                 <h2 class="d-inline tables_label"><?php echo lang("tables_label"); ?></h2>
 
                 <div class="hideshowbtn d-inline">
                     <form class="d-inline" action="" method="post">
-                        <input name="zero" class="btn btn-primary d-inline" id="show-or-hide-btn" style="margin-bottom: 10px; float: right;"
-                               type="button" value="<?php echo lang("tables_button_hide")?>" onclick="change(getElementById('show-or-hide-btn'))"/>
+                        <input name="zero" class="btn btn-primary d-inline" id="show-or-hide-btn"
+                               style="margin-bottom: 10px; float: right;"
+                               type="button" value="<?php echo lang("tables_button_hide") ?>"
+                               onclick="change(getElementById('show-or-hide-btn'))"/>
                     </form>
+                    <hr>
                     <script>
                         function change(el) {
                             if (el.value === "<?php echo lang("tables_button_hide")?>") {
                                 el.value = "<?php echo lang("tables_button_show")?>";
                                 var folderContainer = $("div.folders-container");
-                                folderContainer.toggle("fast", function(){
+                                folderContainer.toggle("fast", function () {
 
-                                    });
-                                var tableDivContainer = $(".table-div-container");
-
+                                });
 
 
                                 $(".tables_label").text("");
 
 
-                            }
-                        else{
-                            el.value = "<?php echo lang("tables_button_hide")?>";
-                            $("div.folders-container").toggle("fast", function(){
+                            } else {
+                                el.value = "<?php echo lang("tables_button_hide")?>";
+                                $("div.folders-container").toggle("fast", function () {
 
-                            });
+                                });
                                 $(".tables_label").text("<?php echo lang("tables_title")?>");
-                        }
+                            }
                         }
                     </script>
 
+
                 </div>
-
-
-            </div>
-            <div class="card-body folders-container" id="table-list-container">
-                ..
-                .
+                <div class="card-body folders-container" id="table-list-container">
+                    ..
+                    .
+                </div>
             </div>
         </div>
     </div>
@@ -120,8 +119,9 @@
         padding-left: 1em;
         list-style-position: inside;
     }
-    .tables-container{
-        display:inline-block;
+
+    .tables-container {
+        display: inline-block;
 
     }
 </style>

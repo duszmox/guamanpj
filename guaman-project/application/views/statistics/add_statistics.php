@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" type="text/css" href="<?php echo css_url("table.css");?>">
 <?php
 /**
  * Created by PhpStorm.
@@ -63,16 +63,17 @@ $input_submit = array(
 $input_options = array(
     "ASC" => "ASC",
     "DESC" => "DESC",
-    'class' => 'list'
 );
+
 echo form_open("statistics/add", "class='".$form_class."' id='".$form_id."'");
 echo "<div class='card statistics-add-card container'>";
 echo "<div class='card-body'>";
+echo "<h2 class='add-statistics-h2'>" . lang('statistics_add') . "</h2>";
 foreach ($input_normal as $key => $value){
 
     echo form_input($value) . "<br>";
 }
-echo form_dropdown('order', $input_options, 'ASC')."<br>";
+echo form_dropdown('order', $input_options, 'ASC', array("class" => "list rounded-2-list"))."<br>";
 
 echo form_input($input_submit);
 echo "</div>";

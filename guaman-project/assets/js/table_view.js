@@ -256,12 +256,12 @@ function insertRow(table_name) {
     $.post(base_url + "database/insert_new_row/" + table_name, function (data) {
         if (data === "success") {
             //alert("ok");
-        } else {
+        }/* else {
             alert("Unexpected error. Please contact with the developers! [support@guamanpj.com]");
-        }
-    }).fail(function () {
+        }*/
+    })/*.fail(function () {
         alert("Unexpected error. Please contact with the developers! [support@guamanpj.com]");
-    }).always(function () {
+    })*/.always(function () {
         loadTable(table_name);
     });
 }

@@ -47,7 +47,6 @@ if (!isset($title)) {
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="theme-color" content="#ffffff">
 
-
 </head>
-<body>
+<body class="sidebar-toggled">
 <div id="wrapper">
