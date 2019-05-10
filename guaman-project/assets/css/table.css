@@ -12,7 +12,22 @@
     border: 1px solid #d1d3e2;
     border-radius: .35rem;
 
+ }.rounded-2-list {
+    display: block;
+    width: 20%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #6e707e;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d1d3e2;
+    border-radius: .35rem;
+
  }
+
 .statistics-add-card {
     margin-left: 20vm;
     margin-right: 20vm;
