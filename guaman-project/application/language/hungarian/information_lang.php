@@ -136,5 +136,6 @@ $lang["event_end"] = "Event End: ";
 $lang["event_place"] = "Event Place";
 $lang["event_true"] = "TRUE";
 $lang["event_false"] = "FALSE";
-$lang["event_ADD"] = "ADD";
+$lang["event_add"] = "ADD";
+$lang["event_edit"] = "EDIT";
 $lang["event_comment"] = "Event Comment";

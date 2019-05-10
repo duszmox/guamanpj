@@ -28,7 +28,7 @@ $inputs_array[2] = array(
     "type" => "datetime-local",
     'name' => 'event_start',
     'id' => 'event_start',
-    'value' => date("Y-m-d") . "T" . date("G:i"),
+    'value' => date("Y-m-d") . "T" . date("H:i"),
     'class' => ''
 );
 
@@ -36,7 +36,7 @@ $inputs_array[3] = array(
     "type" => "datetime-local",
     'name' => 'event_end',
     'id' => 'event_end',
-    'value' => date("Y-m-d") . "T" . date("G:i"),
+    'value' => date("Y-m-d") . "T" . date("H:i"),
     'class' => ''
 );
 
@@ -59,49 +59,49 @@ $input_submit = array(
 );
 //------------------------
 
-foreach ($event_types as $key => $value) {
-    $inputs_options[1][$value] = $value;
+foreach ($event_types as $key2 => $value2) {
+    $inputs_options[1][$value2] = $value2;
 }
 
 
 echo form_open("timetable/manage_event", "class='" . $form_class . "' id='" . $form_id . "'");
 if (!empty($data)) {
-    $possible_data = array("event_title", "event_place", "event_start", "event_start", "event_end");
+    $possible_data = array("event_title", "event_place", "event_comment", "event_start", "event_end");
 
-    foreach ($inputs_array as $key2 => $value2) {
-        foreach ($possible_data as $key => $value) {
-            if ($value2['name'] == "event_start" || $value2['name'] == "event_end") {
-                continue;
-            }
-            if($inputs_array[$key]['name'] == "event_start" || $inputs_array[$key2]['name'] == "event_end"){
-                $data[$value] = str_replace(" ", "T", $data[$value]);
-                $inputs_array[$key2]['value'] = "asd";
-            }
-            echo $data[$value]."<br>";
-            if ($value2['name'] == $value) {
+    foreach ($inputs_array as $key => $value) {
+        foreach ($possible_data as $key2 => $value2) {
+            if ($inputs_array[$key]['name'] == "event_start" || $inputs_array[$key]['name'] == "event_end") {
+                if ($value2 == "event_start" || $value2 == "event_end") {
+                    if (strlen($data[$value2]) == 15) {
+                        $data[$value2] = str_replace(" ", "T0", $data[$value2]);
+                    } else {
+                        $data[$value2] = str_replace(" ", "T", $data[$value2]);
+                    }
+                    $inputs_array[$key]['value'] = $data[$value2];
 
-                $inputs_array[$key2]['value'] = $data[$value];
-                echo $data[$value]."<br>";
-                echo $inputs_array[$key2]['value'];
+                }
+            }
+
+            if ($value['name'] == $value2) {
+
+                $inputs_array[$key]['value'] = $data[$value2];
 
             }
         }
     }
 }
-foreach ($inputs_array as $key => $value) {
+foreach ($inputs_array as $key2 => $value2) {
 
-    if ($value['name'] == "event_place") {
+    if ($value2['name'] == "event_place") {
 
-        $var_event_type = (!empty($data))?$data['event_type']:"";
-        $var_all_day = (!empty($data))?$data['event_type']:"";
+        $var_event_type = (!empty($data)) ? $data['event_type'] : "";
+        $var_all_day = (!empty($data)) ? $data['event_type'] : "";
 
         echo form_dropdown('event_type', $inputs_options[1], $var_event_type, array("class" => "chosen")) . "<br>";
         echo form_dropdown('all_day', $inputs_options[0], $var_all_day) . "<br>";
 
     }
-    echo form_input($value) . "<br>";
+    echo form_input($value2) . "<br>";
 
 }
 echo form_input($input_submit);
-?>
-
