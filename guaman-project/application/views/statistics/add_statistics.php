@@ -15,7 +15,7 @@ $input_normal[0] = array(
     'name'  => 'statistics_name',
     'id'    => 'statistics_name',
     'placeholder' => lang('statistics_name'),
-    'class' => 'rounded-2'
+    'class' => 'rounded-2 '
 );
 $input_normal[1] = array(
     "type" => "number",

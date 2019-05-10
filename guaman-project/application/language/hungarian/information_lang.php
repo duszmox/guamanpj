@@ -140,3 +140,4 @@ $lang["event_add"] = "ADD";
 $lang["event_edit"] = "EDIT";
 $lang["event_comment"] = "Event Comment";
 $lang["statistics_add"] = "Add Statistics";
+$lang["manage_event_title"] = "Manage Event";

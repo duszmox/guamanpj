@@ -12,9 +12,9 @@
     border: 1px solid #d1d3e2;
     border-radius: .35rem;
 
- }.rounded-2-list {
+ }.rounded-2-date {
     display: block;
-    width: 20%;
+    width: auto;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -35,4 +35,10 @@
 .list {
     margin-bottom: 20px;
     border-radius: .35rem;
+}
+.h2-title-manage {
+    margin-bottom: 20px;
+}
+.event-title {
+    width: 17% !important;
 }
