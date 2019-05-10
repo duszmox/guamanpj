@@ -12,7 +12,7 @@
     </div>
     <div class="" style="position: absolute;right:20px ;z-index: 1;background-color: #ffffff !important;">
         <div class="card col-sm-auto" >
-            <div class="card-header">
+            <div class="card-header card-header-2 ">
                 <h2 class="d-inline tables_label"><?php echo lang("tables_label"); ?></h2>
 
                 <div class="hideshowbtn d-inline">
@@ -22,6 +22,7 @@
                                type="button" value="<?php echo lang("tables_button_hide") ?>"
                                onclick="change(getElementById('show-or-hide-btn'))"/>
                     </form>
+                    <hr>
                     <script>
                         function change(el) {
                             if (el.value === "<?php echo lang("tables_button_hide")?>") {
