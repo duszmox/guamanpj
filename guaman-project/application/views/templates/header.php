@@ -46,7 +46,12 @@ if (!isset($title)) {
 	<link rel="mask-icon" href="https://guamanpj.com/guaman-project/favicon/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="msapplication-TileColor" content="#ffffff">
 	<meta name="theme-color" content="#ffffff">
+<script>
 
+$("document").ready(function (e) {
+    sidebarToggle();
+});
+</script>
 
 </head>
 <body>
