@@ -10,7 +10,6 @@
         ?>
 
     <?php
-    // todo gyulus gui az adott array alapján $data
     echo "<div class='statistics-div'><table class='table'>";
     foreach ($data as $key => $value) {
         echo "<thead class='statistics-table'><tr>\n";
