@@ -54,7 +54,23 @@ class Timetable_model extends CI_Model
         $this->db->select("id");
         $this->db->limit(1);
         $result = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("nice_name" => $nice_name))->result_array();
+
         return $result[0]['id'];
+    }
+
+    /**
+     * @param $event_type_id
+     * @return bool
+     */
+    public function does_event_type_exists($event_type_id)
+    {
+        $this->db->limit(0);
+        $result = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("id" => $event_type_id))->result_array();
+        if (empty($result)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
@@ -63,9 +79,13 @@ class Timetable_model extends CI_Model
      */
     public function get_nice_name_by_id($id)
     {
+        if(self::does_event_type_exists($id)){
+            throw new Exception("invalid id"); //todo lang + exception kezelés
+        }
         $this->db->select("nice_name");
         $this->db->limit(1);
         $result = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("id" => $id))->result_array();
+
         return $result[0]['nice_name'];
     }
 

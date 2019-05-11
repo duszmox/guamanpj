@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="<?php echo css_url("table.css");?>">
+<link rel="stylesheet" type="text/css" href="<?php echo css_url("table.css"); ?>">
 
 <?php
 //inputs variables
@@ -28,15 +28,8 @@ $inputs_options[0] = array(
     "FALSE" => lang('event_false'),
 );
 
+$inputs_options[1] = array(array());
 $inputs_array[2] = array(
-    "type" => "text",
-    'name' => 'event_type',
-    'id' => 'event_type',
-    'placeholder' => "Event type", //todo lang
-    'class' => 'rounded-2-date',
-    "list" => "event_type_list"
-);
-$inputs_array[3] = array(
     "type" => "datetime-local",
     'name' => 'event_start',
     'id' => 'event_start',
@@ -44,7 +37,7 @@ $inputs_array[3] = array(
     'class' => 'rounded-2-date'
 );
 
-$inputs_array[4] = array(
+$inputs_array[3] = array(
     "type" => "datetime-local",
     'name' => 'event_end',
     'id' => 'event_end',
@@ -52,7 +45,7 @@ $inputs_array[4] = array(
     'class' => 'rounded-2-date'
 );
 
-$inputs_array[5] = array(
+$inputs_array[4] = array(
     "type" => "text",
     'name' => 'event_comment',
     'id' => 'event_comment',
@@ -70,14 +63,14 @@ $input_submit = array(
     'class' => 'btn btn-primary'
 );
 //------------------------
-echo "<datalist id='event_type_list'>";
 foreach ($event_types as $key => $value) {
-    echo "<option value='".$value['nice_name']."'>";
+
+    $inputs_options[1][$value['nice_name']] = $value['nice_name'];
+
 }
-echo "</datalist>";
 echo "<datalist id='event_place_list'>";
 foreach ($event_places as $key => $value) {
-    echo "<option value='".$value."'>";
+    echo "<option value='" . $value . "'>";
 }
 echo "</datalist>";
 echo "<div class='card statistics-add-card container'>";
@@ -86,8 +79,7 @@ echo "<h2 class='h2-title-manage'>" . lang('manage_event_title') . "</h2>";
 echo form_open("timetable/manage_event", "class='" . $form_class . "' id='" . $form_id . "'");
 
 if (!empty($data)) {
-    $possible_data = array("event_title", "event_place", "event_comment", "event_start", "event_end", "event_type");
-
+    $possible_data = array("event_title", "event_place", "event_comment", "event_start", "event_end");
     foreach ($inputs_array as $key => $value) {
         foreach ($possible_data as $key2 => $value2) {
             if ($inputs_array[$key]['name'] == "event_start" || $inputs_array[$key]['name'] == "event_end") {
@@ -98,14 +90,10 @@ if (!empty($data)) {
                         $data[$value2] = str_replace(" ", "T", $data[$value2]);
                     }
                     $inputs_array[$key]['value'] = $data[$value2];
-
                 }
             }
-
             if ($value['name'] == $value2) {
-
                 $inputs_array[$key]['value'] = $data[$value2];
-
             }
         }
     }
@@ -114,10 +102,11 @@ foreach ($inputs_array as $key2 => $value2) {
 
     if ($value2['name'] == "event_place") {
 
-        $var_event_type = (!empty($data)) ? $data['event_type'] : "";
-        $var_all_day = (!empty($data)) ? $data['event_type'] : "";
+        $var_all_day = ($data['all_day'] == 1) ? "TRUE" : "FALSE";
 
         echo form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>";
+
+        echo form_dropdown('event_type', $inputs_options[1], $actual_event_type, array("class" => "rounded-2-date")) . "<br>";
 
     }
     echo form_input($value2) . "<br>";
@@ -126,3 +115,4 @@ foreach ($inputs_array as $key2 => $value2) {
 echo form_input($input_submit);
 echo "</div>";
 echo "</div>";
+//todo az inputok elé kitenni hogy mikre vonatkoznak

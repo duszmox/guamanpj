@@ -53,32 +53,50 @@ class Timetable extends CI_Controller
         $this->load->view("templates/footer");
     }
 
-    public function manage_event($event = "")
+    public function manage_event_add()
     {
 
 
         $event_types = $this->Timetable_model->get_timetable_event_types();
         $event_places = $this->Timetable_model->get_timetable_event_places();
-        if ($event == "") {
-            $data = array(array());
 
-        } else {
-            $data = $this->Timetable_model->get_event($event);
-
-            if (empty($data)) {
-                js_alert("Invalid event id", base_url("timetable/"));
-            }
-        }
 
 
         $this->load->view("templates/header", array('page_title' => "Manage Event"));
         $this->load->view("templates/menu");
 
-        $this->load->view("timetable/manage_event", array("data" => $data[0], "event_types" => $event_types, "event_places" => $event_places));
+        $this->load->view("timetable/manage_event_add", array("event_types" => $event_types, "event_places" => $event_places));
         $this->load->view("templates/footer");
     }
 
-    public function manage_event_add()
+    /**
+     * @param string $event
+     */
+    public function manage_event_edit($event = "")
+    {
+        $data = array();
+        if ($event == "") {
+            js_alert("No event picked", base_url("timetable/"));
+        } else {
+            $data = $this->Timetable_model->get_event($event);
+            if (empty($data)) {
+                js_alert("Invalid event id", base_url("timetable/"));
+            }
+        }
+        $event_types = $this->Timetable_model->get_timetable_event_types();
+        $event_places = $this->Timetable_model->get_timetable_event_places();
+
+        $actual_event_type = $this->Timetable_model->get_nice_name_by_id($data[0]['event_type']);
+
+
+        $this->load->view("templates/header", array('page_title' => "Manage Event"));
+        $this->load->view("templates/menu");
+
+        $this->load->view("timetable/manage_event_edit", array("data" => $data[0],"event_types" => $event_types, "event_places" => $event_places, "actual_event_type" => $actual_event_type));
+        $this->load->view("templates/footer");
+    }
+
+    public function manage_event_upload_add()
     {
         if ($this->input->post("submit_button") == lang("event_add")) {
             if (NULL !== $this->input->post("event_title")) {
@@ -107,7 +125,7 @@ class Timetable extends CI_Controller
         }
     }
 
-    public function manage_event_edit()
+    public function manage_event_upload_edit()
     {
         if ($this->input->post("submit_button") == lang("event_edit")) {
             if (NULL !== $this->input->post("event_title")) {
