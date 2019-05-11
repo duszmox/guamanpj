@@ -29,12 +29,12 @@ input:checked + label {
 .adds_statistics {
    font-size: 20px;
     display: inline-block;
-
-    margin-top: 20px;
+    margin-top: 18px;
 }
 .statistics-h2 {
-display: inline-block;
+    display: inline-block;
     padding-top: 20px;
+    font-size: 25px;
 }
 .statistics-div {
     padding-bottom: 20px;

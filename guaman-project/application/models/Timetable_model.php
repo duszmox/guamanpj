@@ -110,7 +110,7 @@ class Timetable_model extends CI_Model
 
     public function has_permission($user)
     {
-        //Get has_permission from HR
+        //todo Get has_permission from HR
         $this->load->model("HR_model");
         return $this->HR_model->has_permission($user);
     }
@@ -130,7 +130,17 @@ class Timetable_model extends CI_Model
     {
 
         //todo test what we can
+        if (!self::is_event_type_exists($event_type)) {
+            self::add_event_type($event_type);
+        }
+        $new_event_type = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("event_type" => $event_type))->result_array();
 
+        $event_start_part = explode("T", $event_start);
+        $event_end_part = explode("T", $event_end);
+        if ($event_end_part[0] > $event_start_part[1]) {
+            throw new Exception("invalid_event_end");
+            //todo lekezelni ott ahol használjuk
+        }
 
         $this->db->set('event_title', $event_title);
         $this->db->set('event_place', $event_place);
@@ -149,6 +159,7 @@ class Timetable_model extends CI_Model
     /**
      * @param $event
      * @param $user
+     * @return bool
      * @return bool
      */
     public function remove_user_from_event($event, $user)
@@ -171,11 +182,31 @@ class Timetable_model extends CI_Model
         return $this->db->get_where(self::$PARTICIPANTS_TABLE_NAME, array("user_id" => $user))->result_array();
     }
 
+    public function is_event_type_exists($event_type)
+    {
+        $result_array = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("id", $event_type))->result_array();
+        if (empty($result_array)) {
+            return false;
+        } elseif (!empty($result_array)) {
+            return true;
+        }
+    }
+
     public function add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type)
     {
 
         //todo test what we can
+        if (!self::is_event_type_exists($event_type)) {
+            self::add_event_type($event_type);
+        }
+        $new_event_type = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("event_type" => $event_type))->result_array();
 
+        $event_start_part = explode("T", $event_start);
+        $event_end_part = explode("T", $event_end);
+        if ($event_end_part[0] > $event_start_part[1]) {
+            throw new Exception("invalid_event_end");
+            //todo lekezelni ott ahol használjuk
+        }
 
         $this->db->set('event_title', $event_title);
         $this->db->set('event_place', $event_place);
@@ -183,8 +214,14 @@ class Timetable_model extends CI_Model
         $this->db->set('event_start', $event_start);
         $this->db->set('event_end', $event_end);
         $this->db->set('event_comment', $event_comment);
-        $this->db->set('event_type', $event_type);
+        $this->db->set('event_type', $new_event_type[0]['id']);
         $this->db->insert(self::$TABLE_NAME);
+        return true;
+    }
+
+    public function add_event_type($event_type)
+    {
+        $this->db->insert(self::$EVENT_TYPE_TABLE_NAME, array("event_type" => $event_type));
         return true;
     }
 
@@ -258,8 +295,6 @@ class Timetable_model extends CI_Model
             return false;
         } elseif (!empty($result_array)) {
             return true;
-        } else {
-            throw new Exception($this->db->_error_message());
         }
     }
 

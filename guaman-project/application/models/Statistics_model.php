@@ -22,6 +22,9 @@ class Statistics_model extends CI_Model
 
     public function get_statistics()
     {
+        $this->db->select("id");
+        $this->db->select("statistics_name");
+
         return $this->db->get(self::$TABLE_NAME)->result_array();
     }
 

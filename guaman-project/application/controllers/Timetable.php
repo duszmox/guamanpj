@@ -17,7 +17,7 @@ class Timetable extends CI_Controller
         $this->load->model("Timetable_model");
 
         $this->load->model("Account_model");
-
+        require_status(Statuses::$LOGGED_IN);
     }
 
     /**
