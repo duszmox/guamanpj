@@ -61,7 +61,6 @@ class Timetable extends CI_Controller
         $event_places = $this->Timetable_model->get_timetable_event_places();
 
 
-
         $this->load->view("templates/header", array('page_title' => "Manage Event"));
         $this->load->view("templates/menu");
 
@@ -92,7 +91,7 @@ class Timetable extends CI_Controller
         $this->load->view("templates/header", array('page_title' => "Manage Event"));
         $this->load->view("templates/menu");
 
-        $this->load->view("timetable/manage_event_edit", array("data" => $data[0],"event_types" => $event_types, "event_places" => $event_places, "actual_event_type" => $actual_event_type));
+        $this->load->view("timetable/manage_event_edit", array("data" => $data[0], "event_types" => $event_types, "event_places" => $event_places, "actual_event_type" => $actual_event_type));
         $this->load->view("templates/footer");
     }
 
@@ -114,7 +113,15 @@ class Timetable extends CI_Controller
                                         $event_end = $this->input->post("event_end");
                                         $event_comment = $this->input->post("event_comment");
 
-                                        $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+                                        try {
+                                            $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+                                        } catch (Exception $e) {
+                                            if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
+                                            if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
+                                        }
+                                        if ($bool_query) {
+                                            js_alert("Kész az add", base_url("timetable/")); //todo lang
+                                        }
                                     }
                                 }
                             }
@@ -135,15 +142,28 @@ class Timetable extends CI_Controller
                             if (NULL !== $this->input->post("event_start")) {
                                 if (NULL !== $this->input->post("event_end")) {
                                     if (NULL !== $this->input->post("event_comment")) {
-                                        $event_title = $this->input->post("event_title");
-                                        $event_place = $this->input->post("event_place");
-                                        $all_day = $this->input->post("all_day");
-                                        $event_type = $this->input->post("event_type");
-                                        $event_start = $this->input->post("event_start");
-                                        $event_end = $this->input->post("event_end");
-                                        $event_comment = $this->input->post("event_comment");
+                                        if (NULL !== $this->input->post("event_id")) {
+                                            var_dump($this->input->post("event_id"));
+                                            $event_id = $this->input->post("event_id");
+                                            $event_title = $this->input->post("event_title");
+                                            $event_place = $this->input->post("event_place");
+                                            $all_day = $this->input->post("all_day");
+                                            $event_type = $this->input->post("event_type");
+                                            $event_start = $this->input->post("event_start");
+                                            $event_end = $this->input->post("event_end");
+                                            $event_comment = $this->input->post("event_comment");
 
-                                        $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+                                            try {
+                                                $event_id = $this->Timetable_model->get_event_type_id_by_event_title($this->Timetable_model->get_event_type_event_title_by_id($event_id));
+                                                $bool_query = $this->Timetable_model->edit_event($event_id, $event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+                                            } catch (Exception $e) {
+                                                if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
+                                                if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
+                                            }
+                                            if ($bool_query) {
+                                                       js_alert("Kész az edit", base_url("timetable/")); //todo lang
+                                            }
+                                        }
                                     }
                                 }
                             }

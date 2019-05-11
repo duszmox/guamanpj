@@ -34,7 +34,8 @@ $inputs_array[2] = array(
     'name' => 'event_start',
     'id' => 'event_start',
     'value' => date("Y-m-d") . "T" . date("H:i"),
-    'class' => 'rounded-2-date'
+    'class' => 'rounded-2-date',
+    'placeholder' => "Event Start"
 );
 
 $inputs_array[3] = array(
@@ -42,7 +43,8 @@ $inputs_array[3] = array(
     'name' => 'event_end',
     'id' => 'event_end',
     'value' => date("Y-m-d") . "T" . date("H:i"),
-    'class' => 'rounded-2-date'
+    'class' => 'rounded-2-date',
+    'placeholder' => "Event End"
 );
 
 $inputs_array[4] = array(
@@ -51,6 +53,12 @@ $inputs_array[4] = array(
     'id' => 'event_comment',
     'placeholder' => lang('event_comment'),
     'class' => 'rounded-2'
+);
+$inputs_array[5] = array(
+    "type" => "hidden",
+    'name' => 'event_id',
+    'id' => 'event_id',
+    'value' => $data['id']
 );
 
 $submit_value = (!empty($data)) ? lang("event_edit") : lang("event_add");
@@ -76,7 +84,7 @@ echo "</datalist>";
 echo "<div class='card statistics-add-card container'>";
 echo "<div class='card-body'>";
 echo "<h2 class='h2-title-manage'>" . lang('manage_event_title') . "</h2>";
-echo form_open("timetable/manage_event", "class='" . $form_class . "' id='" . $form_id . "'");
+echo form_open("timetable/manage_event_upload_edit", "class='" . $form_class . "' id='" . $form_id . "'");
 
 if (!empty($data)) {
     $possible_data = array("event_title", "event_place", "event_comment", "event_start", "event_end");
@@ -104,15 +112,19 @@ foreach ($inputs_array as $key2 => $value2) {
 
         $var_all_day = ($data['all_day'] == 1) ? "TRUE" : "FALSE";
 
-        echo form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>";
+        echo "All Day" . form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>"; //todo lang All Day
 
-        echo form_dropdown('event_type', $inputs_options[1], $actual_event_type, array("class" => "rounded-2-date")) . "<br>";
+        echo "Event type" . form_dropdown('event_type', $inputs_options[1], $actual_event_type, array("class" => "rounded-2-date")) . "<br>"; //todo lang Event_type
 
     }
-    echo form_input($value2) . "<br>";
-
+    if($value2['type'] != "hidden") {
+        echo $value2['placeholder'] . form_input($value2) . "<br>";
+    }else{
+        echo form_input($value2) . "<br>";
+    }
 }
 echo form_input($input_submit);
+echo form_close();
 echo "</div>";
 echo "</div>";
 //todo az inputok elé kitenni hogy mikre vonatkoznak

@@ -36,12 +36,7 @@ class Timetable_model extends CI_Model
         $event_types = array();
         $this->db->select("*");
         $result_array = $this->db->get(self::$EVENT_TYPE_TABLE_NAME)->result_array();
-        /*foreach($result_array as $key => $value){
-            foreach($value as $key2 => $value2){
-                if(!in_array($value2, $event_types)){
-                    $event_types[] = $value2;
-                }}
-        }*/
+
         return $result_array;
     }
 
@@ -56,6 +51,29 @@ class Timetable_model extends CI_Model
         $result = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("nice_name" => $nice_name))->result_array();
 
         return $result[0]['id'];
+    }
+
+    /**
+     * @param $event_title
+     * @return mixed
+     */
+    public function get_event_type_id_by_event_title($event_title){
+        $this->db->select("id");
+        $this->db->limit(1);
+        $result = $this->db->get_where(self::$TABLE_NAME, array("event_title" => $event_title))->result_array();
+
+        return $result[0]['id'];
+    }
+
+    /**
+     * @param $event_id
+     */
+    public function get_event_type_event_title_by_id($event_id){
+        $this->db->select("event_title");
+        $this->db->limit(1);
+        $result = $this->db->get_where(self::$TABLE_NAME, array("id" => $event_id))->result_array();
+
+        return $result[0]['event_title'];
     }
 
     /**
@@ -129,16 +147,32 @@ class Timetable_model extends CI_Model
     public function edit_event($id, $event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type)
     {
 
-        //todo test what we can
-        if (!self::is_event_type_exists($event_type)) {
-            self::add_event_type($event_type);
+        $result = self::get_timetable_event_types();
+        foreach($result as $key => $value){
+            foreach($value as $key2 => $value2){
+                if(!in_array($value2, $result)){
+                    $event_type_array[] = $value2;
+                }}
         }
-        $new_event_type = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("event_type" => $event_type))->result_array();
+        if (!in_array($event_type, $event_type_array)) {
+            throw new Exception("invalid_event_type");
+        }
+        foreach($result as $key => $value){
+
+            if($value['nice_name'] == $event_type){
+                $event_type_id = $value['id'];
+
+            }
+        }
+        $new_event_type = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("id" => $event_type_id))->result_array();
 
         $event_start_part = explode("T", $event_start);
         $event_end_part = explode("T", $event_end);
-        if ($event_end_part[0] > $event_start_part[1]) {
+
+        if ($event_end_part[0] < $event_start_part[0]) {
+
             throw new Exception("invalid_event_end");
+
             //todo lekezelni ott ahol használjuk
         }
 
@@ -148,7 +182,7 @@ class Timetable_model extends CI_Model
         $this->db->set('event_start', $event_start);
         $this->db->set('event_end', $event_end);
         $this->db->set('event_comment', $event_comment);
-        $this->db->set('event_type', $event_type);
+        $this->db->set('event_type', $new_event_type[0]['id']);
 
         $this->db->where('id', $id);
         $this->db->update(self::$TABLE_NAME);
@@ -196,15 +230,31 @@ class Timetable_model extends CI_Model
     {
 
         //todo test what we can
-        if (!self::is_event_type_exists($event_type)) {
-            self::add_event_type($event_type);
+
+        $result = self::get_timetable_event_types();
+        foreach($result as $key => $value){
+            foreach($value as $key2 => $value2){
+                if(!in_array($value2, $result)){
+                    $event_type_array[] = $value2;
+                }}
         }
-        $new_event_type = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("event_type" => $event_type))->result_array();
+        if (!in_array($event_type, $event_type_array)) {
+            throw new Exception("invalid_event_type");
+        }
+        foreach($result as $key => $value){
+
+            if($value['nice_name'] == $event_type){
+                $event_type_id = $value['id'];
+
+            }
+        }
+        $new_event_type = $this->db->get_where(self::$EVENT_TYPE_TABLE_NAME, array("id" => $event_type_id))->result_array();
 
         $event_start_part = explode("T", $event_start);
         $event_end_part = explode("T", $event_end);
-        if ($event_end_part[0] > $event_start_part[1]) {
-            throw new Exception("invalid_event_end");
+
+        if ($event_end_part[0] < $event_start_part[1]) {
+                throw new Exception("invalid_event_end");
             //todo lekezelni ott ahol használjuk
         }
 
