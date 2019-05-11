@@ -60,24 +60,24 @@ $inputs_array[5] = array(
     'class' => 'rounded-2'
 );
 
-$submit_placeholder = (!empty($data)) ? lang("event_edit") : lang("event_add");
+$submit_value = (!empty($data)) ? lang("event_edit") : lang("event_add");
 $submit_name = (!empty($data)) ? "submit_edit" : "submit_add";
 $input_submit = array(
     "type" => "submit",
-    'name' => $submit_name,
-    'id' => $submit_name,
-    'value' => $submit_placeholder,
+    'name' => "submit_button",
+    'id' => "submit_button",
+    'value' => $submit_value,
     'class' => 'btn btn-primary'
 );
 //------------------------
 echo "<datalist id='event_type_list'>";
-foreach ($event_types as $key2 => $value2) {
-    echo "<option value='".$value2."'>";
+foreach ($event_types as $key => $value) {
+    echo "<option value='".$value['nice_name']."'>";
 }
 echo "</datalist>";
 echo "<datalist id='event_place_list'>";
-foreach ($event_places as $key2 => $value2) {
-    echo "<option value='".$value2."'>";
+foreach ($event_places as $key => $value) {
+    echo "<option value='".$value."'>";
 }
 echo "</datalist>";
 echo "<div class='card statistics-add-card container'>";

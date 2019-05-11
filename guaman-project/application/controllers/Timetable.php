@@ -33,11 +33,11 @@ class Timetable extends CI_Controller
         $this->load->view("templates/menu");
         $events_array = $this->Timetable_model->get_events_by_user($user_id);
         $empty = false;
-        if(empty($events_array)){
+        if (empty($events_array)) {
             $events_array = array(array());
             $empty = true;
         }
-        if(!$empty) {
+        if (!$empty) {
 
             foreach ($events_array as $key => $value) {
                 $var = $this->Timetable_model->get_event_title_by_id($value['event_id']);
@@ -55,6 +55,8 @@ class Timetable extends CI_Controller
 
     public function manage_event($event = "")
     {
+
+
         $event_types = $this->Timetable_model->get_timetable_event_types();
         $event_places = $this->Timetable_model->get_timetable_event_places();
         if ($event == "") {
@@ -74,6 +76,64 @@ class Timetable extends CI_Controller
 
         $this->load->view("timetable/manage_event", array("data" => $data[0], "event_types" => $event_types, "event_places" => $event_places));
         $this->load->view("templates/footer");
+    }
+
+    public function manage_event_add()
+    {
+        if ($this->input->post("submit_button") == lang("event_add")) {
+            if (NULL !== $this->input->post("event_title")) {
+                if (NULL !== $this->input->post("event_place")) {
+                    if (NULL !== $this->input->post("all_day")) {
+                        if (NULL !== $this->input->post("event_type")) {
+                            if (NULL !== $this->input->post("event_start")) {
+                                if (NULL !== $this->input->post("event_end")) {
+                                    if (NULL !== $this->input->post("event_comment")) {
+                                        $event_title = $this->input->post("event_title");
+                                        $event_place = $this->input->post("event_place");
+                                        $all_day = $this->input->post("all_day");
+                                        $event_type = $this->input->post("event_type");
+                                        $event_start = $this->input->post("event_start");
+                                        $event_end = $this->input->post("event_end");
+                                        $event_comment = $this->input->post("event_comment");
+
+                                        $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function manage_event_edit()
+    {
+        if ($this->input->post("submit_button") == lang("event_edit")) {
+            if (NULL !== $this->input->post("event_title")) {
+                if (NULL !== $this->input->post("event_place")) {
+                    if (NULL !== $this->input->post("all_day")) {
+                        if (NULL !== $this->input->post("event_type")) {
+                            if (NULL !== $this->input->post("event_start")) {
+                                if (NULL !== $this->input->post("event_end")) {
+                                    if (NULL !== $this->input->post("event_comment")) {
+                                        $event_title = $this->input->post("event_title");
+                                        $event_place = $this->input->post("event_place");
+                                        $all_day = $this->input->post("all_day");
+                                        $event_type = $this->input->post("event_type");
+                                        $event_start = $this->input->post("event_start");
+                                        $event_end = $this->input->post("event_end");
+                                        $event_comment = $this->input->post("event_comment");
+
+                                        $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function manage_participants($event = "")
