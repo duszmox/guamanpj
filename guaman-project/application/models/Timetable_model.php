@@ -4,6 +4,7 @@
  * User: horva
  * Date: 5/7/2019
  * Time: 10:31 PM
+ * @property Account_model Account_model
  */
 
 
@@ -99,6 +100,11 @@ class Timetable_model extends CI_Model{
      */
     public function remove_user_from_event($event, $user){
         //todo exception isUserId exists,
+        $this->load->model("Database_model");
+        $users = $this->Account_model->get_users("id");
+        if(!in_array($user, $users)){
+            throw new Exception("invalid_user_id");
+        }
         $this->db->where('user_id', $user);
 
         $this->db->where('event_id', $event);

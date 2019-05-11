@@ -56,6 +56,7 @@ class Timetable extends CI_Controller
     public function manage_event($event = "")
     {
         $event_types = $this->Timetable_model->get_timetable_event_types();
+        $event_places = $this->Timetable_model->get_timetable_event_places();
         if ($event == "") {
             $data = array(array());
 
@@ -71,7 +72,7 @@ class Timetable extends CI_Controller
         $this->load->view("templates/header", array('page_title' => "Manage Event"));
         $this->load->view("templates/menu");
 
-        $this->load->view("timetable/manage_event", array("data" => $data[0], "event_types" => $event_types));
+        $this->load->view("timetable/manage_event", array("data" => $data[0], "event_types" => $event_types, "event_places" => $event_places));
         $this->load->view("templates/footer");
     }
 

@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-12 table-div-container" style="visibility: hidden;position: absolute;z-index: 1" id="data-table-column" >
-        <div class="card">
+        <div class="card col-sm-11">
             <div class="card-body">
 
                 <div class="responsive-table" id="table-container">
