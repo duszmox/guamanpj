@@ -1,6 +1,6 @@
 <div class="row">
-    <div class="col-sm-12 table-div-container" style="visibility: hidden;position: absolute;z-index: 1" id="data-table-column" >
-        <div class="card col-sm-11">
+    <div class="col-sm-auto table-div-container" style="visibility: hidden;position: relative;z-index: 1" id="data-table-column" >
+        <div class="card col-sm-auto" style="margin-right: 20px;margin-left: 20px;">
             <div class="card-body">
 
                 <div class="responsive-table" id="table-container">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="" style="position: absolute;right:20px ;z-index: 1;background-color: #ffffff !important;">
-        <div class="card col-sm-auto" >
+        <div class="card col-sm-auto">
             <div class="card-header card-header-2 ">
                 <h2 class="d-inline tables_label"><?php echo lang("tables_label"); ?></h2>
 
