@@ -14,13 +14,7 @@ class Permissions extends CI_Controller
         redirect("permissions/manage_permissions");
     }
 
-    function manage_permissions()
-    {
-        require_permission("admin");
 
-        echo "// TODO [Ambrus] Manage permissions view";
-        // TODO [Ambrus] Manage permissions view
-    }
 
     function remove_permission()
     {

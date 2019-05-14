@@ -27,7 +27,7 @@
             echo "<td class='col'>" . $value2 . " </td>\n";
         }
         echo "</tr>\n";
-    }//todo error van
+    }
     echo "</tbody></table></div>";
     ?>
  

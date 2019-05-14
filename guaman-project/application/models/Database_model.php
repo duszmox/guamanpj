@@ -87,7 +87,7 @@ class Database_model extends CI_Model
 
         $this->load->helper("custom_db_helper");
         return custom_db_actions($table, $resultArray, $this->get_columns_by_table($table), $columns);
-        //todo Andris
+
     }
 
     public function get_columns_by_table($table_name)

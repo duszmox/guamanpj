@@ -33,7 +33,6 @@ class Database extends CI_Controller
         $this->load->view("templates/footer");
     }
 
-    // TODO ANDRISNAK Folder & Table létrehozás
 
 
     function create_folder()
@@ -58,7 +57,7 @@ class Database extends CI_Controller
 
         if ($this->input->post("submit") /* + ... */) {
             js_alert("Working on it...", base_url());
-            // TODO Create table
+
         } else {
             $this->load->view("templates/header");
             $this->load->view("templates/menu");
@@ -146,7 +145,6 @@ class Database extends CI_Controller
     public function backup()
     {
         require_permission("download_backup");
-        // TODO backupot megcsinálni!!! Ez most csak lementi a usernek
 
         $this->load->dbutil();
 
@@ -178,7 +176,6 @@ class Database extends CI_Controller
     {
         require_permission($from_table . "_table_edit");
 
-        // TODO befejezni form kiíratása, compatible_tables már nice_namemel átadása neki
 
         if ($this->input->post("to_table")) {
             require_permission($from_table . "_table_edit");

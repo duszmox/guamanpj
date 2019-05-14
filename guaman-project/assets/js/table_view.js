@@ -11,19 +11,28 @@ $(document).ready(function () {
 });
 
 
-function loadTable(table_name) {
-    change(document.getElementById('show-or-hide-btn'));
+function loadTable(table_name, menuOfTables = true) {
+    if (menuOfTables) {
+        change(document.getElementById('show-or-hide-btn'));
+    }
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
-            $.post(base_url + "permissions/has_permission/"+ table_name + "_table_edit", function (canEdit) {
+            $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
 
-
-                if (table_name === "guaman_forgalom") {
-                    canEdit = false;
+                switch (table_name) {
+                    case "guaman_forgalom":
+                    case "guaman_beszerzesireportgadget":
+                    case "guaman_beszerzesireporthasznalt":
+                    case "guaman_beszerzesireportpartner":
+                    case "guaman_disztribuciosreport":
+                    case "guaman_disztribuciosreport":
+                        canEdit = false;
+                        break;
                 }
+
 
                 console.log(canEdit);
                 console.log(table_name);
-                console.log(base_url + "permissions/has_permission/"+ table_name + "_table_edit");
+                console.log(base_url + "permissions/has_permission/" + table_name + "_table_edit");
                 let columns = [];
                 let column_nice_names = [];
                 let col_types = [];
@@ -46,7 +55,7 @@ function loadTable(table_name) {
                 if (canEdit) {
                     html += "<button class=\'btn btn-primary\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
                 }
-                html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\")\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
+                html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
                 html += "\n</div>";
 
 

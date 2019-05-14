@@ -66,8 +66,8 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 break;
 
             case "guaman_keszlet":
-                if (is_numeric($result_array_[$key]['eladasi_ar']) || is_numeric($result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['netto_profit'] = round((($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
+                if (is_numeric($result_array_[$key]['eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
+                    $result_array_[$key]['netto_profit'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
                     $result_array_[$key]['afa'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
                     if ($result_array_[$key]['eladasi_ar'] != 0) {
                         $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]), 4) * 100 . ' %';
@@ -77,7 +77,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
 
 
             case "guaman_disztribuciosreport":
-                // TODO befejezni
+
                 $ci =& get_instance();
 
                 $current_month = $row["honap"]; // 01, 02, 03...
@@ -103,10 +103,12 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 $result_array_[$key]["szemelyes_atvetel"] = $szemelyesatvetelcount;
+                echo $szemelyesatvetelcount."asd";
                 $result_array_[$key]["futar"] = $futarcount;
+                echo $futarcount;
                 if (isset($szemelyesatvetelcount) && isset($futarcount)) {
                     if (($szemelyesatvetelcount + $futarcount) != 0) {
-                        $result_array_[$key]["%_a"] = round($szemelyesatvetelcount / ($szemelyesatvetelcount + $futarcount) * 100, 2) . " %";
+                        $result_array_[$key]["%_a"] = round($szemelyesatvetelcount / ((int)$szemelyesatvetelcount + (int)$futarcount) * 100, 2) . " %";
                         $result_array_[$key]["%_b"] = round($futarcount / ($szemelyesatvetelcount + $futarcount) * 100, 2) . " %";
                     }
 
@@ -207,4 +209,3 @@ function trim_month($month)
     return $month;
 }
 
-// TODO megjelenítésre vonatkozó cuccok átrakása JS-be

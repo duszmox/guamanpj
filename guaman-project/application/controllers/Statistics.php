@@ -12,10 +12,7 @@ class Statistics extends CI_Controller
     }
 
 
-    public function add_statistics()
-    {
-        //todo view and model
-    }
+
 
     public function index()
     {
@@ -110,7 +107,7 @@ class Statistics extends CI_Controller
     }
 
 
-    // TODO Statisctics module
+
 
 
 }

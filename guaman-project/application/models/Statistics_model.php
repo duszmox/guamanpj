@@ -58,7 +58,7 @@ class Statistics_model extends CI_Model
      * @throws Exception
      */
     public function add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config){
-        //todo megírni az összes validatort, type-t lekérdezzen, source table valódi e,
+
         $query_statistics_type = $this->db->get(self::$TYPES_TABLE_NAME)->result_array();
 
         /*if(!in_array($statistics_type, $query_statistics_type)){

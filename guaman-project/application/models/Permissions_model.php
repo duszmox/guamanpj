@@ -172,9 +172,9 @@ class Permissions_model extends CI_Model
 	/**
      * Permissions:
      * admin                        Ultimate permission for everything
-     * edit_folders                 Create, delete, edit folders TODO [Ambrus] create folder, delete folder, edit folder
-     * edit_tables                  Create, delete, edit tables [their properties] TODO [Ambrus] create tables, delete tables, edit tables
+     * edit_folders                 Create, delete, edit folders
+     * edit_tables                  Create, delete, edit tables [their properties]
      * <table_name>_table_view      View the content of a specific table
-     * <table_mame>_table_edit      Add, delete, edit the content of a table TODO delete row
+     * <table_mame>_table_edit      Add, delete, edit the content of a table
      */
 }

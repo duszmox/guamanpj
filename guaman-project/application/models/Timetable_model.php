@@ -128,7 +128,7 @@ class Timetable_model extends CI_Model
 
     public function has_permission($user)
     {
-        //todo Get has_permission from HR
+
         $this->load->model("HR_model");
         return $this->HR_model->has_permission($user);
     }
@@ -173,7 +173,6 @@ class Timetable_model extends CI_Model
 
             throw new Exception("invalid_event_end");
 
-            //todo lekezelni ott ahol használjuk
         }
 
         $this->db->set('event_title', $event_title);
@@ -198,7 +197,7 @@ class Timetable_model extends CI_Model
      */
     public function remove_user_from_event($event, $user)
     {
-        //todo exception isUserId exists,
+
         $this->load->model("Database_model");
         $users = $this->Account_model->get_users("id");
         if (!in_array($user, $users)) {
@@ -229,7 +228,6 @@ class Timetable_model extends CI_Model
     public function add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type)
     {
 
-        //todo test what we can
 
         $result = self::get_timetable_event_types();
         foreach($result as $key => $value){
@@ -255,7 +253,7 @@ class Timetable_model extends CI_Model
 
         if ($event_end_part[0] < $event_start_part[1]) {
                 throw new Exception("invalid_event_end");
-            //todo lekezelni ott ahol használjuk
+
         }
 
         $this->db->set('event_title', $event_title);

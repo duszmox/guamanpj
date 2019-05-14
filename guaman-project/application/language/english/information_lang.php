@@ -98,4 +98,3 @@ $lang['username_label'] = "Username : ";
 $lang['admin_label'] = "Admin";
 $lang["tables_button_hide"] = "Hide ⮝";
 $lang["tables_button_show"] = "Show ⮟";
-// todo ha van egy fölös 1 órád akkor jó szarakodást!!
