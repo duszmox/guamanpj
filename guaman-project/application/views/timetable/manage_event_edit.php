@@ -127,4 +127,4 @@ echo form_input($input_submit);
 echo form_close();
 echo "</div>";
 echo "</div>";
-//todo az inputok elé kitenni hogy mikre vonatkoznak
+
