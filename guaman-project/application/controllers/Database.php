@@ -90,10 +90,11 @@ class Database extends CI_Controller
         foreach ($rows as $key => $row) {
             $output[] = $row;
         }
-
+        $canEdit = $this->Database_model->can_edit_table($table_name);
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($output));
+
     }
 
     function get_column_names($table_name)
