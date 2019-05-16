@@ -24,7 +24,10 @@ function loadTable(table_name, menuOfTables = true) {
                     case "guaman_beszerzesireporthasznalt":
                     case "guaman_beszerzesireportpartner":
                     case "guaman_disztribuciosreport":
-                    case "guaman_disztribuciosreport":
+                    case "guaman_salesreport":
+                    case "guaman_salesplatformreporthasznalt":
+                    case "guaman_salesplatformreportpartner":
+                    case "guaman_salesplatformreportgadget":
                         canEdit = false;
                         break;
                 }
