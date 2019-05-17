@@ -15,20 +15,18 @@ function loadTable(table_name, menuOfTables = true) {
     if (menuOfTables) {
         change(document.getElementById('show-or-hide-btn'));
     }
+
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
 
-                switch (table_name) {
-                    case "guaman_forgalom":
-                    case "guaman_beszerzesireportgadget":
-                    case "guaman_beszerzesireporthasznalt":
-                    case "guaman_beszerzesireportpartner":
-                    case "guaman_disztribuciosreport":
-                    case "guaman_salesreport":
-                    case "guaman_salesplatformreporthasznalt":
-                    case "guaman_salesplatformreportpartner":
-                    case "guaman_salesplatformreportgadget":
+
+                switch (canEditTable[table_name]) {
+                    case "1":
                         canEdit = false;
+                        break;
+                    case "0":
+                        canEdit = true;
+
                         break;
                 }
 

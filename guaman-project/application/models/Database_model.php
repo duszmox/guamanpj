@@ -89,10 +89,16 @@ class Database_model extends CI_Model
         return custom_db_actions($table, $resultArray, $this->get_columns_by_table($table), $columns);
 
     }
-    public function can_edit_table($table_name){
+    public function only_edit_table($table_name){
         $this->db->select("only_view");
         $bool = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name))->result_array();
         return $bool[0]['only_view'];
+    }
+    public function get_only_edit_table_array(){
+        $this->db->select("only_view");
+        $this->db->select("table_name");
+        $array = $this->db->get(self::$TABLE_NAME)->result_array();
+        return $array;
     }
 
     public function get_columns_by_table($table_name)

@@ -27,6 +27,7 @@ class Timetable extends CI_Controller
     {
         if ($user_id == 0) {
             //todo csak akkor ha van a HR modulból rá engedélye / főnöke
+
             $user_id = $this->Account_model::$user_id;
         }
         $this->load->view("templates/header", array("page_title" => lang("timetable_label")));
@@ -97,82 +98,64 @@ class Timetable extends CI_Controller
 
     public function manage_event_upload_add()
     {
-        if ($this->input->post("submit_button") == lang("event_add")) {
-            if (NULL !== $this->input->post("event_title")) {
-                if (NULL !== $this->input->post("event_place")) {
-                    if (NULL !== $this->input->post("all_day")) {
-                        if (NULL !== $this->input->post("event_type")) {
-                            if (NULL !== $this->input->post("event_start")) {
-                                if (NULL !== $this->input->post("event_end")) {
-                                    if (NULL !== $this->input->post("event_comment")) {
-                                        $event_title = $this->input->post("event_title");
-                                        $event_place = $this->input->post("event_place");
-                                        $all_day = $this->input->post("all_day");
-                                        $event_type = $this->input->post("event_type");
-                                        $event_start = $this->input->post("event_start");
-                                        $event_end = $this->input->post("event_end");
-                                        $event_comment = $this->input->post("event_comment");
+        $required_inputs = array("event_title", "event_place", "all_day", "event_type", "event_start", "event_end", "event_comment");
 
-                                        try {
-                                            $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
-                                        } catch (Exception $e) {
-                                            if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
-                                            if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
-                                        }
-                                        if ($bool_query) {
-                                            js_alert("Kész az add", base_url("timetable/")); //todo lang
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        foreach ($required_inputs as $field) {
+            if (is_null($field)) {
+                js_alert("A " . $field . " megadása kötelező.", "back"); //todo lang
             }
         }
+        $event_title = $this->input->post("event_title");
+        $event_place = $this->input->post("event_place");
+        $all_day = $this->input->post("all_day");
+        $event_type = $this->input->post("event_type");
+        $event_start = $this->input->post("event_start");
+        $event_end = $this->input->post("event_end");
+        $event_comment = $this->input->post("event_comment");
+
+        try {
+            $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+        } catch (Exception $e) {
+            if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
+            if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
+        }
+        if ($bool_query) {
+            js_alert("Kész az add", base_url("timetable/")); //todo lang
+        }
     }
+
 
     public function manage_event_upload_edit()
     {
-        if ($this->input->post("submit_button") == lang("event_edit")) {
-            if (NULL !== $this->input->post("event_title")) {
-                if (NULL !== $this->input->post("event_place")) {
-                    if (NULL !== $this->input->post("all_day")) {
-                        if (NULL !== $this->input->post("event_type")) {
-                            if (NULL !== $this->input->post("event_start")) {
-                                if (NULL !== $this->input->post("event_end")) {
-                                    if (NULL !== $this->input->post("event_comment")) {
-                                        if (NULL !== $this->input->post("event_id")) {
-                                            var_dump($this->input->post("event_id"));
-                                            $event_id = $this->input->post("event_id");
-                                            $event_title = $this->input->post("event_title");
-                                            $event_place = $this->input->post("event_place");
-                                            $all_day = $this->input->post("all_day");
-                                            $event_type = $this->input->post("event_type");
-                                            $event_start = $this->input->post("event_start");
-                                            $event_end = $this->input->post("event_end");
-                                            $event_comment = $this->input->post("event_comment");
 
-                                            try {
-                                                $event_id = $this->Timetable_model->get_event_type_id_by_event_title($this->Timetable_model->get_event_type_event_title_by_id($event_id));
-                                                $bool_query = $this->Timetable_model->edit_event($event_id, $event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
-                                            } catch (Exception $e) {
-                                                if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
-                                                if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
-                                            }
-                                            if ($bool_query) {
-                                                       js_alert("Kész az edit", base_url("timetable/")); //todo lang
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        $required_inputs = array("event_id", "event_title", "event_place", "all_day", "event_type", "event_start", "event_end", "event_comment");
+
+        foreach ($required_inputs as $field) {
+            if (is_null($field)) {
+                js_alert("A " . $field . " megadása kötelező.", "back"); //todo lang
             }
         }
+        $event_id = $this->input->post("event_id");
+        $event_title = $this->input->post("event_title");
+        $event_place = $this->input->post("event_place");
+        $all_day = $this->input->post("all_day");
+        $event_type = $this->input->post("event_type");
+        $event_start = $this->input->post("event_start");
+        $event_end = $this->input->post("event_end");
+        $event_comment = $this->input->post("event_comment");
+
+        try {
+            $event_id = $this->Timetable_model->get_event_type_id_by_event_title($this->Timetable_model->get_event_type_event_title_by_id($event_id));
+            $bool_query = $this->Timetable_model->edit_event($event_id, $event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
+        } catch (Exception $e) {
+            if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
+            if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
+        }
+        if ($bool_query) {
+            js_alert("Kész az edit", base_url("timetable/")); //todo lang
+        }
     }
+
 
     public function manage_participants($event = "")
     {

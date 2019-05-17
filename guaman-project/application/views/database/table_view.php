@@ -56,6 +56,7 @@
         </div>
     </div>
 </div>
+
 <script>
     var data_table_strings = {
         processing: "<?php echo lang("processing_message");?>",
@@ -85,7 +86,9 @@
         "new_row_button": "<?php echo lang("add_row_button_title");?>",
         "move_row_button": "<?php echo lang("move_row_title");?>",
         "actions": "<?php echo lang("actions_button_title");?>"
+
     };
+
 
     var base_url = "<?php echo base_url(); ?>";
 
@@ -95,7 +98,13 @@
     var tables = <?php /** @var array $table_array */
         echo json_encode($table_array); ?>;
 
-
+    var canEditTable = {
+        <?php
+            foreach ($canEditTableArray as $key => $value){
+                echo $canEditTableArray[$key]['table_name'] .":'" . $canEditTableArray[$key]['only_view']. "',\n";
+            }
+        ?>
+    }
 </script>
 
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
