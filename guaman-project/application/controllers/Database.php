@@ -27,8 +27,9 @@ class Database extends CI_Controller
 
         $folder_array = ($this->Database_model->get_folders());
 
+        $canEditTableArray = $this->Database_model->get_only_edit_table_array();
 
-        $this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array));
+        $this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array, "canEditTableArray" => $canEditTableArray));
 
         $this->load->view("templates/footer");
     }
@@ -90,7 +91,6 @@ class Database extends CI_Controller
         foreach ($rows as $key => $row) {
             $output[] = $row;
         }
-        $canEdit = $this->Database_model->can_edit_table($table_name);
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($output));
@@ -123,7 +123,9 @@ class Database extends CI_Controller
         $table_name = $this->input->post("table_name");
 
         require_permission($table_name . "_table_edit");
-
+        if($this->Database_model->only_edit_table($table_name) == "1"){
+            js_alert("Cant update field", base_url("database/")); //todo lang
+        }
         $column = $this->input->post("column");
         $id = $this->input->post("id");
         $value = $this->input->post("value");
