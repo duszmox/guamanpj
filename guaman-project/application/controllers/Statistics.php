@@ -66,7 +66,7 @@ class Statistics extends CI_Controller
         require_status(Statuses::$LOGGED_IN);
         require_permission("admin");
 
-        if (is_null($this->input->post("submit"))) {
+        if ($this->input->post("submit") == null) {
             $this->load->view("templates/header", array("title" => lang("statistics_title")));
             $this->load->view("templates/menu");
 
@@ -75,15 +75,13 @@ class Statistics extends CI_Controller
             $this->load->view("templates/footer");
         }
         else{
-
             // Check input fields
             $requiered_fields = array("statistics_name", "statistics_type", "selected_columns", "source_table", "order_by", "order", "statistics_config");
             foreach ($requiered_fields as $field) {
-                if (is_null($field)) {
+                if ($field == null) {
                     js_alert("A " . $field . " megadása kötelező.", "back");
                 }
             }
-
 
             $statistics_name = $this->input->post("statistics_name");
             $statistics_type = $this->input->post("statistics_type");
@@ -97,7 +95,7 @@ class Statistics extends CI_Controller
             try {
                 $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config);
             } catch (Exception $e) {
-                js_alert("Unexpected error: \n" . $e->getMessage(), "statistics/");
+                js_alert("Unexpected error: \\n" . $e->getMessage(), base_url("statistics/"));
             }
             // Success
             js_alert(lang('succesful_add_statistics'), base_url("statistics/"));
