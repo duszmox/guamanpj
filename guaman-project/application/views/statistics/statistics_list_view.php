@@ -1,58 +1,121 @@
-<div class="container bg-white shadow">
-    <h2 class="statistics-h2">
-        <p style="display: inline-block"><?php echo lang("statistics_label") ?></p>
+<div class="container bg-white shadow p-5">
+    <h2 class="d-inline-block">
+        <?php echo lang("statistics_label") ?>
     </h2>
-        <?php
-        if (has_permission("admin")) {
-            echo "<a class='adds_statistics btn btn-primary float-right' href='" . base_url("statistics/add") . "'> " . lang("add_statistics") . " </a>";
-
-            }
-        ?>
-
     <?php
-    echo "<div class='statistics-div'><table class='table'>";
-    foreach ($data as $key => $value) {
-        echo "<thead class='statistics-table'><tr>\n";
-        foreach ($value as $key2 => $value2) {
-            echo "<th class='col'>" . $key2 . " </th>\n";
-        }
-        echo "</tr></thead><tbody >";
-        break;
+    if (has_permission("admin")) {
+        ?><a class='btn btn-primary float-right'
+             href='<?php echo base_url("statistics/add"); ?>'><i
+                class="fas fa-plus"></i> <?php echo lang("statistics_add"); ?></a><?php
     }
-    foreach ($data as $key => $value) {
-
-        echo "\n<tr class='' id='getStatistics" . $value["id"] .  "'>
-        \n";
-        foreach ($value as $key2 => $value2) {
-            echo "<td class='col'>" . $value2 . " </td>\n";
-        }
-        echo "</tr>\n";
-    }
-    echo "</tbody></table></div>";
     ?>
- 
+    <div id="statistics-list-container">
+
+    </div>
+
 </div>
+
 <script>
+    var base_url = "<?php echo base_url()?>";
+    var can_edit_stats = <?php echo has_permission("edit_stats") ? "true" : "false"; ?>;
+    lang = { // TODO lang ide kicserélni
+        "id": "ID",
+        "stat_name": "Statisztika neve",
+        "type": "Típus",
+        "actions": "Műveletek",
+        "remove_stat": "Eltávolítás",
+        "confirm_delete_statistics": "Biztosan törölni szeretnéd ezt a statisztika beállítást? (Az adatok nem fognak törlődni)",
+        "view_stat": "Megtekintés"
+    };
 
-    <?php
+    var data_table_strings = {
+        processing: "<?php echo lang("processing_message");?>",
+        search: "<?php echo lang("searcher_message");?>",
+        lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message");?>",
+        info: "",
+        infoEmpty: "",
+        infoFiltered: "",
+        infoPostFix: "",
+        loadingRecords: "<?php echo lang("records_loading_message");?>",
+        zeroRecords: "<?php echo lang("records_zero_message");?>",
+        emptyTable: "<?php echo lang("empty_table_message");?>",
+        paginate: {
+            first: "<?php echo lang("first_page_message");?>",
+            previous: "<?php echo lang("previous_page_message");?>",
+            next: "<?php echo lang("next_page_message");?>",
+            last: "<?php echo lang("last_page_message");?>"
+        },
+        aria: {
+            sortAscending: "<?php echo lang("asc_table_message");?>",
+            sortDescending: "<?php echo lang("desc_table_message");?>"
+        }
+    };
 
-    foreach ($data as $key => $value) {
-        echo "$(\"#getStatistics" . $value["id"] . "\").on(\"click\", function(){
-        window.location.href = \"" . base_url('statistics/view/' . $value["id"]) . "\";
-    });";
+
+    $(document).ready(function () {
+        loadTable();
+    });
+
+    function loadTable() {
+        $.post(base_url + "statistics/get_statistics_list/", function (data) {
+            if (data.error !== undefined) {
+                alert(data.error);
+                return;
+            }
+            console.log(data);
+
+            let html = "<table class='table'>";
+            html += "<thead>";
+            html += "<tr>";
+            html += "<th>" + lang.id + "</th>";
+            html += "<th>" + lang.stat_name + "</th>";
+            html += "<th>" + lang.type + "</th>";
+            html += "<th>" + lang.actions + "</th>";
+            html += "</tr>";
+            html += "</thead>";
+
+            html += "<tbody>";
+            for (var i = 0; i < data.length; i++) {
+                html += "<tr>";
+
+                html += "<td>" + data[i].id + "</td>";
+                html += "<td>" + data[i].statistics_name + "</td>";
+                html += "<td>" + data[i].type_name + "</td>";
+
+                html += "<td>";
+
+                if (can_edit_stats) {
+                    html += "<button class='btn btn-danger mr-1' onclick='remove(" + data[i].id + ")'><i class=\"fas fa-trash-alt\"></i> " + lang.remove_stat + "</button>";
+                }
+                html += "<a href='" + base_url + "statistics/view/" + data[i].id + "' class='btn btn-info'>" + lang.view_stat + "</a>";
+
+                html += "</td>";
+
+                html += "</tr>";
+            }
+
+            html += "</tbody></table>";
+            $("#statistics-list-container").html(html);
+
+            setTimeout(function () {
+                $("#statistics-list-container table").DataTable({
+                    language: data_table_strings
+                });
+
+                $("#statistics-list-container").css("overflow-x", "auto");
+
+            }, 1);
+        })
     }
-    ?>
+
+    function remove(id) {
+        if (confirm(lang.confirm_delete_statistics)) {
+            $.post(base_url + "statistics/remove/" + id).done(function (data) {
+                if (data.error !== undefined) {
+                    alert(data.error);
+                }
+                loadTable();
+            });
+        }
+    }
 </script>
-<style>
-
-
-    <?php
-
-    foreach ($data as $key => $value) {
-        echo "#getStatistics".$value["id"].":hover{
-            background-color:#F5F5F5	;
-            
-        }";
-    }
-    ?>
-</style>

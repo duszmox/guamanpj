@@ -111,6 +111,20 @@ class Database_model extends CI_Model
         return $column_names;
     }
 
+    /**
+     * @param $table_id
+     * @param $column_name
+     * @throws Exception
+     */
+    public function get_column($table_id, $column_name)
+    {
+        $result =$this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" =>$table_id, "column_name" => $column_name), 1)->first_row();
+        if($result == null){
+            throw new Exception("Column not found");
+        }
+        return $result;
+    }
+
     public function get_col_types($table_id, $column_names)
     {
         $types = array();

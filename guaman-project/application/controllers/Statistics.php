@@ -16,37 +16,49 @@ class Statistics extends CI_Controller
     {
         require_status(Statuses::$LOGGED_IN);
 
-        $result_array = array();
-        $statistics = $this->Statistics_model->get_statistics();
-        foreach ($statistics as $key => $row) {
-            $id = $row['id'];
-            if (has_permission($id . "_stat_view")) {
-                $result_array[] = $row;
-            }
-        }
-
-
-        if (!sizeof($result_array)) js_alert(lang("statistics_no_permission"), base_url('database/'));
-
         $this->load->view("templates/header", array("title" => lang("statistics_title")));
         $this->load->view("templates/menu");
 
-        $this->load->view("statistics/statistics_list_view", array("data" => $result_array));
+        $this->load->view("statistics/statistics_list_view");
 
         $this->load->view("templates/footer");
 
     }
 
+    public function get_statistics_list()
+    {
+        require_status(Statuses::$LOGGED_IN);
+
+        $statistics = $this->Statistics_model->get_statistics();
+
+        // Check permissions:
+        $result_array = array();
+        foreach ($statistics as $key => $row) {
+            if (has_permission($row['id'] . "_stat_view")) {
+                try {
+                    $row["type_name"] = $this->Statistics_model->get_nice_type_name($row["statistics_type"]);
+                } catch (Exception $e) {
+                }
+                $result_array[] = $row;
+            }
+        }
+
+        if (sizeof($result_array) == 0) {
+            json_error(lang("statistics_no_permission"));
+        }
+
+        json_output($result_array);
+
+    }
 
     public function view($id = NULL)
     {
         require_status(Statuses::$LOGGED_IN);
 
-        if (!Validator::is_numeric($id) OR $id == NULL) js_alert(lang("invalid_id_message"), base_url("statistics/"));
+        if ($id == NULL || !Validator::is_numeric($id)) js_alert(lang("invalid_id_message"), base_url("statistics/"));
         if (!has_permission($id . "_stat_view")) js_alert(lang("not_having_permission_message"), base_url("statistics/"));
 
         try {
-            $result_array = array();
             $result_array = $this->Statistics_model->get_statistics_by_id($id);
         } catch (Exception $e) {
             if ($e->getMessage() == "statistics_not_found") js_alert(lang("statistics_not_found_message"), base_url("statistics/"));
@@ -56,7 +68,7 @@ class Statistics extends CI_Controller
         $this->load->view("templates/header", array("title" => lang("statistics_title")));
         $this->load->view("templates/menu");
 
-        $this->load->view("statistics/view_statistics", array("data" => $result_array));
+        $this->load->view("statistics/view_statistics", array("statistics" => $result_array));
 
         $this->load->view("templates/footer");
     }
@@ -73,8 +85,7 @@ class Statistics extends CI_Controller
             $this->load->view("statistics/add_statistics");
 
             $this->load->view("templates/footer");
-        }
-        else{
+        } else {
             // Check input fields
             $requiered_fields = array("statistics_name", "statistics_type", "selected_columns", "source_table", "order_by", "order", "statistics_config");
             foreach ($requiered_fields as $field) {
@@ -105,7 +116,42 @@ class Statistics extends CI_Controller
 
     }
 
+    public function remove($id)
+    {
+        require_permission("edit_stats");
+        $this->Statistics_model->remove($id);
+    }
 
+    public function get_source_table($stat_id = null)
+    {
+        $this->load->model("Database_model");
+
+        if ($stat_id == null || !Validator::is_numeric($stat_id)) json_error("Invalid source table name!"); // TODO LANG
+        require_permission($stat_id . "_stat_view", "json");
+
+        try {
+            $statistics = $this->Statistics_model->get_statistics_by_id($stat_id);
+        } catch (Exception $e) {
+            json_error($e->getMessage());
+        }
+
+
+        $cols = explode(",", $statistics["selected_columns"]);
+
+        $table = $this->Database_model->get_table($cols, $this->Database_model->get_table_name_by_id($statistics["source_table"]), "id", "ASC");
+
+
+        $columns = array();
+
+        foreach ($cols as $col) {
+            try {
+                $columns[$col] = $this->Database_model->get_column($statistics["source_table"], $col);
+            } catch (Exception $e) {
+                json_error($e->getMessage());
+            }
+        }
+
+        $result = array("columns" => $columns, "table" => $table);
+        json_output($result);
+    }
 }
-
-

@@ -1,8 +1,6 @@
-<?php
-$condition = has_permission("admin");
-?>
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar" style="z-index: 2">
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar"
+    style="z-index: 2">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
@@ -35,8 +33,9 @@ $condition = has_permission("admin");
                 <?php //<h6 class="collapse-header">Login Screens:</h6> ?>
 
                 <?php
-                    $statistics ='<a class="collapse-item" href="'.base_url("statistics").'"><i class="fas fa-chart-line"></i> '.lang("statistics_label").'</a>';
-                    echo ($condition)?$statistics:"";
+                if (has_permission("admin")) {
+                    echo '<a class="collapse-item" href="' . base_url("statistics") . '"><i class="fas fa-chart-line"></i> ' . lang("statistics_label") . '</a>';
+                }
 
                 ?>
                 <a class="collapse-item " href="<?php echo base_url("database/") ?>">
@@ -244,7 +243,7 @@ $condition = has_permission("admin");
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						<span
                                 class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo Account_model::$nice_username ?></span>
-                        <img class="img-profile rounded-circle" src="<?php echo  img_url("avatar.png") ?>">
+                        <img class="img-profile rounded-circle" src="<?php echo img_url("avatar.png") ?>">
 
                     </a>
                     <!-- Dropdown - User Information -->
@@ -261,12 +260,12 @@ $condition = has_permission("admin");
                             <?php echo lang("profile_label"); ?>
                         </a>
                         <?php
-                            if($condition){
-                                echo "<a class=\"dropdown-item\" href=\"".base_url("account/admin")."\">
+                        if (has_permission("admin")) {
+                            echo "<a class=\"dropdown-item\" href=\"" . base_url("account/admin") . "\">
                             <i class=\"fas fa-at fa-sm fa-fw mr-2 text-gray-400\"></i>
-                            ".lang("admin_label")."
+                            " . lang("admin_label") . "
                         </a>";
-                            }
+                        }
                         ?>
 
                         <div class="dropdown-divider"></div>

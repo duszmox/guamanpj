@@ -30,7 +30,6 @@ function loadTable(table_name, menuOfTables = true) {
                         break;
                 }
 
-
                 console.log(canEdit);
                 console.log(table_name);
                 console.log(base_url + "permissions/has_permission/" + table_name + "_table_edit");
@@ -83,56 +82,8 @@ function loadTable(table_name, menuOfTables = true) {
 
                         html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>";
 
-                        let cell_body = "";
-                        switch (col_types[k]) {
-                            case "text":
-                                if (canEdit) {
-                                    cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
-                                    cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
-                                } else {
-                                    cell_body = "<span>" + data[i][columns[k]] + "</span>";
-                                }
-                                break;
-                            case "date":
-                                if (canEdit) {
-                                    cell_body = "<input type=\"date\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
-                                    cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
-                                } else {
-                                    cell_body = "<span>" + data[i][columns[k]] + "</span>";
-                                }
-                                break;
-                            case "money":
-                                let cell_value = data[i][columns[k]];
-                                if (isNumeric(cell_value)) {
-                                    cell_value = numberWithSpaces(cell_value);
+                        html += getCellBody(data[i][columns[k]], col_types[k], canEdit);
 
-
-                                } else {
-                                    cell_value = "0";
-                                    data[i][columns[k]] = "0";
-                                }
-
-
-                                if (canEdit) {
-                                    // language=HTML
-                                    cell_body = "<input type=\"text\" pattern=\'[0-9]|\\s\' value=\'" + cell_value + "\' class=\'form-control\'/>";
-                                    cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
-
-                                } else {
-                                    cell_body += "<span>" + cell_value + "</span>";
-                                    cell_body += "<span hidden>" + cell_value + " " + data[i][columns[k]] + "</span>";
-                                }
-                                break;
-                            default:
-                                if (canEdit) {
-                                    cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + data[i][columns[k]] + "\'>";
-                                    cell_body += "<span hidden>" + data[i][columns[k]] + "</span>";
-                                } else {
-                                    cell_body = "<span>" + data[i][columns[k]] + "</span>";
-                                }
-                        }
-
-                        html += cell_body;
 
                         html += "</td>";
                     }
@@ -167,12 +118,7 @@ function loadTable(table_name, menuOfTables = true) {
                         }
                     }
 
-                    switch (col_types[col_id]) {
-                        case "money":
-                            newValue = newValue.toLowerCase();
-                            newValue = newValue.replace(/\s/g, '');
-                            newValue = newValue.replace("/ft/g", ""); // TODO (?) global currency
-                    }
+                    newValue = getBackData(newValue, col_types[col_id]);
                     update_table_field(table_name, column, $(this).data("id"), newValue);
                 });
 
@@ -276,11 +222,7 @@ function insertRow(table_name) {
     });
 }
 
-function numberWithSpaces(number) {
-    let parts = number.toString().split(".");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    return parts.join(".");
-}
+
 
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);

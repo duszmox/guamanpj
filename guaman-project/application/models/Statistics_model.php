@@ -22,9 +22,6 @@ class Statistics_model extends CI_Model
 
     public function get_statistics()
     {
-        $this->db->select("id");
-        $this->db->select("statistics_name");
-
         return $this->db->get(self::$TABLE_NAME)->result_array();
     }
 
@@ -81,11 +78,13 @@ class Statistics_model extends CI_Model
 
         $table_columns = $this->Database_model->get_columns_by_table($this->Database_model->get_table_name_by_id($source_table));
 
-        $selected_columns = explode(",", $selected_columns);
+        $selected_columns_arr = explode(",", $selected_columns);
 
-        foreach ($selected_columns as $selected_column) {
+        foreach ($selected_columns_arr as $selected_column) {
             if (!in_array($selected_column, $table_columns)) {
-                throw new Exception($invalid_column_message . "selected_columns");
+                print_r($table_columns);
+
+                throw new Exception($invalid_column_message . "selected_columns" );
             }
         }
 
@@ -102,13 +101,35 @@ class Statistics_model extends CI_Model
                 "statistics_type" => $statistics_type,
                 "source_table" => $source_table,
                 "selected_columns" => $selected_columns,
-                "order" => $order, "order_by" => $order_by,
+                "order" => $order,
+                "order_by" => $order_by,
                 "statistics_config" => $statistics_config
             )
         );
         if ($this->db->affected_rows() != 1) {
             throw new Exception("Unexpected database error!");
         }
+    }
+
+    public function remove($id){
+        $this->db->delete(self::$TABLE_NAME, array("id" => $id), 1);
+    }
+
+    public function get_types(){
+        return $this->db->get(self::$TYPES_TABLE_NAME)->result_array();
+    }
+
+    /**
+     * @param $type_id
+     * @return mixed
+     * @throws Exception
+     */
+    public function get_nice_type_name($type_id){
+        $x = $this->db->get_where(self::$TYPES_TABLE_NAME, array("id" => $type_id), 1)->first_row();
+        if($x == null){
+            throw new Exception("Invalid type id");
+        }
+        return $x->nice_type_name;
     }
 
 

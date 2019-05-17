@@ -7,6 +7,14 @@
     --primary-color: #3F51B5;
     --primary-dark-color: #303F9F;
 }
+.btn-info{
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
+.btn-info:hover{
+    background-color: #117888 !important;
+}
+
 .language-logo{
     max-width: 100%;
     height: 40px;

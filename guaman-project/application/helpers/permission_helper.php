@@ -6,14 +6,23 @@
  * Time: 9:00 PM
  */
 
-function require_permission($permission_name)
+/**
+ * @param $permission_name
+ * @param string $output_mode it can be js or json
+ */
+function require_permission($permission_name, $output_mode="js")
 {
 	$CI = get_instance();
 	$CI->load->helper('language');
 	$CI->load->helper('my_alert_helper');
 
 	if (!has_permission($permission_name)) {
-		js_alert(lang("not_having_permission_message"), base_url("account/"));
+	    if($output_mode == "js") {
+            js_alert(lang("not_having_permission_message"), base_url("account/"));
+        }
+	    else if($output_mode == "json"){
+	        json_error(lang("not_having_permission_message"));
+        }
 		die();
 	}
 

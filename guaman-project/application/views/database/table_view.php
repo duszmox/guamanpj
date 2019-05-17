@@ -107,6 +107,7 @@
     }
 </script>
 
+<script async src="<?php echo js_url("data_output_helper.js");?>"> </script>
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
 
 
