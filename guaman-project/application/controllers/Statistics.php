@@ -12,8 +12,6 @@ class Statistics extends CI_Controller
     }
 
 
-
-
     public function index()
     {
         require_status(Statuses::$LOGGED_IN);
@@ -67,47 +65,47 @@ class Statistics extends CI_Controller
     {
         require_status(Statuses::$LOGGED_IN);
         require_permission("admin");
-        if (NULL !== $this->input->post("statistics_name") && (NULL !== $this->input->post("statistics_type"))) {
-            if (NULL !== $this->input->post("selected_columns") && NULL !== $this->input->post("source_table")) {
-                if (NULL !== $this->input->post("order_by") && NULL !== $this->input->post("order")) {
-                    if (NULL !== $this->input->post("statistics_config")) {
 
-
-                        $statistics_name = $this->input->post("statistics_name");
-                        $statistics_type = $this->input->post("statistics_type");
-                        $source_table = $this->input->post("source_table");
-                        $selected_columns = $this->input->post("selected_columns");
-                        $order = $this->input->post("order");
-                        $order_by = $this->input->post("order_by");
-                        $statistics_config = $this->input->post("statistics_config");
-
-                        try {
-                            $result_bool = false;
-                            $result_bool = $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config);
-                        } catch (Exception $e) {
-                            if ($e->getMessage() == "wrong_statistics_type") js_alert(lang("statistics_type_not_found"), base_url("statistics/"));
-                            if ($e->getMessage() == "wrong_source_table") js_alert(lang("statistics_source_table_missing"), base_url("statistics/"));
-                            if ($e->getMessage() == "wrong_selected_columns") js_alert(lang("statistics_select_columns_missing"), base_url("statistics/"));
-                            if ($e->getMessage() == "wrong_order") js_alert(lang("statistics_order_missing"), base_url("statistics/"));
-                            if ($e->getMessage() == "wrong_order_by") js_alert(lang("statistics_order_by_missing"), base_url("statistics/"));
-                        }
-                        if($result_bool)js_alert(lang('succesful_add_statistics'), base_url("statistics/"));
-                    }
-                }
-            }
-        } else {
+        if (is_null($this->input->post("submit"))) {
             $this->load->view("templates/header", array("title" => lang("statistics_title")));
             $this->load->view("templates/menu");
 
             $this->load->view("statistics/add_statistics");
 
             $this->load->view("templates/footer");
+        }
+        else{
+
+            // Check input fields
+            $requiered_fields = array("statistics_name", "statistics_type", "selected_columns", "source_table", "order_by", "order", "statistics_config");
+            foreach ($requiered_fields as $field) {
+                if (is_null($field)) {
+                    js_alert("A " . $field . " megadása kötelező.", "back");
+                }
+            }
+
+
+            $statistics_name = $this->input->post("statistics_name");
+            $statistics_type = $this->input->post("statistics_type");
+            $source_table = $this->input->post("source_table");
+            $selected_columns = $this->input->post("selected_columns");
+            $order = $this->input->post("order");
+            $order_by = $this->input->post("order_by");
+            $statistics_config = $this->input->post("statistics_config");
+
+
+            try {
+                $this->Statistics_model->add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config);
+            } catch (Exception $e) {
+                js_alert("Unexpected error: \n" . $e->getMessage(), "statistics/");
+            }
+            // Success
+            js_alert(lang('succesful_add_statistics'), base_url("statistics/"));
 
         }
+
+
     }
-
-
-
 
 
 }

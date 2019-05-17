@@ -40,8 +40,7 @@ class Statistics_model extends CI_Model
 
         if (!sizeof($result)) {
             throw new Exception("statistics_not_found");
-        }
-        else {
+        } else {
             return $result[0];
         }
 
@@ -57,7 +56,8 @@ class Statistics_model extends CI_Model
      * @param $statistics_config
      * @throws Exception
      */
-    public function add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config){
+    public function add_statistics($statistics_name, $statistics_type, $source_table, $selected_columns, $order, $order_by, $statistics_config)
+    {
 
         $query_statistics_type = $this->db->get(self::$TYPES_TABLE_NAME)->result_array();
 
@@ -67,37 +67,48 @@ class Statistics_model extends CI_Model
 
         $this->load->model("Database_model");
 
-        $query_source_table = $this->Database_model->get_tables();
+        $tables = $this->Database_model->get_tables();
 
-        $query_source_table_id = array();
-        foreach($query_source_table as $key => $value){
-
-            $query_source_table_id[] = $value['id'];
+        $invalid_column_message = "Invalid column: "; // TODO LANG
+        $table_names = array();
+        foreach ($tables as $key => $value) {
+            $table_names[] = $value['id'];
         }
-        if(!in_array($source_table, $query_source_table_id)){
-            throw new Exception("wrong_source_table");
-        }
-        $query_table_columns = $this->Database_model->get_columns_by_table($this->Database_model->get_table_name_by_id($source_table));
 
-        $selected_columns_array = explode(",", $selected_columns);
-        foreach($selected_columns_array as $key => $value){
-            if(!in_array($value, $query_table_columns)){
-                throw new Exception("wrong_selected_columns");
+        if (!in_array($source_table, $table_names)) {
+            throw new Exception($invalid_column_message . "source_table");
+        }
+
+        $table_columns = $this->Database_model->get_columns_by_table($this->Database_model->get_table_name_by_id($source_table));
+
+        $selected_columns = explode(",", $selected_columns);
+
+        foreach ($selected_columns as $selected_column) {
+            if (!in_array($selected_column, $table_columns)) {
+                throw new Exception($invalid_column_message . "selected_columns");
             }
         }
-        if($order != "ASC" && $order != "DESC"){
-            throw new Exception("wrong_order");
+
+        if ($order != "ASC" && $order != "DESC") {
+            throw new Exception($invalid_column_message . "order");
         }
-        if(!in_array($order_by, $query_table_columns)){
-            throw new Exception("wrong_order_by");
+        if (!in_array($order_by, $table_columns)) {
+            throw new Exception($invalid_column_message . "order_by");
         }
 
-
-
-        $this->db->insert(self::$TABLE_NAME, array("statistics_name" => $statistics_name, "statistics_type" => $statistics_type, "source_table" => $source_table, "selected_columns" => $selected_columns,
-            "order" => $order, "order_by" => $order_by, "statistics_config" => $statistics_config));
-        return true;
-
+        $this->db->insert(self::$TABLE_NAME,
+            array(
+                "statistics_name" => $statistics_name,
+                "statistics_type" => $statistics_type,
+                "source_table" => $source_table,
+                "selected_columns" => $selected_columns,
+                "order" => $order, "order_by" => $order_by,
+                "statistics_config" => $statistics_config
+            )
+        );
+        if ($this->db->affected_rows() != 1) {
+            throw new Exception("Unexpected database error!");
+        }
     }
 
 
