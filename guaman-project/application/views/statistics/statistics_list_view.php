@@ -64,7 +64,7 @@
             }
             console.log(data);
 
-            let html = "<table class='table d-block'>";
+            let html = "<table class='table'>";
             html += "<thead>";
             html += "<tr>";
             html += "<th>" + lang.stat_name + "</th>";
