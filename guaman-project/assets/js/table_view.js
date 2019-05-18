@@ -20,14 +20,8 @@ function loadTable(table_name, menuOfTables = true) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
 
 
-                switch (canEditTable[table_name]) {
-                    case "1":
-                        canEdit = false;
-                        break;
-                    case "0":
-                        canEdit = true;
-
-                        break;
+                if (canEditTable[table_name] === "0") {
+                    canEdit = false;
                 }
 
                 console.log(canEdit);

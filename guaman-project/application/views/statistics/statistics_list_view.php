@@ -9,7 +9,7 @@
                 class="fas fa-plus"></i> <?php echo lang("statistics_add"); ?></a><?php
     }
     ?>
-    <div id="statistics-list-container">
+    <div id="statistics-list-container" class="responsive-table mt-3">
 
     </div>
 
@@ -64,10 +64,9 @@
             }
             console.log(data);
 
-            let html = "<table class='table'>";
+            let html = "<table class='table d-block'>";
             html += "<thead>";
             html += "<tr>";
-            html += "<th>" + lang.id + "</th>";
             html += "<th>" + lang.stat_name + "</th>";
             html += "<th>" + lang.type + "</th>";
             html += "<th>" + lang.actions + "</th>";
@@ -78,16 +77,15 @@
             for (var i = 0; i < data.length; i++) {
                 html += "<tr>";
 
-                html += "<td>" + data[i].id + "</td>";
                 html += "<td>" + data[i].statistics_name + "</td>";
                 html += "<td>" + data[i].type_name + "</td>";
 
                 html += "<td>";
 
                 if (can_edit_stats) {
-                    html += "<button class='btn btn-danger mr-1' onclick='remove(" + data[i].id + ")'><i class=\"fas fa-trash-alt\"></i> " + lang.remove_stat + "</button>";
+                    html += "<button class='btn btn-danger mr-1 mb-1' onclick='remove(" + data[i].id + ")'><i class=\"fas fa-trash-alt\"></i> " + lang.remove_stat + "</button>";
                 }
-                html += "<a href='" + base_url + "statistics/view/" + data[i].id + "' class='btn btn-info'>" + lang.view_stat + "</a>";
+                html += "<a href='" + base_url + "statistics/view/" + data[i].id + "' class='btn btn-info mb-1'><i class=\"fas fa-chart-line\"></i> " + lang.view_stat + "</a>";
 
                 html += "</td>";
 
@@ -101,9 +99,6 @@
                 $("#statistics-list-container table").DataTable({
                     language: data_table_strings
                 });
-
-                $("#statistics-list-container").css("overflow-x", "auto");
-
             }, 1);
         })
     }

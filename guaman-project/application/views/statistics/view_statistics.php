@@ -11,33 +11,73 @@
         <?php echo lang("statistics_edit"); ?></a><?php
     }
     ?>
-    <div id="statistics-container">
+    <canvas id="statChart" style="width: 800px; max-width: 100%; height: 500px; max-height: 60vh;"></canvas>
+    <div id="statistics-container" class="mt-5 w-auto overflow-auto p-3">
 
     </div>
 
 </div>
 
-<script async src="<?php echo js_url("data_output_helper.js"); ?>"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo css_url("Chart.min.css"); ?>">
+
+<script src="<?php echo js_url("Chart.bundle.min.js"); ?>"></script>
+<script src="<?php echo js_url("data_output_helper.js"); ?>"></script>
 <script>
+    var colors = [
+        "rgb(54, 162, 235, 0.5)",
+        "rgb(75, 192, 192,0.5)",
+        "rgba(207,20,20,0.5)",
+        "rgb(255, 159, 64, 0.5)",
+        "rgb(153, 102, 255, 0.5)",
+        "rgb(255, 99, 132, 0.5)",
+        "rgb(255, 205, 86, 0.5)",
+    ];
+
+    var data_table_strings = {
+        processing: "<?php echo lang("processing_message");?>",
+        search: "<?php echo lang("searcher_message");?>",
+        lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message");?>",
+        info: "",
+        infoEmpty: "",
+        infoFiltered: "",
+        infoPostFix: "",
+        loadingRecords: "<?php echo lang("records_loading_message");?>",
+        zeroRecords: "<?php echo lang("records_zero_message");?>",
+        emptyTable: "<?php echo lang("empty_table_message");?>",
+        paginate: {
+            first: "<?php echo lang("first_page_message");?>",
+            previous: "<?php echo lang("previous_page_message");?>",
+            next: "<?php echo lang("next_page_message");?>",
+            last: "<?php echo lang("last_page_message");?>"
+        },
+        aria: {
+            sortAscending: "<?php echo lang("asc_table_message");?>",
+            sortDescending: "<?php echo lang("desc_table_message");?>"
+        }
+    };
 
     $(document).ready(function () {
         loadTable();
     });
-
     var base_url = "<?php echo base_url(); ?>";
+
     var statId = <?php echo $statistics["id"] ?>;
+    var statConfig = <?php echo $statistics["statistics_config"]; ?>;
+    var statType = <?php echo $statistics["statistics_type"]; ?>;
+
+    var column_names = [];
+    var nice_column_names = [];
+    var col_types = [];
 
     function loadTable() {
+        var ctx = $('#statChart');
+
         $.post(base_url + "statistics/get_source_table/" + statId)
             .done(function (data) {
                 if (data.error !== undefined) {
                     alert(data.error);
                 } else {
                     console.log(data);
-
-                    let column_names = [];
-                    let nice_column_names = [];
-                    let col_types = [];
 
 
                     Object.keys(data.columns).forEach(function (k) {
@@ -47,25 +87,22 @@
                     });
 
 
-                    console.log(column_names);
                     let html = "";
 
 
                     html += "<table class='table'>";
                     html += "<thead><tr>";
-                    for (var i = 0; i < nice_column_names.length; i++) {
+                    for (let i = 0; i < nice_column_names.length; i++) {
                         html += "<th>" + nice_column_names[i] + "</th>";
                     }
                     html += "</tr></thead>";
 
                     html += "<tbody>";
-                    for (var i = 0; i < data.table.length; i++) {
+                    for (let i = 0; i < data.table.length; i++) {
                         html += "<tr>";
 
-                        keys = Object.keys(data.table[0]);
-
-                        for (var j = 0; j < keys.length; j++) {
-                            html += "<td>" + getCellBody(data.table[i][keys[j]], col_types[j], false) + "</td>";
+                        for (let j = 0; j < column_names.length; j++) {
+                            html += "<td>" + getCellBody(data.table[i][column_names[j]], col_types[j], false) + "</td>";
                         }
 
                         html += "</tr>";
@@ -73,6 +110,58 @@
                     html += "</tbody>";
 
                     $("#statistics-container").html(html);
+
+                    setTimeout(function () {
+                        $("#statistics-container table").DataTable({
+                            language: data_table_strings
+                        });
+
+                        $("#statistics-container table").css("overflow-x", "auto");
+                        $("#statistics-container table").css("max-width", "100%");
+
+                    }, 1);
+
+
+                    switch (statType) {
+                        case 3:
+                            var labelType = getColumnType(statConfig.label);
+
+                            let labels = [];
+                            for (let i = 0; i < data.table.length; i++) {
+                                labels.push(getDisplayFormat(data.table[i][statConfig.label], labelType));
+                            }
+
+                            let datasets = [];
+                            for (let i = 0; i < statConfig.datalines.length; i++) {
+                                datasets.push({
+                                    label: getNiceColumnName(statConfig.datalines[i]),
+                                    data: getDataLine(data.table, statConfig.datalines[i]),
+                                    backgroundColor: colors[i % colors.length],
+                                    borderColor: colors[i % colors.length]
+                                })
+                            }
+
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: datasets
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            break;
+                        default:
+                            console.log(statType);
+                            alert("Ez a megjelenítési forma még kidolgozás alatt áll.");
+                    }
                 }
             })
             .fail(function () {
@@ -80,4 +169,30 @@
             });
 
     }
+
+    function getNiceColumnName(columnName) {
+        for (let i = 0; i < column_names.length; i++) {
+            if (column_names[i] === columnName) {
+                return nice_column_names[i];
+            }
+        }
+    }
+
+    function getColumnType(columnName) {
+        for (let i = 0; i < column_names.length; i++) {
+            if (column_names[i] === columnName) {
+                return col_types[i];
+            }
+        }
+    }
+
+    function getDataLine(dataTable, column) {
+        let dataLine = [];
+        for (let i = 0; i < dataTable.length; i++) {
+            dataLine.push(dataTable[i][column]);
+        }
+        return dataLine;
+    }
+
+
 </script>

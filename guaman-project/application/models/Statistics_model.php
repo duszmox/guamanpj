@@ -81,6 +81,7 @@ class Statistics_model extends CI_Model
         $selected_columns_arr = explode(",", $selected_columns);
 
         foreach ($selected_columns_arr as $selected_column) {
+            $selected_column = trim($selected_column);
             if (!in_array($selected_column, $table_columns)) {
                 print_r($table_columns);
 

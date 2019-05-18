@@ -120,7 +120,7 @@ class Database_model extends CI_Model
     {
         $result =$this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" =>$table_id, "column_name" => $column_name), 1)->first_row();
         if($result == null){
-            throw new Exception("Column not found");
+            throw new Exception("Column not found: ".$column_name);
         }
         return $result;
     }

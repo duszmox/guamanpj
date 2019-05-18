@@ -16,529 +16,543 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
 {
 
     $result_array_ = $result_array;
-    foreach ($result_array_ as $key => $row) {
 
+    switch ($table_name) {
 
-        switch ($table_name) {
-
-            case "guaman_keresesilista":
-
+        case "guaman_keresesilista":
+            foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['indulo_ar']) AND is_numeric($result_array_[$key]['vegso_ar'])) {
                     $result_array_[$key]["kozepar"] = ($result_array_[$key]["indulo_ar"] + $result_array_[$key]["vegso_ar"]) / 2;
                     $result_array_[$key]["celar"] = $result_array_[$key]["indulo_ar"] * 0.8;
                 }
-
-                break;
-            case "guaman_telefon":
-            case "guaman_tablet":
-            case "guaman_orakkiegeszitok":
-            case "guaman_gadget":
+            }
+            break;
+        case "guaman_telefon":
+        case "guaman_tablet":
+        case "guaman_orakkiegeszitok":
+        case "guaman_gadget":
+            foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['beker_netto']) AND is_numeric($result_array_[$key]['kiker_netto'])) {
                     $result_array_[$key]["netto_profit"] = $result_array_[$key]["kiker_netto"] - $result_array_[$key]["beker_netto"];
                     if ($result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]), 4) * 100 . ' %';
+                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]), 4) * 100;
                     }
                 }
-                break;
+            }
+            break;
 
-            case "guaman_hasznaltsales":
-            case "guaman_partnersales" :
-            case "guaman_gadgetsales" :
+        case "guaman_hasznaltsales":
+        case "guaman_partnersales" :
+        case "guaman_gadgetsales" :
+            foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['netto_profit'] = round((($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
-                    $result_array_[$key]['afa'] = ($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
+                    $result_array_[$key]['netto_profit'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126, 2);
+                    $result_array_[$key]['afa'] = $result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar'] - $result_array_[$key]['netto_profit'];
                     $result_array_[$key]['netto_eladasi_ar'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['afa']), 2);
                     if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
-                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"]), 4) * 100 . ' %';
+                        $result_array_[$key]["netto_%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);
+                    } else {
+                        $result_array_[$key]["netto_%"] = "0";
                     }
                     $date1 = $result_array_[$key]['beszer_datum'];
                     $date2 = $result_array_[$key]['eladas_datum'];
                     $diff = abs(strtotime($date2) - strtotime($date1));
                     $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
-                }
-                break;
+                } else {
+                    $result_array_[$key]['brutto_eladasi_ar'] = 0;
+                    $result_array_[$key]['beszerzesi_ar'] = 0;
+                    $result_array_[$key]["netto_%"] = "0";
 
-            case "guaman_szerviznaplo":
+                }
+            }
+            break;
+
+        case "guaman_szerviznaplo":
+            foreach ($result_array_ as $key => $row) {
                 $date1 = $result_array_[$key]['szerviz_kezdet_datum'];
                 $date2 = $result_array_[$key]['szerviz_vege_datum'];
                 $diff = abs(strtotime($date2) - strtotime($date1));
                 $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
-                break;
+            }
+            break;
 
-            case "guaman_keszlet":
+        case "guaman_keszlet":
+            foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
                     $result_array_[$key]['netto_profit'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
                     $result_array_[$key]['afa'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
                     if ($result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]), 4) * 100 . ' %';
+                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]), 4) * 100;
                     }
                 }
-                break;
+            }
+            break;
 
 
-            case "guaman_disztribuciosreport":
-
+        case "guaman_disztribuciosreport":
+            $result_array_ = array();
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
                 $ci =& get_instance();
+                $result_array_[$current_month - 1]["honap"] = $current_month;
 
-                $current_month = get_month($row['honap']); // 01, 02, 03...
 
                 $szemelyesatvetelcount = 0;
                 $futarcount = 0;
 
                 $dh = $ci->Database_model->get_table("kiszallitas_datum, szallitasi_megjegyzes", "guaman_disztribucioshasznalt", "id", "asc");
                 foreach ($dh as $dh_row) {
-                    if (get_month($dh_row["kiszallitas_datum"]) == $current_month && strtolower($dh_row["szallitasi_megjegyzes"]) == "személyes átvétel") {
+                    if (trim_month(get_month($dh_row["kiszallitas_datum"])) == $current_month && strtolower($dh_row["szallitasi_megjegyzes"]) == "személyes átvétel") {
                         $szemelyesatvetelcount++;
-
-                    } else if (get_month($dh_row["kiszallitas_datum"]) == $current_month && strtolower($dh_row["szallitasi_megjegyzes"]) == "posta") {
+                    } else if (trim_month(get_month($dh_row["kiszallitas_datum"])) == $current_month && strtolower($dh_row["szallitasi_megjegyzes"]) == "posta") {
                         $futarcount++;
                     }
                 }
 
                 $dp = $ci->Database_model->get_table("kiszallitas_datum, szallitasi_megjegyzes", "guaman_disztribuciospartnerkeszulekek", "id", "asc");
                 foreach ($dp as $dp_row) {
-                    if (get_month($dp_row["kiszallitas_datum"]) == $current_month && strtolower($dp_row["szallitasi_megjegyzes"]) == "személyes átvétel") {
+                    if (trim_month(get_month($dp_row["kiszallitas_datum"])) == $current_month && strtolower($dp_row["szallitasi_megjegyzes"]) == "személyes átvétel") {
                         $szemelyesatvetelcount++;
-                    } else if (get_month($dp_row["kiszallitas_datum"]) == $current_month && strtolower($dp_row["szallitasi_megjegyzes"]) == "posta") {
+                    } else if (trim_month(get_month($dp_row["kiszallitas_datum"])) == $current_month && strtolower($dp_row["szallitasi_megjegyzes"]) == "posta") {
                         $futarcount++;
                     }
                 }
 
-                $result_array_[$key]["szemelyes_atvetel"] = $szemelyesatvetelcount;
+                $result_array_[$current_month - 1]["id"] = $current_month;
+                $result_array_[$current_month - 1]["honap"] = $current_month;
+                $result_array_[$current_month - 1]["szemelyes_atvetel"] = $szemelyesatvetelcount;
 
-                $result_array_[$key]["futar"] = $futarcount;
+                $result_array_[$current_month - 1]["futar"] = $futarcount;
 
-                if (isset($szemelyesatvetelcount) && isset($futarcount)) {
-                    if (($szemelyesatvetelcount + $futarcount) != 0) {
-                        $result_array_[$key]["%_a"] = round((int)$szemelyesatvetelcount / ((int)$szemelyesatvetelcount + (int)$futarcount) * 100, 2) . " %";
-                        $result_array_[$key]["%_b"] = round((int)$futarcount / ((int)$szemelyesatvetelcount + (int)$futarcount) * 100, 2) . " %";
+                $sum = $futarcount + $szemelyesatvetelcount;
+                // 0-val nem osztunk
+                if ($sum <= 0) {
+                    $sum = 1;
+                }
+
+                $result_array_[$current_month - 1]["%_a"] = round($szemelyesatvetelcount / ($sum) * 100, 2);
+                $result_array_[$current_month - 1]["%_b"] = round($futarcount / ($sum) * 100, 2);
+
+            }
+            break;
+
+        case "guaman_forgalom":
+            $ci =& get_instance();
+            $result_array_ = array();
+
+            $hasznalt_sales = $ci->Database_model->get_table("*", "guaman_hasznaltsales", "id", "asc");
+            $partner_sales = $ci->Database_model->get_table("*", "guaman_partnersales", "id", "asc");
+
+            foreach ($hasznalt_sales as $hasznalt_sale) {
+                $result_array_[] = $hasznalt_sale;
+            }
+
+            foreach ($partner_sales as $partner_sale) {
+                $result_array_[] = $partner_sale;
+            }
+
+            return $result_array_;
+
+        case "guaman_beszerzesireporthasznalt":
+            $CI =& get_instance();
+            $result_array_ = array();
+
+            $keszlet = $CI->Database_model->get_table("*", "guaman_keszlet", "id", "ASC");
+
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
+                $i = $current_month - 1;
+                $result_array_[$i]["honap"] = $current_month;
+
+                $result_array_[$i]["beszerzesi_partner_db"] = 0;
+                $result_array_[$i]["jofogas_db"] = 0;
+                $result_array_[$i]["hardverapro_db"] = 0;
+                $result_array_[$i]["facebook_marketplace_db"] = 0;
+
+                foreach ($keszlet as $gadget) {
+                    if (trim_month(get_month($gadget["beker_datuma"])) == $current_month) {
+                        switch (strtolower($gadget["beszerzesi_platform"])) {
+                            case "partner":
+                                $result_array_[$i]["beszerzesi_partner_db"]++;
+                                break;
+                            case "jf":
+                                $result_array_[$i]["jofogas_db"]++;
+                                break;
+                            case "ha":
+                                $result_array_[$i]["hardverapro_db"]++;
+                                break;
+                            case "fb":
+                                $result_array_[$i]["facebook_marketplace_db"]++;
+                                break;
+                        }
                     }
-
                 }
 
-                break;
+                // Összegzés:
+                $sum =
+                    $result_array_[$i]["beszerzesi_partner_db"] +
+                    $result_array_[$i]["jofogas_db"] +
+                    $result_array_[$i]["hardverapro_db"] +
+                    $result_array_[$i]["facebook_marketplace_db"];
 
-            case "guaman_forgalom":
-
-                $result_array_ = array();
-
-                $ci =& get_instance();
-
-                $hasznalt_sales = $ci->Database_model->get_table("*", "guaman_hasznaltsales", "id", "asc");
-                $partner_sales = $ci->Database_model->get_table("*", "guaman_partnersales", "id", "asc");
-
-                foreach ($hasznalt_sales as $hasznalt_sale) {
-                    $result_array_[] = $hasznalt_sale;
+                // 0-val nem osztunk még 0-t sem!
+                if ($sum == 0) {
+                    $sum = 1;
                 }
 
-                foreach ($partner_sales as $partner_sale) {
-                    $result_array_[] = $partner_sale;
-                }
+                // Százalékok:
+                $result_array_[$i]["beszerzesi_partner_%"] = 100 * ($result_array_[$i]["beszerzesi_partner_db"] / $sum);
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
+                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);
 
-                return $result_array_;
+            }
 
-            case "guaman_beszerzesireporthasznalt":
-                $CI =& get_instance();
-                $result_array_ = array();
+            break;
 
-                $keszlet = $CI->Database_model->get_table("*", "guaman_keszlet", "id", "ASC");
+        case "guaman_beszerzesireportpartner":
+            $CI =& get_instance();
 
-                for ($current_month = 1; $current_month <= 12; $current_month++) {
-                    $i = $current_month - 1;
-                    $result_array_[$i]["honap"] = $current_month;
+            $telefon = $CI->Database_model->get_table("*", "guaman_telefon", "id", "ASC");
+            $orakkiegeszitok = $CI->Database_model->get_table("*", "guaman_orakkiegeszitok", "id", "ASC");
+            $tablet = $CI->Database_model->get_table("*", "guaman_tablet", "id", "ASC");
 
-                    $result_array_[$i]["beszerzesi_partner_db"] = 0;
-                    $result_array_[$i]["jofogas_db"] = 0;
-                    $result_array_[$i]["hardverapro_db"] = 0;
-                    $result_array_[$i]["facebook_marketplace_db"] = 0;
+            $merged_arrays = array($telefon, $tablet, $orakkiegeszitok);
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
+                $i = $current_month - 1;
+                $result_array_[$i]["honap"] = $current_month;
+                $result_array_[$i]["id"] = $current_month;
 
-                    foreach ($keszlet as $item) {
-                        if (trim_month(get_month($item["beker_datuma"])) == $current_month) {
-                            switch (strtolower($item["beszerzesi_platform"])) {
-                                case "partner":
-                                    $result_array_[$i]["beszerzesi_partner_db"]++;
+                $result_array_[$i]["bravophone_db"] = 0;
+                $result_array_[$i]["gegeszoft_db"] = 0;
+                $result_array_[$i]["alibaba_db"] = 0;
+                $result_array_[$i]["facebook_marketplace_db"] = 0;
+                foreach ($merged_arrays as $key => $value) {
+                    foreach ($value as $gadget) {
+                        if (trim_month(get_month($gadget["datum"])) == $current_month) {
+                            switch (strtolower($gadget["nagyker"])) {
+                                case "bravophone":
+                                    $result_array_[$i]["bravophone_db"]++;
                                     break;
-                                case "jf":
-                                    $result_array_[$i]["jofogas_db"]++;
+                                case "gegeszoft":
+                                    $result_array_[$i]["gegeszoft_db"]++;
                                     break;
-                                case "ha":
-                                    $result_array_[$i]["hardverapro_db"]++;
+                                case "alibaba":
+                                    $result_array_[$i]["alibaba_db"]++;
                                     break;
-                                case "fb":
+                                case "facebook":
                                     $result_array_[$i]["facebook_marketplace_db"]++;
                                     break;
                             }
                         }
-                    }
-
-                    // Összegzés:
-                    $sum =
-                        $result_array_[$i]["beszerzesi_partner_db"] +
-                        $result_array_[$i]["jofogas_db"] +
-                        $result_array_[$i]["hardverapro_db"] +
-                        $result_array_[$i]["facebook_marketplace_db"];
-
-                    // 0-val nem osztunk még 0-t sem!
-                    if ($sum == 0) {
-                        $sum = 1;
-                    }
-
-                    // Százalékok:
-                    $result_array_[$i]["beszerzesi_partner_%"] = 100 * ($result_array_[$i]["beszerzesi_partner_db"] / $sum) . " %";
-                    $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum) . " %";
-                    $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum) . " %";
-                    $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum) . " %";
-
+                    } // TODO ellenőrizni
                 }
 
-                break;
 
-            case "guaman_beszerzesireportpartner":
-                $CI =& get_instance();
-                $result_array_ = array();
+                // Összegzés:
+                $sum =
+                    $result_array_[$i]["bravophone_db"] +
+                    $result_array_[$i]["gegeszoft_db"] +
+                    $result_array_[$i]["alibaba_db"] +
+                    $result_array_[$i]["facebook_marketplace_db"];
 
-                $telefon = $CI->Database_model->get_table("*", "guaman_telefon", "id", "ASC");
-                $orakkiegeszitok = $CI->Database_model->get_table("*", "guaman_orakkiegeszitok", "id", "ASC");
-                $tablet = $CI->Database_model->get_table("*", "guaman_tablet", "id", "ASC");
+                // 0-val nem osztunk még 0-t sem!
+                if ($sum == 0) {
+                    $sum = 1;
+                }
 
-                $merged_arrays = array($telefon, $tablet, $orakkiegeszitok);
-                for ($current_month = 1; $current_month <= 12; $current_month++) {
-                    $i = $current_month - 1;
-                    $result_array_[$i]["honap"] = $current_month;
+                // Százalékok:
+                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);
+                $result_array_[$i]["gegeszoft_%"] = 100 * ($result_array_[$i]["gegeszoft_db"] / $sum);
+                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);
+                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);
 
-                    $result_array_[$i]["bravophone_db"] = 0;
-                    $result_array_[$i]["gegeszoft_db"] = 0;
-                    $result_array_[$i]["alibaba_db"] = 0;
-                    $result_array_[$i]["facebook_marketplace_db"] = 0;
-                    foreach ($merged_arrays as $key => $value){
-                        foreach ($value as $item) {
-                            if (trim_month(get_month($item["datum"])) == $current_month) {
-                                switch (strtolower($item["nagyker"])) {
-                                    case "bravophone":
-                                        $result_array_[$i]["bravophone_db"]++;
-                                        break;
-                                    case "gegeszoft":
-                                        $result_array_[$i]["gegeszoft_db"]++;
-                                        break;
-                                    case "alibaba":
-                                        $result_array_[$i]["alibaba_db"]++;
-                                        break;
-                                    case "facebook":
-                                        $result_array_[$i]["facebook_marketplace_db"]++;
-                                        break;
-                                }
+            }
+            break;
+        case "guaman_beszerzesireportgadget":
+            $CI =& get_instance();
+            $result_array_ = array();
+
+            $gadgets = $CI->Database_model->get_table("*", "guaman_gadget", "id", "ASC");
+
+            $merged_arrays = array($gadgets);
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
+                $i = $current_month - 1;
+                $result_array_[$i]["id"] = $current_month;
+                $result_array_[$i]["honap"] = $current_month;
+
+                $result_array_[$i]["phonemax_db"] = 0;
+                $result_array_[$i]["mobilpro_db"] = 0;
+                $result_array_[$i]["alibaba_db"] = 0;
+                $result_array_[$i]["bravophone_db"] = 0;
+                foreach ($merged_arrays as $key => $value) {
+                    foreach ($value as $gadget) {
+                        if (trim_month(get_month($gadget["datum"])) == $current_month) {
+                            switch (strtolower($gadget["nagyker"])) {
+                                case "phonemax":
+                                    $result_array_[$i]["phonemax_db"]++;
+                                    break;
+                                case "mobilpro":
+                                    $result_array_[$i]["mobilpro_db"]++;
+                                    break;
+                                case "alibaba":
+                                    $result_array_[$i]["alibaba_db"]++;
+                                    break;
+                                case "bravophone":
+                                    $result_array_[$i]["bravophone_db"]++;
+                                    break;
                             }
                         }
                     }
-
-
-                    // Összegzés:
-                    $sum =
-                        $result_array_[$i]["bravophone_db"] +
-                        $result_array_[$i]["gegeszoft_db"] +
-                        $result_array_[$i]["alibaba_db"] +
-                        $result_array_[$i]["facebook_marketplace_db"];
-
-                    // 0-val nem osztunk még 0-t sem!
-                    if ($sum == 0) {
-                        $sum = 1;
-                    }
-
-                    // Százalékok:
-                    $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum) . " %";
-                    $result_array_[$i]["gegeszoft_%"] = 100 * ($result_array_[$i]["gegeszoft_db"] / $sum) . " %";
-                    $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum) . " %";
-                    $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum) . " %";
-
                 }
-                break;
-            case "guaman_beszerzesireportgadget":
-                $CI =& get_instance();
-                $result_array_ = array();
 
-               $gadget = $CI->Database_model->get_table("*", "guaman_gadget", "id", "ASC");
 
-                $merged_arrays = array($gadget);
-                for ($current_month = 1; $current_month <= 12; $current_month++) {
-                    $i = $current_month - 1;
-                    $result_array_[$i]["honap"] = $current_month;
+                // Összegzés:
+                $sum =
+                    $result_array_[$i]["phonemax_db"] +
+                    $result_array_[$i]["mobilpro_db"] +
+                    $result_array_[$i]["alibaba_db"] +
+                    $result_array_[$i]["bravophone_db"];
 
-                    $result_array_[$i]["phonemax_db"] = 0;
-                    $result_array_[$i]["mobilpro_db"] = 0;
-                    $result_array_[$i]["alibaba_db"] = 0;
-                    $result_array_[$i]["bravophone_db"] = 0;
-                    foreach ($merged_arrays as $key => $value){
-                        foreach ($value as $item) {
-                            if (trim_month(get_month($item["datum"])) == $current_month) {
-                                switch (strtolower($item["nagyker"])) {
-                                    case "phonemax":
-                                        $result_array_[$i]["phonemax_db"]++;
-                                        break;
-                                    case "mobilpro":
-                                        $result_array_[$i]["mobilpro_db"]++;
-                                        break;
-                                    case "alibaba":
-                                        $result_array_[$i]["alibaba_db"]++;
-                                        break;
-                                    case "bravophone":
-                                        $result_array_[$i]["bravophone_db"]++;
-                                        break;
-                                }
-                            }
+                // 0-val nem osztunk még 0-t sem!
+                if ($sum == 0) {
+                    $sum = 1;
+                }
+
+                // Százalékok:
+                $result_array_[$i]["phonemax_%"] = 100 * ($result_array_[$i]["phonemax_db"] / $sum);
+                $result_array_[$i]["mobilpro_%"] = 100 * ($result_array_[$i]["mobilpro_db"] / $sum);
+                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);
+                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);
+
+            }
+            break;
+        case "guaman_salesplatformreporthasznalt":
+            $CI =& get_instance();
+            $result_array_ = array();
+
+            $hasznaltsales = $CI->Database_model->get_table("*", "guaman_hasznaltsales", "id", "ASC");
+
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
+                $i = $current_month - 1;
+                $result_array_[$i]["honap"] = $current_month;
+                $result_array_[$i]["id"] = $current_month;
+
+                $result_array_[$i]["webshop_db"] = 0;
+                $result_array_[$i]["instagram_db"] = 0;
+                $result_array_[$i]["visszatero_db"] = 0;
+                $result_array_[$i]["hasznalt_alma_db"] = 0;
+                $result_array_[$i]["jofogas_db"] = 0;
+                $result_array_[$i]["hardverapro_db"] = 0;
+                $result_array_[$i]["facebook_db"] = 0;
+
+                foreach ($hasznaltsales as $hasznaltsale) {
+                    if (trim_month(get_month($hasznaltsale["beszer_datum"])) == $current_month) {
+                        switch (strtolower($hasznaltsale["platform"])) {
+                            case "ws":
+                                $result_array_[$i]["webshop_db"]++;
+                                break;
+                            case "ig":
+                                $result_array_[$i]["instagram_db"]++;
+                                break;
+                            case "vt":
+                                $result_array_[$i]["visszatero_db"]++;
+                                break;
+                            case "ha":
+                                $result_array_[$i]["hasznalt_alma_db"]++;
+                                break;
+                            case "jf":
+                                $result_array_[$i]["jofogas_db"]++;
+                                break;
+                            case "hr":
+                                $result_array_[$i]["hardverapro_db"]++;
+                                break;
+                            case "fb":
+                                $result_array_[$i]["facebook_db"]++;
+                                break;
+
+                        }
+                    }
+                }
+
+
+                // Összegzés:
+                $sum =
+                    $result_array_[$i]["webshop_db"] +
+                    $result_array_[$i]["instagram_db"] +
+                    $result_array_[$i]["visszatero_db"] +
+                    $result_array_[$i]["hasznalt_alma_db"] +
+                    $result_array_[$i]["jofogas_db"] +
+                    $result_array_[$i]["hardverapro_db"] +
+                    $result_array_[$i]["facebook_db"];
+
+                // 0-val nem osztunk még 0-t sem!
+                if ($sum == 0) {
+                    $sum = 1;
+                }
+
+                // Százalékok:
+                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
+                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
+                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
+                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
+                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+
+            }
+            break;
+        case
+        "guaman_salesplatformreportgadget":
+            $CI =& get_instance();
+            $result_array_ = array();
+
+            $gadgets = $CI->Database_model->get_table("*", "guaman_gadgetsales", "id", "ASC");
+
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
+                $i = $current_month - 1;
+                $result_array_[$i]["honap"] = $current_month;
+                $result_array_[$i]["id"] = $current_month;
+
+                $result_array_[$i]["webshop_db"] = 0;
+                $result_array_[$i]["instagram_db"] = 0;
+                $result_array_[$i]["visszatero_db"] = 0;
+                $result_array_[$i]["hasznalt_alma_db"] = 0;
+                $result_array_[$i]["jofogas_db"] = 0;
+                $result_array_[$i]["hardverapro_db"] = 0;
+                $result_array_[$i]["facebook_db"] = 0;
+
+                foreach ($gadgets as $gadget) {
+                    if (trim_month(get_month($gadget["beszer_datum"])) == $current_month) {
+                        switch (strtolower($gadget["platform"])) {
+                            case "ws":
+                                $result_array_[$i]["webshop_db"]++;
+                                break;
+                            case "ig":
+                                $result_array_[$i]["instagram_db"]++;
+                                break;
+                            case "vt":
+                                $result_array_[$i]["visszatero_db"]++;
+                                break;
+                            case "ha":
+                                $result_array_[$i]["hasznalt_alma_db"]++;
+                                break;
+                            case "jf":
+                                $result_array_[$i]["jofogas_db"]++;
+                                break;
+                            case "hr":
+                                $result_array_[$i]["hardverapro_db"]++;
+                                break;
+                            case "fb":
+                                $result_array_[$i]["facebook_db"]++;
+                                break;
+
+                        }
+                    }
+                }
+
+                // Összegzés:
+                $sum =
+                    $result_array_[$i]["webshop_db"] +
+                    $result_array_[$i]["instagram_db"] +
+                    $result_array_[$i]["visszatero_db"] +
+                    $result_array_[$i]["hasznalt_alma_db"] +
+                    $result_array_[$i]["jofogas_db"] +
+                    $result_array_[$i]["hardverapro_db"] +
+                    $result_array_[$i]["facebook_db"];
+
+                // 0-val nem osztunk még 0-t sem!
+                if ($sum == 0) {
+                    $sum = 1;
+                }
+
+                // Százalékok:
+                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
+                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
+                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
+                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
+                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+            }
+
+
+            break;
+        case
+        "guaman_salesplatformreportpartner":
+            $CI =& get_instance();
+            $result_array_ = array();
+
+            $report_partner = $CI->Database_model->get_table("*", "guaman_partnersales", "id", "ASC");
+
+            for ($current_month = 1; $current_month <= 12; $current_month++) {
+                $i = $current_month - 1;
+                $result_array_[$i]["honap"] = $current_month;
+                $result_array_[$i]["id"] = $current_month;
+
+                $result_array_[$i]["webshop_db"] = 0;
+                $result_array_[$i]["instagram_db"] = 0;
+                $result_array_[$i]["visszatero_db"] = 0;
+                $result_array_[$i]["hasznalt_alma_db"] = 0;
+                $result_array_[$i]["jofogas_db"] = 0;
+                $result_array_[$i]["hardverapro_db"] = 0;
+                $result_array_[$i]["facebook_db"] = 0;
+
+                foreach ($report_partner as $row) {
+                    if (trim_month(get_month($row["beszer_datum"])) == $current_month) {
+                        switch (strtolower($row["platform"])) {
+                            case "ws":
+                                $result_array_[$i]["webshop_db"]++;
+                                break;
+                            case "ig":
+                                $result_array_[$i]["instagram_db"]++;
+                                break;
+                            case "vt":
+                                $result_array_[$i]["visszatero_db"]++;
+                                break;
+                            case "ha":
+                                $result_array_[$i]["hasznalt_alma_db"]++;
+                                break;
+                            case "jf":
+                                $result_array_[$i]["jofogas_db"]++;
+                                break;
+                            case "hr":
+                                $result_array_[$i]["hardverapro_db"]++;
+                                break;
+                            case "fb":
+                                $result_array_[$i]["facebook_db"]++;
+                                break;
+
                         }
                     }
 
-
-                    // Összegzés:
-                    $sum =
-                        $result_array_[$i]["phonemax_db"] +
-                        $result_array_[$i]["mobilpro_db"] +
-                        $result_array_[$i]["alibaba_db"] +
-                        $result_array_[$i]["bravophone_db"];
-
-                    // 0-val nem osztunk még 0-t sem!
-                    if ($sum == 0) {
-                        $sum = 1;
-                    }
-
-                    // Százalékok:
-                    $result_array_[$i]["phonemax_%"] = 100 * ($result_array_[$i]["phonemax_db"] / $sum) . " %";
-                    $result_array_[$i]["mobilpro_%"] = 100 * ($result_array_[$i]["mobilpro_db"] / $sum) . " %";
-                    $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum) . " %";
-                    $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum) . " %";
-
                 }
-                break;
-            case "guaman_salesplatformreporthasznalt":
-                $CI =& get_instance();
-                $result_array_ = array();
-
-                $hasznaltsales = $CI->Database_model->get_table("*", "guaman_hasznaltsales", "id", "ASC");
-
-                $merged_arrays = array($hasznaltsales);
-                for ($current_month = 1; $current_month <= 12; $current_month++) {
-                    $i = $current_month - 1;
-                    $result_array_[$i]["honap"] = $current_month;
-
-                    $result_array_[$i]["webshop_db"] = 0;
-                    $result_array_[$i]["instagram_db"] = 0;
-                    $result_array_[$i]["visszatero_db"] = 0;
-                    $result_array_[$i]["hasznalt_alma_db"] = 0;
-                    $result_array_[$i]["jofogas_db"] = 0;
-                    $result_array_[$i]["hardverapro_db"] = 0;
-                    $result_array_[$i]["facebook_db"] = 0;
-                    foreach ($merged_arrays as $key => $value){
-                        foreach ($value as $item) {
-                            if (trim_month(get_month($item["beszer_datum"])) == $current_month) {
-                                switch (strtolower($item["platform"])) {
-                                    case "ws":
-                                        $result_array_[$i]["webshop_db"]++;
-                                        break;
-                                    case "ig":
-                                        $result_array_[$i]["instagram_db"]++;
-                                        break;
-                                    case "vt":
-                                        $result_array_[$i]["visszatero_db"]++;
-                                        break;
-                                    case "ha":
-                                        $result_array_[$i]["hasznalt_alma_db"]++;
-                                        break;
-                                    case "jf":
-                                        $result_array_[$i]["jofogas_db"]++;
-                                        break;
-                                    case "hr":
-                                        $result_array_[$i]["hardverapro_db"]++;
-                                        break;
-                                    case "fb":
-                                        $result_array_[$i]["facebook_db"]++;
-                                        break;
-
-                                }
-                            }
-                        }
-                    }
 
 
-                    // Összegzés:
-                    $sum =
-                        $result_array_[$i]["webshop_db"] +
-                        $result_array_[$i]["instagram_db"] +
-                        $result_array_[$i]["visszatero_db"] +
-                        $result_array_[$i]["hasznalt_alma_db"] +
-                        $result_array_[$i]["jofogas_db"] +
-                        $result_array_[$i]["hardverapro_db"] +
-                        $result_array_[$i]["facebook_db"];
+                // Összegzés:
+                $sum =
+                    $result_array_[$i]["webshop_db"] +
+                    $result_array_[$i]["instagram_db"] +
+                    $result_array_[$i]["visszatero_db"] +
+                    $result_array_[$i]["hasznalt_alma_db"] +
+                    $result_array_[$i]["jofogas_db"] +
+                    $result_array_[$i]["hardverapro_db"] +
+                    $result_array_[$i]["facebook_db"];
 
-                    // 0-val nem osztunk még 0-t sem!
-                    if ($sum == 0) {
-                        $sum = 1;
-                    }
-
-                    // Százalékok:
-                    $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum) . " %";
-                    $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum) . " %";
-                    $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum) . " %";
-                    $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum) . " %";
-                    $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum) . " %";
-                    $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum) . " %";
-                    $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum) . " %";
-
+                // 0-val nem osztunk még 0-t sem!
+                if ($sum == 0) {
+                    $sum = 1;
                 }
-                break;
-            case "guaman_salesplatformreportgadget":
-                $CI =& get_instance();
-                $result_array_ = array();
 
-                $gadget = $CI->Database_model->get_table("*", "guaman_gadgetsales", "id", "ASC");
+                // Százalékok:
+                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
+                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
+                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
+                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
+                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
 
-                $merged_arrays = array($gadget);
-                for ($current_month = 1; $current_month <= 12; $current_month++) {
-                    $i = $current_month - 1;
-                    $result_array_[$i]["honap"] = $current_month;
-
-                    $result_array_[$i]["webshop_db"] = 0;
-                    $result_array_[$i]["instagram_db"] = 0;
-                    $result_array_[$i]["visszatero_db"] = 0;
-                    $result_array_[$i]["hasznalt_alma_db"] = 0;
-                    $result_array_[$i]["jofogas_db"] = 0;
-                    $result_array_[$i]["hardverapro_db"] = 0;
-                    $result_array_[$i]["facebook_db"] = 0;
-                    foreach ($merged_arrays as $key => $value){
-                        foreach ($value as $item) {
-                            if (trim_month(get_month($item["beszer_datum"])) == $current_month) {
-                                switch (strtolower($item["platform"])) {
-                                    case "ws":
-                                        $result_array_[$i]["webshop_db"]++;
-                                        break;
-                                    case "ig":
-                                        $result_array_[$i]["instagram_db"]++;
-                                        break;
-                                    case "vt":
-                                        $result_array_[$i]["visszatero_db"]++;
-                                        break;
-                                    case "ha":
-                                        $result_array_[$i]["hasznalt_alma_db"]++;
-                                        break;
-                                    case "jf":
-                                        $result_array_[$i]["jofogas_db"]++;
-                                        break;
-                                    case "hr":
-                                        $result_array_[$i]["hardverapro_db"]++;
-                                        break;
-                                    case "fb":
-                                        $result_array_[$i]["facebook_db"]++;
-                                        break;
-
-                                }
-                            }
-                        }
-                    }
-
-
-                    // Összegzés:
-                    $sum =
-                        $result_array_[$i]["webshop_db"] +
-                        $result_array_[$i]["instagram_db"] +
-                        $result_array_[$i]["visszatero_db"] +
-                        $result_array_[$i]["hasznalt_alma_db"] +
-                        $result_array_[$i]["jofogas_db"] +
-                        $result_array_[$i]["hardverapro_db"] +
-                        $result_array_[$i]["facebook_db"];
-
-                    // 0-val nem osztunk még 0-t sem!
-                    if ($sum == 0) {
-                        $sum = 1;
-                    }
-
-                    // Százalékok:
-                    $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum) . " %";
-                    $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum) . " %";
-                    $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum) . " %";
-                    $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum) . " %";
-                    $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum) . " %";
-                    $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum) . " %";
-                    $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum) . " %";
-
-                }
-                break;
-            case "guaman_salesplatformreportpartner":
-                $CI =& get_instance();
-                $result_array_ = array();
-
-                $partner = $CI->Database_model->get_table("*", "guaman_partnersales", "id", "ASC");
-
-                $merged_arrays = array($partner);
-                for ($current_month = 1; $current_month <= 12; $current_month++) {
-                    $i = $current_month - 1;
-                    $result_array_[$i]["honap"] = $current_month;
-
-                    $result_array_[$i]["webshop_db"] = 0;
-                    $result_array_[$i]["instagram_db"] = 0;
-                    $result_array_[$i]["visszatero_db"] = 0;
-                    $result_array_[$i]["hasznalt_alma_db"] = 0;
-                    $result_array_[$i]["jofogas_db"] = 0;
-                    $result_array_[$i]["hardverapro_db"] = 0;
-                    $result_array_[$i]["facebook_db"] = 0;
-                    foreach ($merged_arrays as $key => $value){
-                        foreach ($value as $item) {
-                            if (trim_month(get_month($item["beszer_datum"])) == $current_month) {
-                                switch (strtolower($item["platform"])) {
-                                    case "ws":
-                                        $result_array_[$i]["webshop_db"]++;
-                                        break;
-                                    case "ig":
-                                        $result_array_[$i]["instagram_db"]++;
-                                        break;
-                                    case "vt":
-                                        $result_array_[$i]["visszatero_db"]++;
-                                        break;
-                                    case "ha":
-                                        $result_array_[$i]["hasznalt_alma_db"]++;
-                                        break;
-                                    case "jf":
-                                        $result_array_[$i]["jofogas_db"]++;
-                                        break;
-                                    case "hr":
-                                        $result_array_[$i]["hardverapro_db"]++;
-                                        break;
-                                    case "fb":
-                                        $result_array_[$i]["facebook_db"]++;
-                                        break;
-
-                                }
-                            }
-                        }
-                    }
-
-
-                    // Összegzés:
-                    $sum =
-                        $result_array_[$i]["webshop_db"] +
-                        $result_array_[$i]["instagram_db"] +
-                        $result_array_[$i]["visszatero_db"] +
-                        $result_array_[$i]["hasznalt_alma_db"] +
-                        $result_array_[$i]["jofogas_db"] +
-                        $result_array_[$i]["hardverapro_db"] +
-                        $result_array_[$i]["facebook_db"];
-
-                    // 0-val nem osztunk még 0-t sem!
-                    if ($sum == 0) {
-                        $sum = 1;
-                    }
-
-                    // Százalékok:
-                    $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum) . " %";
-                    $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum) . " %";
-                    $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum) . " %";
-                    $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum) . " %";
-                    $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum) . " %";
-                    $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum) . " %";
-                    $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum) . " %";
-
-                }
-                break;
-        }
-
+            }
+            break;
     }
 
 

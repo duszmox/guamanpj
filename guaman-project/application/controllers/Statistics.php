@@ -144,8 +144,10 @@ class Statistics extends CI_Controller
         $columns = array();
 
         foreach ($cols as $col) {
+            $col = trim($col);
+            if($col === "") continue;
             try {
-                $columns[$col] = $this->Database_model->get_column($statistics["source_table"], $col);
+                $columns[$col] = $this->Database_model->get_column(trim($statistics["source_table"]), $col);
             } catch (Exception $e) {
                 json_error($e->getMessage());
             }

@@ -49,8 +49,7 @@
 
                 </div>
                 <div class="card-body folders-container" id="table-list-container">
-                    ..
-                    .
+                    ...
                 </div>
             </div>
         </div>
