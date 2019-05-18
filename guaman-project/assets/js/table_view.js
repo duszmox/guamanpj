@@ -20,7 +20,7 @@ function loadTable(table_name, menuOfTables = true) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
 
 
-                if (canEditTable[table_name] === "0") {
+                if (nonEditableTables.includes(table_name)) {
                     canEdit = false;
                 }
 

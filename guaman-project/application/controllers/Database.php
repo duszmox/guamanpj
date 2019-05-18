@@ -27,9 +27,9 @@ class Database extends CI_Controller
 
         $folder_array = ($this->Database_model->get_folders());
 
-        $canEditTableArray = $this->Database_model->get_only_edit_table_array();
+        $nonEditableTables = $this->Database_model->getNonEditableTables();
 
-        $this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array, "canEditTableArray" => $canEditTableArray));
+        $this->load->view("database/table_view", array("table_array" => $table_array, "folder_array" => $folder_array, "nonEditableTables" => $nonEditableTables));
 
         $this->load->view("templates/footer");
     }
@@ -123,27 +123,19 @@ class Database extends CI_Controller
         $table_name = $this->input->post("table_name");
 
         require_permission($table_name . "_table_edit");
-        if($this->Database_model->only_edit_table($table_name) == "1"){
-            js_alert("Cant update field", base_url("database/")); //todo lang
+        if(!$this->Database_model->isEditableTable($table_name)){
+            json_error("You cannot change this field!"); // TODO lang
         }
         $column = $this->input->post("column");
         $id = $this->input->post("id");
         $value = $this->input->post("value");
-        print_r($table_name . "; " . $column . "; " . $id . "; " . $value);
 
         try {
             $this->Database_model->update_field($table_name, $column, $id, $value);
         } catch (Exception $exception) {
-            die($exception->getMessage());
+            json_error($exception->getMessage());
         }
     }
-
-    function get_nice_column_name($table_id, $column_name)
-    {
-        require_permission($this->Database_model->get_table_name($table_id) . "_table_view");
-        echo $this->Database_model->get_nice_column_name($table_id, $column_name);
-    }
-
 
     public function backup()
     {
@@ -173,7 +165,7 @@ class Database extends CI_Controller
     /**
      * Form for move row
      * @param $from_table
-     * @param $row
+     * @param $from_id
      */
     public function move_row($from_table, $from_id)
     {

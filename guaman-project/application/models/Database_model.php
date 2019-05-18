@@ -89,16 +89,20 @@ class Database_model extends CI_Model
         return custom_db_actions($table, $resultArray, $this->get_columns_by_table($table), $columns);
 
     }
-    public function only_edit_table($table_name){
-        $this->db->select("only_view");
-        $bool = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name))->result_array();
-        return $bool[0]['only_view'];
+
+    public function isEditableTable($table_name)
+    {
+        return $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name, "editable" => 1))->num_rows() >= 1;
     }
-    public function get_only_edit_table_array(){
-        $this->db->select("only_view");
-        $this->db->select("table_name");
-        $array = $this->db->get(self::$TABLE_NAME)->result_array();
-        return $array;
+
+    public function getNonEditableTables()
+    {
+        $result_array = $this->db->get_where(self::$TABLE_NAME, array("editable" => 0))->result_array();
+        $nonEditableTables = array();
+        foreach ($result_array as $row) {
+            $nonEditableTables[] = $row["table_name"];
+        }
+        return $nonEditableTables;
     }
 
     public function get_columns_by_table($table_name)
@@ -118,9 +122,9 @@ class Database_model extends CI_Model
      */
     public function get_column($table_id, $column_name)
     {
-        $result =$this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" =>$table_id, "column_name" => $column_name), 1)->first_row();
-        if($result == null){
-            throw new Exception("Column not found: ".$column_name);
+        $result = $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" => $table_id, "column_name" => $column_name), 1)->first_row();
+        if ($result == null) {
+            throw new Exception("Column not found: " . $column_name);
         }
         return $result;
     }
@@ -146,15 +150,18 @@ class Database_model extends CI_Model
         }
         return $nice_column_names;
     }
-    public function has_column_in_table($column, $table){
+
+    public function has_column_in_table($column, $table)
+    {
         $columns_of_table = self::get_columns_by_table($table);
-        if(in_array($column, $columns_of_table)){
+        if (in_array($column, $columns_of_table)) {
             return true;
-        }else{
+        } else {
             return false;
         }
 
     }
+
     public function get_type_of_column($col)
     {
 
@@ -192,7 +199,7 @@ class Database_model extends CI_Model
         $this->db->insert(self::$FOLDER_TABLE_NAME, array("id" => "", "folder_name" => $this->get_database_type_name($name), "folder_title" => $name, "parent_folder" => $parent_folder));
     }
 
-   public function get_database_type_name($string)
+    public function get_database_type_name($string)
     {
 
         $string = strtolower($string);
@@ -343,20 +350,29 @@ class Database_model extends CI_Model
 
         return $compatible_tables;
     }
-    public function get_id_by_table_name($table_name){
-            $this->db->select("id");
-            $result = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name))->result_array();
-            if(sizeof($result) > 0){return $result[0]['id'];};
-            return "false";
 
-    }
-    public function get_table_name_by_id($id){
-        $this->db->select("table_name");
-        $result = $this->db->get_where(self::$TABLE_NAME, array("id" => $id))->result_array();
-        if(sizeof($result) > 0){return $result[0]['table_name'];};
+    public function get_id_by_table_name($table_name)
+    {
+        $this->db->select("id");
+        $result = $this->db->get_where(self::$TABLE_NAME, array("table_name" => $table_name))->result_array();
+        if (sizeof($result) > 0) {
+            return $result[0]['id'];
+        };
         return "false";
 
     }
+
+    public function get_table_name_by_id($id)
+    {
+        $this->db->select("table_name");
+        $result = $this->db->get_where(self::$TABLE_NAME, array("id" => $id))->result_array();
+        if (sizeof($result) > 0) {
+            return $result[0]['table_name'];
+        };
+        return "false";
+
+    }
+
     public function get_table_title($table_name)
     {
         if (!in_array($table_name, $this->get_table_names())) throw new Exception("table_not_found_exception");

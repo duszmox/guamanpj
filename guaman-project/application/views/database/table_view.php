@@ -1,5 +1,6 @@
 <div class="row">
-    <div class="col-sm-auto table-div-container" style="visibility: hidden;position: relative;z-index: 1" id="data-table-column" >
+    <div class="col-sm-auto table-div-container" style="visibility: hidden;position: relative;z-index: 1"
+         id="data-table-column">
         <div class="card col-sm-auto" style="margin-right: 20px;margin-left: 20px;">
             <div class="card-body">
 
@@ -97,16 +98,10 @@
     var tables = <?php /** @var array $table_array */
         echo json_encode($table_array); ?>;
 
-    var canEditTable = {
-        <?php
-            foreach ($canEditTableArray as $key => $value){
-                echo $canEditTableArray[$key]['table_name'] .":'" . $canEditTableArray[$key]['only_view']. "',\n";
-            }
-        ?>
-    }
+    var nonEditableTables = <?php /** @var array $nonEditableTables */ echo json_encode($nonEditableTables); ?>;
 </script>
 
-<script async src="<?php echo js_url("data_output_helper.js");?>"> </script>
+<script async src="<?php echo js_url("data_output_helper.js"); ?>"></script>
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
 
 
