@@ -135,11 +135,6 @@ class Database_model extends CI_Model
 
         foreach ($column_names as $column_name) {
             $result_array = $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" => $table_id, "column_name" => $column_name), 1)->result_array();
-
-            if(empty($result_array)){
-                echo "<script>console.log('".$column_name."');</script>";
-            }
-
             $types[] = $result_array[0]["type"];
         }
         return $types;

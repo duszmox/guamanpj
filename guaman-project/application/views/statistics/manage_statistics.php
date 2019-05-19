@@ -1,4 +1,10 @@
 <div class="container bg-white shadow p-5">
+    <a href="<?php echo base_url("statistics/");?>" class="d-block text-decoration-none" style="color: inherit">
+        <strong>
+            <i class="fas fa-chevron-left"></i>
+            Kezdőlap<!-- TODO lang statistics back to home-->
+        </strong>
+    </a>
     <h2 class="d-inline-block">
         <?php echo lang("statistics_label") ?>
     </h2>

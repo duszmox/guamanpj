@@ -1,4 +1,5 @@
 function getCellBody(value, col_type, canEdit) {
+    let cell_body = "";
     switch (col_type) {
         case "text":
             if (canEdit) {
@@ -7,7 +8,7 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "</span>";
             }
-            break;
+            return cell_body;
         case "month":
             if (canEdit) {
                 // TODO select input
@@ -15,10 +16,10 @@ function getCellBody(value, col_type, canEdit) {
                 cell_body += "<span hidden>" + value + "</span>";
             } else {
 
-                withzero = (value + "").length === 1 ? "0" + value : value;
+                let withzero = (value + "").length === 1 ? "0" + value : value;
                 cell_body = "<span><span hidden>" + withzero + "</span>" + getDisplayFormat(value, "month") + "</span>";
             }
-            break;
+            return cell_body;
         case "date":
             if (canEdit) {
                 cell_body = "<input type=\"date\" class=\"form-control data-cell\" value=\'" + value + "\'>";
@@ -26,8 +27,9 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "</span>";
             }
-            break;
+            return cell_body;
         case "money":
+            console.log("DDD: " + value);
             let cell_value = value;
             if (isNumeric(cell_value)) {
                 cell_value = numberWithSpaces(cell_value);
@@ -36,16 +38,15 @@ function getCellBody(value, col_type, canEdit) {
                 value = "0";
             }
 
-
             if (canEdit) {
                 cell_body = "<input type=\"text\" pattern=\'[0-9]|\\s\' value=\'" + cell_value + "\' class=\'form-control\'/>";
                 cell_body += "<span hidden>" + cell_value + " " + value + "</span>";
-
             } else {
-                cell_body += "<span>" + cell_value + "</span>";
+                cell_body = "<span>" + cell_value + "</span>";
                 cell_body += "<span hidden>" + cell_value + " " + value + "</span>";
             }
-            break;
+            console.log(cell_value);
+            return cell_body;
         case "percentage":
             if (canEdit) {
                 value += "";
@@ -54,7 +55,8 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "%</span>";
             }
-            break;
+            return cell_body;
+
         default:
             if (canEdit) {
                 cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + value + "\'>";
@@ -62,12 +64,13 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "</span>";
             }
+            return cell_body;
+
     }
-    return cell_body;
 }
 
 // TODO megcsinálni, hogy JS-ből is tudjunk langot kiolvasni
-var MONTHS = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
+let MONTHS = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
 
 function getDisplayFormat(value, type) {
     console.log("type: " + type + "; value: " + value);
@@ -92,6 +95,7 @@ function getDisplayFormat(value, type) {
 }
 
 function getBackData(inputValue, type) {
+    let newValue = "";
     switch (type) {
         case "money":
             newValue = inputValue.toLowerCase();

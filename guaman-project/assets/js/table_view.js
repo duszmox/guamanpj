@@ -56,14 +56,14 @@ function loadTable(table_name, menuOfTables = true) {
                 html += "<table class=\"table table\" id=\"data-table\" >";
 
                 // Display table headers
-                html += "<thead><tr><tr>";
+                html += "<thead><tr>";
                 for (let i = 0; i < column_nice_names.length; i++) {
                     html += "<th>" + column_nice_names[i] + "</th>";
                 }
                 if (canEdit) {
                     html += "<th>" + lang.actions + "</th>";
                 }
-                html += "</tr></tr></thead>";
+                html += "</tr></thead>";
 
                 html += "<tbody>";
                 for (let i = 1; i < data.length; i++) {
@@ -78,16 +78,16 @@ function loadTable(table_name, menuOfTables = true) {
 
                         html += getCellBody(data[i][columns[k]], col_types[k], canEdit);
 
-
                         html += "</td>";
                     }
 
                     if (canEdit) {
                         html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_button + "</a></td>";
-                     }
+                    }
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
+                console.log(html);
 
                 $("#table-container").html(html);
                 setTimeout(function () {
@@ -215,7 +215,6 @@ function insertRow(table_name) {
         loadTable(table_name);
     });
 }
-
 
 
 function isNumeric(n) {

@@ -1,0 +1,179 @@
+<h2>Forgalom</h2>
+<div class='my-4'>
+    <button class='btn btn-primary' onclick='loadTable("guaman_forgalom", false)'><i class="fas fa-redo"></i> Frissítés
+    </button>
+</div>
+<table class="table table" id="data-table">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>Beszerzés dátuma</th>
+        <th>Termék neve</th>
+        <th>Termék ID</th>
+        <th>Beszerzési ár</th>
+        <th>Nettó Eladási ár</th>
+        <th>Bruttó Eladási Ár</th>
+        <th>Áfa</th>
+        <th>Netto profit</th>
+        <th>%</th>
+        <th>Eladás dátuma</th>
+        <th>Forgási idő</th>
+        <th>Platform</th>
+        <th>Értékesítő</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='id'><span>1</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='beszer_datum'><span>2019-04-18</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='termek_neve'><span>kutya 7</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='termek_id'><span>B32</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='beszerzesi_ar'><span>B32</span><span>20 000 000</span><span
+                hidden>20 000 000 20000000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='netto_eladasi_ar'><span>B32</span><span>20 000 000</span><span
+                hidden>20 000 000 20000000</span><span>68 898 000</span><span hidden>68 898 000 68898000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='brutto_eladasi_ar'><span>B32</span><span>20 000 000</span><span
+                hidden>20 000 000 20000000</span><span>68 898 000</span><span hidden>68 898 000 68898000</span><span>250 000 000</span><span
+                hidden>250 000 000 250000000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='afa'>
+            <span>B32</span><span>20 000 000</span><span hidden>20 000 000 20000000</span><span>68 898 000</span><span
+                hidden>68 898 000 68898000</span><span>250 000 000</span><span hidden>250 000 000 250000000</span><span>181 102 000</span><span
+                hidden>181 102 000 181102000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='netto_profit'><span>B32</span><span>20 000 000</span><span
+                hidden>20 000 000 20000000</span><span>68 898 000</span><span hidden>68 898 000 68898000</span><span>250 000 000</span><span
+                hidden>250 000 000 250000000</span><span>181 102 000</span><span
+                hidden>181 102 000 181102000</span><span>48 898 000</span><span hidden>48 898 000 48898000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='netto_%'><span>70.97%</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='eladas_datum'><span>2019-04-10</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='forgasi_nap'><span>8 nap</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='platform'><span>FACEBOOK</span></td>
+        <td class='data-cell-container' data-id='1' data-row='0' data-column='ertekesito'><span>LEVI</span></td>
+    </tr>
+    <tr>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='id'><span>2</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='beszer_datum'><span>2019-04-15</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='termek_neve'><span>IPHONE 6</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='termek_id'><span></span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='beszerzesi_ar'>
+            <span></span><span>1 000</span><span hidden>1 000 1000</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='netto_eladasi_ar'>
+            <span></span><span>1 000</span><span hidden>1 000 1000</span><span>1 212.6</span><span
+                hidden>1 212.6 1212.6</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='brutto_eladasi_ar'><span></span><span>1 000</span><span
+                hidden>1 000 1000</span><span>1 212.6</span><span hidden>1 212.6 1212.6</span><span>2 000</span><span
+                hidden>2 000 2000</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='afa'><span></span><span>1 000</span><span
+                hidden>1 000 1000</span><span>1 212.6</span><span hidden>1 212.6 1212.6</span><span>2 000</span><span
+                hidden>2 000 2000</span><span>787.4</span><span hidden>787.4 787.4</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='netto_profit'>
+            <span></span><span>1 000</span><span hidden>1 000 1000</span><span>1 212.6</span><span
+                hidden>1 212.6 1212.6</span><span>2 000</span><span hidden>2 000 2000</span><span>787.4</span><span
+                hidden>787.4 787.4</span><span>212.6</span><span hidden>212.6 212.6</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='netto_%'><span>17.53%</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='eladas_datum'><span>2019-04-03</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='forgasi_nap'><span>12 nap</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='platform'><span>JF</span></td>
+        <td class='data-cell-container' data-id='2' data-row='1' data-column='ertekesito'><span>BÉLA</span></td>
+    </tr>
+    <tr>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='id'><span>3</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='beszer_datum'><span>2019-04-27</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='termek_neve'><span>IPHONE 6</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='termek_id'><span>H76</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='beszerzesi_ar'>
+            <span>H76</span><span>100</span><span hidden>100 100</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='netto_eladasi_ar'><span>H76</span><span>100</span><span
+                hidden>100 100</span><span>121.26</span><span hidden>121.26 121.26</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='brutto_eladasi_ar'><span>H76</span><span>100</span><span
+                hidden>100 100</span><span>121.26</span><span hidden>121.26 121.26</span><span>200</span><span hidden>200 200</span>
+        </td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='afa'><span>H76</span><span>100</span><span
+                hidden>100 100</span><span>121.26</span><span hidden>121.26 121.26</span><span>200</span><span hidden>200 200</span><span>78.74</span><span
+                hidden>78.74 78.74</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='netto_profit'>
+            <span>H76</span><span>100</span><span hidden>100 100</span><span>121.26</span><span
+                hidden>121.26 121.26</span><span>200</span><span hidden>200 200</span><span>78.74</span><span hidden>78.74 78.74</span><span>21.26</span><span
+                hidden>21.26 21.26</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='netto_%'><span>17.53%</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='eladas_datum'><span>2019-04-24</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='forgasi_nap'><span>3 nap</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='platform'><span>JF</span></td>
+        <td class='data-cell-container' data-id='3' data-row='2' data-column='ertekesito'><span>FERI</span></td>
+    </tr>
+    <tr>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='id'><span>1</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='beszer_datum'><span>2019-04-11</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='termek_neve'>
+            <span>SAMSUNG GALAXY A8</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='termek_id'><span>J76</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='beszerzesi_ar'>
+            <span>J76</span><span>2 000</span><span hidden>2 000 2000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='netto_eladasi_ar'><span>J76</span><span>2 000</span><span
+                hidden>2 000 2000</span><span>4 976.4</span><span hidden>4 976.4 4976.4</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='brutto_eladasi_ar'><span>J76</span><span>2 000</span><span
+                hidden>2 000 2000</span><span>4 976.4</span><span hidden>4 976.4 4976.4</span><span>16 000</span><span
+                hidden>16 000 16000</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='afa'>
+            <span>J76</span><span>2 000</span><span hidden>2 000 2000</span><span>4 976.4</span><span hidden>4 976.4 4976.4</span><span>16 000</span><span
+                hidden>16 000 16000</span><span>11 023.6</span><span hidden>11 023.6 11023.6</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='netto_profit'>
+            <span>J76</span><span>2 000</span><span hidden>2 000 2000</span><span>4 976.4</span><span hidden>4 976.4 4976.4</span><span>16 000</span><span
+                hidden>16 000 16000</span><span>11 023.6</span><span
+                hidden>11 023.6 11023.6</span><span>2 976.4</span><span hidden>2 976.4 2976.4</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='netto_%'><span>59.81%</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='eladas_datum'><span>2019-04-10</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='forgasi_nap'><span>1 nap</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='platform'><span>FACEBOOK</span></td>
+        <td class='data-cell-container' data-id='1' data-row='3' data-column='ertekesito'><span>LEVI</span></td>
+    </tr>
+    <tr>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='id'><span>2</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='beszer_datum'><span>2019-04-10</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='termek_neve'><span>HUAWEI Y6</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='termek_id'><span>J67</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='beszerzesi_ar'>
+            <span>J67</span><span>1 000</span><span hidden>1 000 1000</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='netto_eladasi_ar'><span>J67</span><span>1 000</span><span
+                hidden>1 000 1000</span><span>1 106.3</span><span hidden>1 106.3 1106.3</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='brutto_eladasi_ar'><span>J67</span><span>1 000</span><span
+                hidden>1 000 1000</span><span>1 106.3</span><span hidden>1 106.3 1106.3</span><span>1 500</span><span
+                hidden>1 500 1500</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='afa'>
+            <span>J67</span><span>1 000</span><span hidden>1 000 1000</span><span>1 106.3</span><span hidden>1 106.3 1106.3</span><span>1 500</span><span
+                hidden>1 500 1500</span><span>393.7</span><span hidden>393.7 393.7</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='netto_profit'>
+            <span>J67</span><span>1 000</span><span hidden>1 000 1000</span><span>1 106.3</span><span hidden>1 106.3 1106.3</span><span>1 500</span><span
+                hidden>1 500 1500</span><span>393.7</span><span hidden>393.7 393.7</span><span>106.3</span><span hidden>106.3 106.3</span>
+        </td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='netto_%'><span>9.61%</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='eladas_datum'><span>2019-03-20</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='forgasi_nap'><span>20 nap</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='platform'><span>JF</span></td>
+        <td class='data-cell-container' data-id='2' data-row='4' data-column='ertekesito'><span>BÉLA</span></td>
+    </tr>
+    <tr>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='id'><span>3</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='beszer_datum'><span></span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='termek_neve'><span></span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='termek_id'><span></span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='beszerzesi_ar'><span></span><span>0</span><span
+                hidden>0 0</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='netto_eladasi_ar'>
+            <span></span><span>0</span><span hidden>0 0</span><span>0</span><span hidden>0 0</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='brutto_eladasi_ar'>
+            <span></span><span>0</span><span hidden>0 0</span><span>0</span><span hidden>0 0</span><span>0</span><span
+                hidden>0 0</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='afa'><span></span><span>0</span><span
+                hidden>0 0</span><span>0</span><span hidden>0 0</span><span>0</span><span
+                hidden>0 0</span><span>0</span><span hidden>0 0</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='netto_profit'>
+            <span></span><span>0</span><span hidden>0 0</span><span>0</span><span hidden>0 0</span><span>0</span><span
+                hidden>0 0</span><span>0</span><span hidden>0 0</span><span>0</span><span hidden>0 0</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='netto_%'><span>0%</span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='eladas_datum'><span></span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='forgasi_nap'><span></span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='platform'><span></span></td>
+        <td class='data-cell-container' data-id='3' data-row='5' data-column='ertekesito'><span></span></td>
+    </tr>
+    </tbody>
+</table>

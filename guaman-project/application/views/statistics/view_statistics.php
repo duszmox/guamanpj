@@ -24,13 +24,23 @@
 <script src="<?php echo js_url("data_output_helper.js"); ?>"></script>
 <script>
     var colors = [
-        "rgb(54, 162, 235, 0.5)",
-        "rgb(75, 192, 192,0.5)",
-        "rgba(207,20,20,0.5)",
-        "rgb(255, 159, 64, 0.5)",
-        "rgb(153, 102, 255, 0.5)",
-        "rgb(255, 99, 132, 0.5)",
-        "rgb(255, 205, 86, 0.5)",
+        "rgb(54, 162, 235)",
+        "rgb(75, 192, 192)",
+        "rgba(207,20,20)",
+        "rgb(255, 159, 64)",
+        "rgb(153, 102, 255)",
+        "rgb(255, 99, 132)",
+        "rgb(255, 205, 86)",
+    ];
+
+    var transparentColors = [
+        "rgb(54, 162, 235,0.1)",
+        "rgb(75, 192, 192,0.1)",
+        "rgba(207,20,20,0.1)",
+        "rgb(255, 159, 64,0.1)",
+        "rgb(153, 102, 255,0.1)",
+        "rgb(255, 99, 132,0.1)",
+        "rgb(255, 205, 86,0.1)",
     ];
 
     var data_table_strings = {
@@ -136,8 +146,9 @@
                                 datasets.push({
                                     label: getNiceColumnName(statConfig.datalines[i]),
                                     data: getDataLine(data.table, statConfig.datalines[i]),
-                                    backgroundColor: colors[i % colors.length],
-                                    borderColor: colors[i % colors.length]
+                                    backgroundColor: transparentColors[i % transparentColors.length],
+                                    borderColor: colors[i % colors.length],
+                                    lineTension: 0.3,
                                 })
                             }
 
@@ -154,8 +165,23 @@
                                                 beginAtZero: true
                                             }
                                         }]
+                                    },
+                                    tooltips: {
+                                        backgroundColor: "rgb(252,252,252)",
+                                        bodyFontColor: "#858796",
+                                        titleMarginBottom: 10,
+                                        titleFontColor: '#6e707e',
+                                        titleFontSize: 14,
+                                        borderColor: '#dddfeb',
+                                        borderWidth: 1,
+                                        xPadding: 15,
+                                        yPadding: 15,
+                                        displayColors: true,
+                                        intersect: false,
+                                        caretPadding: 10
                                     }
-                                }
+                                },
+
                             });
                             break;
                         default:

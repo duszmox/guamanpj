@@ -11,15 +11,24 @@ class Statistics extends CI_Controller
         $this->load->model("Statistics_model");
     }
 
+    public function index(){
+        $this->load->view("templates/header", array("title" => lang("statistics_title")));
+        $this->load->view("templates/menu");
 
-    public function index()
+        $this->load->view("statistics/dashboard");
+
+        $this->load->view("templates/footer");
+    }
+
+    public function manage()
     {
         require_status(Statuses::$LOGGED_IN);
+        require_permission("edit_stats");
 
         $this->load->view("templates/header", array("title" => lang("statistics_title")));
         $this->load->view("templates/menu");
 
-        $this->load->view("statistics/statistics_list_view");
+        $this->load->view("statistics/manage_statistics");
 
         $this->load->view("templates/footer");
 
@@ -76,7 +85,7 @@ class Statistics extends CI_Controller
     public function add()
     {
         require_status(Statuses::$LOGGED_IN);
-        require_permission("admin");
+        require_permission("edit_stats");
 
         if ($this->input->post("submit") == null) {
             $this->load->view("templates/header", array("title" => lang("statistics_title")));
