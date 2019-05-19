@@ -98,3 +98,4 @@ $lang['username_label'] = "Username : ";
 $lang['admin_label'] = "Admin";
 $lang["tables_button_hide"] = "Hide ⮝";
 $lang["tables_button_show"] = "Show ⮟";
+$lang["nice_username_label"] = "Name : ";

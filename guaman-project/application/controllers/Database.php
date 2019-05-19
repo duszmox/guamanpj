@@ -132,6 +132,8 @@ class Database extends CI_Controller
 
         try {
             $this->Database_model->update_field($table_name, $column, $id, $value);
+            echo "true";
+
         } catch (Exception $exception) {
             json_error($exception->getMessage());
         }

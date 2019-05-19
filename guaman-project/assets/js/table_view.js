@@ -84,7 +84,7 @@ function loadTable(table_name, menuOfTables = true) {
 
                     if (canEdit) {
                         html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_button + "</a></td>";
-                    }
+                     }
                     html += "</tr>";
                 }
                 html += "</tbody></table>";

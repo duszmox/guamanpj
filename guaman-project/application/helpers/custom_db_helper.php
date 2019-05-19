@@ -149,7 +149,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
             foreach ($partner_sales as $partner_sale) {
                 $result_array_[] = $partner_sale;
             }
-
+            echo "<script>console.log('".var_dump($result_array_)."');</script>";
             return $result_array_;
 
         case "guaman_beszerzesireporthasznalt":
