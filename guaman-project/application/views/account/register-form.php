@@ -15,7 +15,7 @@
                         <form class="user" method="post">
                             <div class="form-group row">
                                 <div class="col-sm-12 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" name="nice_username" id="exampleFirstName" placeholder="<?php echo lang("nice_username_placeholder");?>">
+                                    <input type="text" class="form-control form-control-user" name="nice_username" id="exampleNiceName" placeholder="<?php echo lang("nice_username_placeholder");?>">
                                 </div>
                             </div>
                             <div class="form-group row">

@@ -46,8 +46,8 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_gadgetsales" :
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['netto_profit'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126, 2);
-                    $result_array_[$key]['afa'] = $result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar'] - $result_array_[$key]['netto_profit'];
+                    $result_array_[$key]['afa'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126, 2);
+                    $result_array_[$key]['netto_profit'] = $result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar'] - $result_array_[$key]['afa'];
                     $result_array_[$key]['netto_eladasi_ar'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['afa']), 2);
                     if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]["netto_%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);

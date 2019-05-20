@@ -69,7 +69,10 @@ class Account extends CI_Controller
                 $this->input->post("email"))) {
             if (Validator::is_alphanumeric($this->input->post("username")) &&
                 Validator::is_alphanumeric($this->input->post("password")) &&
-                Validator::is_valid_email($this->input->post("email"))) {
+                Validator::is_valid_email($this->input->post("email")) &&
+                Validator::is_alphanumeric($this->input->post("nice_username"))
+
+            ) {
 
                 try {
                     $this->Account_model->register_user(
