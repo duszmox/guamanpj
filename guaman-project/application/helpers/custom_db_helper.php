@@ -27,6 +27,21 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
             }
             break;
+        case "guaman_tartozeksales":
+            foreach ($result_array_ as $key => $row) {
+                if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
+                    $result_array_[$key]['afa'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126, 2);
+                    $result_array_[$key]['netto_profit'] = $result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar'] - $result_array_[$key]['afa'];
+                    $result_array_[$key]['netto_eladasi_ar'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['afa']), 2);
+                    if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
+                        $result_array_[$key]["netto_%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);
+                    } else {
+                        $result_array_[$key]["netto_%"] = "0";
+                    }
+                }
+            }
+
+            break;
         case "guaman_telefon":
         case "guaman_tablet":
         case "guaman_orakkiegeszitok":
@@ -54,16 +69,17 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                     } else {
                         $result_array_[$key]["netto_%"] = "0";
                     }
-                    $date1 = $result_array_[$key]['beszer_datum'];
-                    $date2 = $result_array_[$key]['eladas_datum'];
-                    $diff = abs(strtotime($date2) - strtotime($date1));
-                    $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
                 } else {
                     $result_array_[$key]['brutto_eladasi_ar'] = 0;
                     $result_array_[$key]['beszerzesi_ar'] = 0;
                     $result_array_[$key]["netto_%"] = "0";
 
                 }
+                $date1 = $result_array_[$key]['beszer_datum'];
+                $date2 = $result_array_[$key]['eladas_datum'];
+                $diff = abs(strtotime($date2) - strtotime($date1));
+                $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
+
             }
             break;
 

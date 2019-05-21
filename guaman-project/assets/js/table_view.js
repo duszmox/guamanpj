@@ -11,8 +11,8 @@ $(document).ready(function () {
 });
 
 
-function loadTable(table_name, menuOfTables = true) {
-    if (menuOfTables) {
+function loadTable(table_name, openMenu = true) {
+    if (openMenu) {
         change(document.getElementById('show-or-hide-btn'));
     }
 
