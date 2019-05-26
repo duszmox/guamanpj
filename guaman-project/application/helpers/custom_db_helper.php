@@ -36,7 +36,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                     if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]["netto_%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);
                     } else {
-                        $result_array_[$key]["netto_%"] = "0";
+                        $result_array_[$key]["netto_%"] = "0 %";
                     }
                 }
             }
@@ -46,11 +46,12 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_tablet":
         case "guaman_orakkiegeszitok":
         case "guaman_gadget":
+        case "guaman_keszletujkeszulek":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['beker_netto']) AND is_numeric($result_array_[$key]['kiker_netto'])) {
                     $result_array_[$key]["netto_profit"] = $result_array_[$key]["kiker_netto"] - $result_array_[$key]["beker_netto"];
                     if ($result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]), 4) * 100;
+                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]) * 100,2);
                     }
                 }
             }
@@ -67,12 +68,12 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                     if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]["netto_%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);
                     } else {
-                        $result_array_[$key]["netto_%"] = "0";
+                        $result_array_[$key]["netto_%"] = "0 %";
                     }
                 } else {
                     $result_array_[$key]['brutto_eladasi_ar'] = 0;
                     $result_array_[$key]['beszerzesi_ar'] = 0;
-                    $result_array_[$key]["netto_%"] = "0";
+                    $result_array_[$key]["netto_%"] = "0 %";
 
                 }
                 $date1 = $result_array_[$key]['beszer_datum'];
@@ -95,10 +96,12 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_keszlet":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['netto_profit'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
-                    $result_array_[$key]['afa'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
+                    $result_array_[$key]['afa'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
+                    $result_array_[$key]['netto_profit'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['afa'];
                     if ($result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]), 4) * 100;
+                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]) * 100,2);
+                    }else{
+                        $result_array_[$key]["%"] = "0 %";
                     }
                 }
             }
@@ -214,10 +217,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["beszerzesi_partner_%"] = 100 * ($result_array_[$i]["beszerzesi_partner_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);
+                $result_array_[$i]["beszerzesi_partner_%"] = round(100 * ($result_array_[$i]["beszerzesi_partner_db"] / $sum),2);
+                $result_array_[$i]["jofogas_%"] = round(100 * ($result_array_[$i]["jofogas_db"] / $sum),2);
+                $result_array_[$i]["hardverapro_%"] = round(100 * ($result_array_[$i]["hardverapro_db"] / $sum),2);
+                $result_array_[$i]["facebook_marketplace_%"] = round(100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum),2);
 
             }
 
@@ -275,10 +278,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);
-                $result_array_[$i]["gegeszoft_%"] = 100 * ($result_array_[$i]["gegeszoft_db"] / $sum);
-                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);
-                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);
+                $result_array_[$i]["bravophone_%"] = round(100 * ($result_array_[$i]["bravophone_db"] / $sum),2);
+                $result_array_[$i]["gegeszoft_%"] = round(100 * ($result_array_[$i]["gegeszoft_db"] / $sum),2);
+                $result_array_[$i]["alibaba_%"] = round(100 * ($result_array_[$i]["alibaba_db"] / $sum),2);
+                $result_array_[$i]["facebook_marketplace_%"] = round(100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum),2);
 
             }
             break;
@@ -333,10 +336,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["phonemax_%"] = 100 * ($result_array_[$i]["phonemax_db"] / $sum);
-                $result_array_[$i]["mobilpro_%"] = 100 * ($result_array_[$i]["mobilpro_db"] / $sum);
-                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);
-                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);
+                $result_array_[$i]["phonemax_%"] = round(100 * ($result_array_[$i]["phonemax_db"] / $sum),2);
+                $result_array_[$i]["mobilpro_%"] = round(100 * ($result_array_[$i]["mobilpro_db"] / $sum),2);
+                $result_array_[$i]["alibaba_%"] = round(100 * ($result_array_[$i]["alibaba_db"] / $sum),2);
+                $result_array_[$i]["bravophone_%"] = round(100 * ($result_array_[$i]["bravophone_db"] / $sum),2);
 
             }
             break;
@@ -405,13 +408,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
-                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
-                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
-                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+                $result_array_[$i]["webshop_%"] = round(100 * ($result_array_[$i]["webshop_db"] / $sum),2);
+                $result_array_[$i]["instagram_%"] = round(100 * ($result_array_[$i]["instagram_db"] / $sum),2);
+                $result_array_[$i]["visszatero_%"] = round(100 * ($result_array_[$i]["visszatero_db"] / $sum),2);
+                $result_array_[$i]["hasznalt_alma_%"] = round(100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum),2);
+                $result_array_[$i]["jofogas_%"] = round(100 * ($result_array_[$i]["jofogas_db"] / $sum),2);
+                $result_array_[$i]["hardverapro_%"] = round(100 * ($result_array_[$i]["hardverapro_db"] / $sum),2);
+                $result_array_[$i]["facebook_%"] = round(100 * ($result_array_[$i]["facebook_db"] / $sum),2);
 
             }
             break;
@@ -480,13 +483,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
-                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
-                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
-                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+                $result_array_[$i]["webshop_%"] = round(100 * ($result_array_[$i]["webshop_db"] / $sum),2);
+                $result_array_[$i]["instagram_%"] = round(100 * ($result_array_[$i]["instagram_db"] / $sum),2);
+                $result_array_[$i]["visszatero_%"] = round(100 * ($result_array_[$i]["visszatero_db"] / $sum),2);
+                $result_array_[$i]["hasznalt_alma_%"] = round(100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum),2);
+                $result_array_[$i]["jofogas_%"] = round(100 * ($result_array_[$i]["jofogas_db"] / $sum),2);
+                $result_array_[$i]["hardverapro_%"] = round(100 * ($result_array_[$i]["hardverapro_db"] / $sum),2);
+                $result_array_[$i]["facebook_%"] = round(100 * ($result_array_[$i]["facebook_db"] / $sum),2);
             }
 
 
@@ -558,13 +561,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
-                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
-                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
-                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+                $result_array_[$i]["webshop_%"] = round(100 * ($result_array_[$i]["webshop_db"] / $sum),2);
+                $result_array_[$i]["instagram_%"] = round(100 * ($result_array_[$i]["instagram_db"] / $sum),2);
+                $result_array_[$i]["visszatero_%"] = round(100 * ($result_array_[$i]["visszatero_db"] / $sum),2);
+                $result_array_[$i]["hasznalt_alma_%"] = round(100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum),2);
+                $result_array_[$i]["jofogas_%"] = round(100 * ($result_array_[$i]["jofogas_db"] / $sum),2);
+                $result_array_[$i]["hardverapro_%"] = round(100 * ($result_array_[$i]["hardverapro_db"] / $sum),2);
+                $result_array_[$i]["facebook_%"] = round(100 * ($result_array_[$i]["facebook_db"] / $sum),2);
 
             }
             break;

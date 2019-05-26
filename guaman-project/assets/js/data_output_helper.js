@@ -13,7 +13,7 @@ function getCellBody(value, col_type, canEdit) {
             if (canEdit) {
                 // TODO select input
                 cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + value + "\'>";
-                cell_body += "<span hidden>" + value + "</span>";
+                cell_body += "<span hidden>"+ value + "</span>";
             } else {
 
                 let withzero = (value + "").length === 1 ? "0" + value : value;

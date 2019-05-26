@@ -64,7 +64,7 @@ function loadTable(table_name) {
 
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
-
+            console.log(data);
 
                 if (nonEditableTables.includes(table_name)) {
                     canEdit = false;
@@ -133,7 +133,7 @@ function loadTable(table_name) {
 
                 $("#table-container").html(html);
                 setTimeout(function () {
-                    $("#data-table").DataTable({
+                    $("#data-table").dataTable({
                         language: data_table_strings,
                         dom: 'Bfrtip',
                         buttons: [

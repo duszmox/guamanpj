@@ -358,8 +358,11 @@ class Database_model extends CI_Model
         $from_table_cols = $this->get_columns_by_table($from_table);
         $to_table_cols = $this->get_columns_by_table($to_table);
 
+
         foreach ($from_table_cols as $from_table_col) {
-            if (!in_array($from_table_col, $to_table_cols)) return false;
+            if (!in_array($from_table_col, $to_table_cols)) {
+                return false;
+            }
         }
         return true;
     }
