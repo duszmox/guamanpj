@@ -74,13 +74,50 @@ class Database_model extends CI_Model
         return $result_array;
     }
 
-    public function get_table($columns, $table, $order_by, $order)
+    public function get_table($columns, $table, $order_by, $order, $filters)
     {
+
+        $table_columns = $this->get_columns_by_table($table);
         if (!in_array($table, $this->get_table_names())) die(":(");
-        if (!in_array($order_by, $this->get_columns_by_table($table))) $order_by = "id";
+        if (!in_array($order_by, $table_columns)) $order_by = "id";
         if (!in_array(strtoupper($order), array("ASC", "DESC"))) $order = "ASC";
 
         $this->db->select($columns);
+
+        if($filters != null && is_array($filters)){
+            foreach ($filters as $filter){
+                if(!isset($filter["column_name"])) continue;
+                if(!isset($filter["relation"])) continue;
+                if(!isset($filter["value"])) continue;
+
+                if(!in_array($filter["column_name"], $table_columns)) continue;
+                if(!in_array($filter["relation"], array("=", ">", "<", "<=", ">=", "LIKE"))) continue;
+                if(trim($filter["value"]) == "") continue;
+
+                switch ($filter["relation"]){
+                    case "=":
+                        $this->db->where($filter["column_name"], $filter["value"]);
+                        break;
+                    case ">":
+                        $this->db->where($filter["column_name"] . ">", $filter["value"]);
+                        break;
+                    case "<":
+                        $this->db->where($filter["column_name"]. "<", $filter["value"]);
+                        break;
+                    case "<=":
+                        $this->db->where($filter["column_name"] . "<=", $filter["value"]);
+                        break;
+                    case ">=":
+                        $this->db->where($filter["column_name"] . ">=", $filter["value"]);
+                        break;
+                    case "LIKE":
+                        $this->db->like($filter["column_name"], $filter["value"]);
+                        break;
+
+                }
+            }
+        }
+
         $this->db->order_by($order_by, $order);
 
         $resultArray = $this->db->get($table)->result_array();

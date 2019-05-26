@@ -33,7 +33,6 @@
 
                                 });
 
-
                                 $(".tables_label").text("");
 
 

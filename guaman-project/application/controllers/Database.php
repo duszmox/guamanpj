@@ -35,7 +35,6 @@ class Database extends CI_Controller
     }
 
 
-
     function create_folder()
     {
         require_permission("edit_folders");
@@ -75,7 +74,16 @@ class Database extends CI_Controller
         require_permission($table_name . "_table_view");
         require_status(Statuses::$LOGGED_IN);
 
-        $rows = $this->Database_model->get_table("*", $table_name, $order_by, $order);
+        if ($this->input->post("filters")) {
+            $filters = json_decode($this->input->post("filters"));
+            if(!is_array($filters)){
+                $filters = null;
+            }
+        } else {
+            $filters = null;
+        }
+
+        $rows = $this->Database_model->get_table("*", $table_name, $order_by, $order, $filters);
         $output = array();
 
         $cols = $this->Database_model->get_columns_by_table($table_name);
@@ -123,7 +131,7 @@ class Database extends CI_Controller
         $table_name = $this->input->post("table_name");
 
         require_permission($table_name . "_table_edit");
-        if(!$this->Database_model->isEditableTable($table_name)){
+        if (!$this->Database_model->isEditableTable($table_name)) {
             json_error("You cannot change this field!"); // TODO lang
         }
         $column = $this->input->post("column");
@@ -251,7 +259,9 @@ class Database extends CI_Controller
         require_permission($from_table . "_table_view");
         json_output($this->Database_model->get_compatible_tables($from_table));
     }
-    public function change(){
+
+    public function change()
+    {
         $this->Database_model->change();
     }
 
