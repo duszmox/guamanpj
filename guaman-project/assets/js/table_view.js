@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 function loadTable(table_name, openMenu = true) {
     if (openMenu) {
-        change(document.getElementById('show-or-hide-btn'));
+
     }
 
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
