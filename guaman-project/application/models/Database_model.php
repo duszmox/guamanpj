@@ -74,7 +74,7 @@ class Database_model extends CI_Model
         return $result_array;
     }
 
-    public function get_table($columns, $table, $order_by, $order, $filters)
+    public function get_table($columns, $table, $order_by, $order, $filters = null)
     {
 
         $table_columns = $this->get_columns_by_table($table);
@@ -116,6 +116,7 @@ class Database_model extends CI_Model
 
                 }
             }
+
         }
 
         $this->db->order_by($order_by, $order);

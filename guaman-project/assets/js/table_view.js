@@ -47,9 +47,10 @@ function loadTable(table_name, openMenu = true) {
                 // Load header buttons
                 html += "<div class=\'my-4\'>\n    ";
                 if (canEdit) {
-                    html += "<button class=\'btn btn-primary\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
+                    html += "<button class=\'btn btn-primary mt-1\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
                 }
-                html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
+                html += "<button class=\'btn btn-primary mt-1\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
+                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn mt-1\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
                 html += "\n</div>";
 
 
@@ -87,25 +88,19 @@ function loadTable(table_name, openMenu = true) {
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
-                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn\"><i onclick='ExcelReport()' \"download-in-excel-btn\" class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
 
-
-                console.log(html);
 
                 $("#table-container").html(html);
-
                 setTimeout(function () {
-                        $("#data-table").DataTable({
-                            language: data_table_strings
-                        });
+                    $("#data-table").DataTable({
+                        language: data_table_strings
+                    });
 
+                    $("#data-table").parent().css("overflow-x", "scroll");
 
-                        $("#data-table").parent().css("overflow-x", "scroll");
+                    $("#data-table-column").css("visibility", "visible");
+                }, 1);
 
-                        $("#data-table-column").css("visibility", "visible");
-
-                    }
-                    , 1);
                 $(".data-cell-container").focusout(function () {
                     let newValue = $(this).children().eq(0).val();
                     let column = $(this).data("column");
