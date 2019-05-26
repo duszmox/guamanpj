@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a id="show-filters-btn" class="nav-link active" style="cursor: pointer"
+                    <a id="show-filters-btn" class="nav-link btn-outline-custom" style="cursor: pointer"
                        onclick="sidebarNav('tables')">
                         Táblák
                     </a>
@@ -33,7 +33,8 @@
 
         <div class="card-body" id="sidebar-body">
             <div id="filters-container-o" style="display: none;">
-                Filterek
+                <h2>Szűrők</h2>
+                <p>Nyaggasd Ambrust, hogy csinálja meg</p>
             </div>
             <div id="table-list-container-o">
                 <h2>Táblák</h2>
@@ -153,9 +154,17 @@
         border-color: #c2320a;
     }
 
-
-    .nav-link:hover.active {
+    .btn-outline-custom{
+        border: 1px solid #1c294e;
+        border-radius: 5px;
+        transition: 0.3s;
+        background-color: #1c294e;
         color: white !important;
+    }
+
+    .btn-outline-custom:hover{
+        background-color: #fff;
+        color: #1c294e !important;
     }
 
 </style>
