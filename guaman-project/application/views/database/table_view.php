@@ -11,79 +11,59 @@
             </div>
         </div>
     </div>
-    <div class="" style="position: absolute;right:20px ;z-index: 1;background-color: #ffffff !important;">
-        <div class="card col-sm-auto">
-            <div class="card-header card-header-2 ">
-                <h2 class="d-inline tables_label"><?php echo lang("tables_label"); ?></h2>
 
-                <div class="hideshowbtn d-inline">
-                    <form class="d-inline" action="" method="post">
-                        <input name="zero" class="btn btn-primary d-inline" id="show-or-hide-btn"
-                               style="margin-bottom: 10px; float: right;"
-                               type="button" value="<?php echo lang("tables_button_hide") ?>"
-                               onclick="change(getElementById('show-or-hide-btn'))"/>
-                    </form>
-                    <hr>
-                    <script>
-                        function change(el) {
-                            if (el.value === "<?php echo lang("tables_button_hide")?>") {
-                                el.value = "<?php echo lang("tables_button_show")?>";
-                                var folderContainer = $(".folders-container");
-                                folderContainer.toggle("fast");
+    <div class="card" style="position: absolute; right:20px; z-index: 100;">
+        <input id="show-table-list-btn" class="btn btn-primary" type="button" value="Szűrők">
+        <input id="show-filters-btn" class="btn btn-primary" type="button" value="Táblák">
 
-                                $(".tables_label").text("");
+        <div id="filters-container-o">
 
+        </div>
+        <div id="table-list-container-o">
+            <h2>Táblák</h2>
+            <div id="table-container">
 
-                            } else {
-                                el.value = "<?php echo lang("tables_button_hide")?>";
-                                $("div.folders-container").toggle("fast", function () {
-
-                                });
-                                $(".tables_label").text("<?php echo lang("tables_title")?>");
-                            }
-                        }
-                    </script>
-
-
-                </div>
-                <div class="card-body folders-container" id="table-list-container">
-                    ...
-                </div>
             </div>
         </div>
     </div>
-</div>
 
+</div>
 <script>
+
+    function sidebarNav(pressedButton) {
+        if(pressedButton === "filters"){
+
+        }
+    }
     var data_table_strings = {
-        processing: "<?php echo lang("processing_message");?>",
-        search: "<?php echo lang("searcher_message");?>",
-        lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message");?>",
+        processing: "<?php echo lang("processing_message"); ?>",
+        search: "<?php echo lang("searcher_message"); ?>",
+        lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message"); ?>",
         info: "",
         infoEmpty: "",
         infoFiltered: "",
         infoPostFix: "",
-        loadingRecords: "<?php echo lang("records_loading_message");?>",
-        zeroRecords: "<?php echo lang("records_zero_message");?>",
-        emptyTable: "<?php echo lang("empty_table_message");?>",
+        loadingRecords: "<?php echo lang("records_loading_message"); ?>",
+        zeroRecords: "<?php echo lang("records_zero_message"); ?>",
+        emptyTable: "<?php echo lang("empty_table_message"); ?>",
         paginate: {
-            first: "<?php echo lang("first_page_message");?>",
-            previous: "<?php echo lang("previous_page_message");?>",
-            next: "<?php echo lang("next_page_message");?>",
-            last: "<?php echo lang("last_page_message");?>"
+            first: "<?php echo lang("first_page_message"); ?>",
+            previous: "<?php echo lang("previous_page_message"); ?>",
+            next: "<?php echo lang("next_page_message"); ?>",
+            last: "<?php echo lang("last_page_message"); ?>"
         },
         aria: {
-            sortAscending: "<?php echo lang("asc_table_message");?>",
-            sortDescending: "<?php echo lang("desc_table_message");?>"
+            sortAscending: "<?php echo lang("asc_table_message"); ?>",
+            sortDescending: "<?php echo lang("desc_table_message"); ?>"
         }
     };
 
     var lang = {
-        "reload_page_button": "<?php echo lang("reload_page_button_title");?>",
-        "new_row_button": "<?php echo lang("add_row_button_title");?>",
-        "move_row_button": "<?php echo lang("move_row_title");?>",
-        "actions": "<?php echo lang("actions_button_title");?>",
-        "excelexport": "<?php echo lang("download-in-excel");?>",
+        "reload_page_button": "<?php echo lang("reload_page_button_title"); ?>",
+        "new_row_button": "<?php echo lang("add_row_button_title"); ?>",
+        "move_row_button": "<?php echo lang("move_row_title"); ?>",
+        "actions": "<?php echo lang("actions_button_title"); ?>",
+        "excelexport": "<?php echo lang("download-in-excel"); ?>",
 
     };
 
@@ -96,7 +76,26 @@
     var tables = <?php /** @var array $table_array */
         echo json_encode($table_array); ?>;
 
-    var nonEditableTables = <?php /** @var array $nonEditableTables */ echo json_encode($nonEditableTables); ?>;
+    var nonEditableTables = <?php /** @var array $nonEditableTables */
+        echo json_encode($nonEditableTables); ?>;
+
+    function change(el) {
+        if (el.value === "<?php echo lang("tables_button_hide") ?>") {
+            el.value = "<?php echo lang("tables_button_show") ?>";
+            var folderContainer = $(".folders-container");
+            folderContainer.toggle("fast");
+
+            $(".tables_label").text("");
+
+
+        } else {
+            el.value = "<?php echo lang("tables_button_hide") ?>";
+            $("div.folders-container").toggle("fast", function () {
+
+            });
+            $(".tables_label").text("<?php echo lang("tables_title") ?>");
+        }
+    }
 </script>
 
 <script async src="<?php echo js_url("data_output_helper.js"); ?>"></script>
@@ -126,6 +125,7 @@
         display: inline-block;
 
     }
+
     .excel-btn {
         background: #1c7430;
         border-color: #1c7430;
