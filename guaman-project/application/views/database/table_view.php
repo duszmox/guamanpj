@@ -129,5 +129,6 @@
     .excel-btn {
         background: #1c7430;
         border-color: #1c7430;
+        display: inline-block;
     }
 </style>

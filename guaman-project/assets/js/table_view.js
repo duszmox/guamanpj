@@ -46,13 +46,13 @@ function loadTable(table_name, openMenu = true) {
                 // Load header buttons
                 html += "<div class=\'my-4\'>\n    ";
                 if (canEdit) {
-                    html += "<button class=\'btn btn-primary\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
+                    html += "<button class=\'btn btn-primary mt-1\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
                 }
-                html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
+                html += "<button class=\'btn btn-primary mt-1\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
+                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn mt-1\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
                 html += "\n</div>";
 
                 html += "<table class=\"table table\" id=\"data-table\" >";
-
                 // Display table headers
                 html += "<thead><tr>";
                 for (let i = 0; i < column_nice_names.length; i++) {
@@ -85,7 +85,6 @@ function loadTable(table_name, openMenu = true) {
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
-                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
                 console.log(html);
 
                 $("#table-container").html(html);
