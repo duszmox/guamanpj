@@ -75,7 +75,7 @@
             html += "<tr>";
             html += "<th>" + lang.stat_name + "</th>";
             html += "<th>" + lang.type + "</th>";
-            html += "<th>" + lang.actions + "</th>";
+            html += "<th>" + lang.actions_button_title + "</th>";
             html += "</tr>";
             html += "</thead>";
 
