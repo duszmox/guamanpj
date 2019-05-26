@@ -53,6 +53,7 @@ function loadTable(table_name, openMenu = true) {
                 html += "\n</div>";
 
 
+
                 html += "<table class=\"table table\" id=\"data-table\" >";
 
                 // Display table headers
@@ -87,6 +88,7 @@ function loadTable(table_name, openMenu = true) {
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
+                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
                 console.log(html);
 
                 $("#table-container").html(html);
