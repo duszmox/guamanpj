@@ -12,7 +12,8 @@
         </div>
     </div>
 
-    <div class="card shadow-lg" id="sidebar-right" style="position: absolute; right:20px; z-index: 100; max-width: 400px;">
+    <div class="card shadow-lg" id="sidebar-right"
+         style="position: absolute; right:20px; z-index: 100; max-width: 400px;">
         <div class="card-header">
             <ul class="nav nav-pills card-header-pills float-right">
                 <li class="nav-item">
@@ -47,55 +48,17 @@
 </div>
 <script>
 
-    function sidebarNav(pressedButton) {
-        if (pressedButton === "filters") {
-            if ($("#filters-container-o").is(":visible")) {
-                $("#filters-container-o").hide();
-            } else {
-                $("#sidebar-body").show();
-
-                $("#show-filters-btn").removeClass("active");
-                $("#show-table-list-btn").addClass("active");
-
-                $("#filters-container-o").show();
-                $("#table-list-container-o").hide();
-            }
-        } else if (pressedButton === "tables") {
-            if ($("#table-list-container-o").is(":visible")) {
-                $("#table-list-container-o").hide();
-            } else {
-                $("#sidebar-body").show();
-
-                $("#show-filters-btn").addClass("active");
-                $("#show-table-list-btn").removeClass("active");
-
-                $("#table-list-container-o").show();
-                $("#filters-container-o").hide();
-            }
-        }
-        if ($("#filters-container-o").is(":hidden") && $("#table-list-container-o").is(":hidden")) {
-            $("#sidebar-body").hide();
-        }
-    }
-
-    $(window).click(function() {
-        $("#filters-container-o").hide();
-        $("#table-list-container-o").hide();
-        $("#sidebar-body").hide();
-
-        $("#show-table-list-btn").removeClass("active");
-        $("#show-filters-btn").removeClass("active");
-
-    });
-
-    $("#sidebar-right").click(function (event) {
-        event.stopPropagation();
-    });
 
 
-        var data_table_strings = {
-        processing: "<?php echo lang("processing_message"); ?>",
-        search: "<?php echo lang("searcher_message"); ?>",
+    /*var lang = {
+
+    };
+    */
+    var lang = <?php echo json_encode(get_instance()->lang->language); ?>;
+
+    var data_table_strings = {
+        processing: lang.processing_message,
+        search: lang.searcher_message,  // TODO GYULA A TÖBBIT IS ILYENRE. LEHET HASZNÁLNI A LANG FÁJL BELI KEY-eket
         lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message"); ?>",
         info: "",
         infoEmpty: "",
@@ -116,16 +79,6 @@
         }
     };
 
-    var lang = {
-        "reload_page_button": "<?php echo lang("reload_page_button_title"); ?>",
-        "new_row_button": "<?php echo lang("add_row_button_title"); ?>",
-        "move_row_button": "<?php echo lang("move_row_title"); ?>",
-        "actions": "<?php echo lang("actions_button_title"); ?>",
-        "excelexport": "<?php echo lang("download-in-excel"); ?>",
-
-    };
-
-
     var base_url = "<?php echo base_url(); ?>";
 
     var folders = <?php /** @var array $folder_array */
@@ -138,14 +91,13 @@
 
 </script>
 
-<script async src="<?php echo js_url("pdfmake.min.js"); ?>"></script>
-<script async src="<?php echo js_url("jszip.min.js"); ?>"></script>
-<script async src="<?php echo js_url("vfs_fonts.js"); ?>"></script>
-<script async src="<?php echo js_url("buttons.html5.min.js"); ?>"></script>
-<script async src="<?php echo js_url("dataTables.buttons.min.js"); ?>"></script>
+<script src="<?php echo js_url("dataTables.buttons.min.js"); ?>"></script>
+<script src="<?php echo js_url("pdfmake.min.js"); ?>"></script>
+<script src="<?php echo js_url("jszip.min.js"); ?>"></script>
+<script src="<?php echo js_url("vfs_fonts.js"); ?>"></script>
 <script async src="<?php echo js_url("data_output_helper.js"); ?>"></script>
+<script src="<?php echo js_url("buttons.html5.min.js"); ?>"></script>
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
-
 
 <style>
     #table-list-container ul {
@@ -171,12 +123,39 @@
 
     }
 
-    .excel-btn {
+    .buttons-excel {
         background: #1c7430;
         border-color: #1c7430;
-        display: inline-block;
     }
-    .nav-link:hover.active{
+
+    .buttons-excel:hover {
+        background: #218939;
+        border-color: #218939;
+    }
+
+    .buttons-csv {
+        background: #73744c;
+        border-color: #73744c;
+    }
+
+    .buttons-csv:hover {
+        background: #8d8e5d;
+        border-color: #8d8e5d;
+    }
+
+    .buttons-pdf {
+        background: #a22a08;
+        border-color: #a22a08;
+    }
+
+    .buttons-pdf:hover {
+        background: #c2320a;
+        border-color: #c2320a;
+    }
+
+
+    .nav-link:hover.active {
         color: white !important;
     }
+
 </style>

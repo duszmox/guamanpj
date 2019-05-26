@@ -10,11 +10,57 @@ $(document).ready(function () {
     JSLists.applyToList('table-list', 'ALL');
 });
 
+function sidebarNav(pressedButton) {
+    if (pressedButton === "filters") {
+        if ($("#filters-container-o").is(":visible")) {
+            $("#filters-container-o").hide();
+        } else {
+            $("#sidebar-body").show();
 
-function loadTable(table_name, openMenu = true) {
-    if (openMenu) {
+            $("#show-filters-btn").removeClass("active");
+            $("#show-table-list-btn").addClass("active");
 
+            $("#filters-container-o").show();
+            $("#table-list-container-o").hide();
+        }
+    } else if (pressedButton === "tables") {
+        if ($("#table-list-container-o").is(":visible")) {
+            $("#table-list-container-o").hide();
+        } else {
+            $("#sidebar-body").show();
+
+            $("#show-filters-btn").addClass("active");
+            $("#show-table-list-btn").removeClass("active");
+
+            $("#table-list-container-o").show();
+            $("#filters-container-o").hide();
+        }
     }
+    if ($("#filters-container-o").is(":hidden") && $("#table-list-container-o").is(":hidden")) {
+        $("#sidebar-body").hide();
+    }
+}
+
+
+function closeRightSidebar() {
+    $("#filters-container-o").hide();
+    $("#table-list-container-o").hide();
+    $("#sidebar-body").hide();
+
+    $("#show-table-list-btn").removeClass("active");
+    $("#show-filters-btn").removeClass("active");
+}
+
+$(window).click(function () {
+    closeRightSidebar();
+});
+
+$("#sidebar-right").click(function (event) {
+    event.stopPropagation();
+});
+
+
+function loadTable(table_name) {
 
     $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
@@ -46,10 +92,8 @@ function loadTable(table_name, openMenu = true) {
                 // Load header buttons
                 html += "<div class=\'my-4\'>\n    ";
                 if (canEdit) {
-                    html += "<button class=\'btn btn-primary mt-1\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
+                    html += "<button class=\'btn btn-primary mt-1\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.add_row_button_title + "</button>\n    ";
                 }
-                html += "<button class=\'btn btn-primary mt-1\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
-                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn mt-1\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
                 html += "\n</div>";
 
                 html += "<table class=\"table table\" id=\"data-table\" >";
@@ -59,7 +103,7 @@ function loadTable(table_name, openMenu = true) {
                     html += "<th>" + column_nice_names[i] + "</th>";
                 }
                 if (canEdit) {
-                    html += "<th>" + lang.actions + "</th>";
+                    html += "<th>" + lang.actions_button_title + "</th>";
                 }
                 html += "</tr></thead>";
 
@@ -80,7 +124,7 @@ function loadTable(table_name, openMenu = true) {
                     }
 
                     if (canEdit) {
-                        html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_button + "</a></td>";
+                        html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_title + "</a></td>";
                     }
                     html += "</tr>";
                 }
@@ -93,16 +137,40 @@ function loadTable(table_name, openMenu = true) {
                         language: data_table_strings,
                         dom: 'Bfrtip',
                         buttons: [
-                            'copyHtml5',
-                            'excelHtml5',
-                            'csvHtml5',
-                            'pdfHtml5'
+                            {
+                                text: "<i class=\"fas fa-redo\"></i> " + lang.reload_page_button_title,
+                                action: function (e, dt, node, config) {
+                                    loadTable(table_name);
+                                },
+                                className: "btn btn-primary"
+                            },
+                            {
+                                text: "<i class=\"fas fa-copy\"></i> Vágólap",
+                                extend: 'copyHtml5',
+                                className: "btn btn-primary"
+                            },
+                            {
+                                text: "<i class=\"fas fa-file-excel\"></i> Excel",
+                                extend: 'excelHtml5',
+                                className: "btn btn-primary"
+                            },
+                            {
+                                text: "<i class=\"fas fa-file-csv\"></i> CSV",
+                                extend: 'csvHtml5',
+                                className: "btn btn-primary"
+                            },
+                            {
+                                text: "<i class=\"fas fa-file-pdf\"></i> PDF",
+                                extend: 'pdfHtml5',
+                                className: "btn btn-primary"
+                            }
                         ]
                     });
 
                     $("#data-table").parent().css("overflow-x", "scroll");
 
                     $("#data-table-column").css("visibility", "visible");
+                    $(".buttons-html5").addClass("btn btn-primary")
                 }, 1);
 
                 $(".data-cell-container").focusout(function () {
@@ -124,6 +192,7 @@ function loadTable(table_name, openMenu = true) {
             })
                 .done(function () {
                     console.log("success");
+                    closeRightSidebar();
                 })
                 .fail(function () {
                     console.log("error");
