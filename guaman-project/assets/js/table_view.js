@@ -90,7 +90,14 @@ function loadTable(table_name, openMenu = true) {
                 $("#table-container").html(html);
                 setTimeout(function () {
                     $("#data-table").DataTable({
-                        language: data_table_strings
+                        language: data_table_strings,
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copyHtml5',
+                            'excelHtml5',
+                            'csvHtml5',
+                            'pdfHtml5'
+                        ]
                     });
 
                     $("#data-table").parent().css("overflow-x", "scroll");

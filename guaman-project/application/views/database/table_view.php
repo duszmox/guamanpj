@@ -128,7 +128,6 @@
 
     var base_url = "<?php echo base_url(); ?>";
 
-
     var folders = <?php /** @var array $folder_array */
         echo json_encode($folder_array); ?>;
     var tables = <?php /** @var array $table_array */
@@ -139,6 +138,11 @@
 
 </script>
 
+<script async src="<?php echo js_url("pdfmake.min.js"); ?>"></script>
+<script async src="<?php echo js_url("jszip.min.js"); ?>"></script>
+<script async src="<?php echo js_url("vfs_fonts.js"); ?>"></script>
+<script async src="<?php echo js_url("buttons.html5.min.js"); ?>"></script>
+<script async src="<?php echo js_url("dataTables.buttons.min.js"); ?>"></script>
 <script async src="<?php echo js_url("data_output_helper.js"); ?>"></script>
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
 
