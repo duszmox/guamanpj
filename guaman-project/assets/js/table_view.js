@@ -53,8 +53,7 @@ function loadTable(table_name, openMenu = true) {
                 html += "\n</div>";
 
 
-
-                html += "<table class=\"table table\" id=\"data-table\" >";
+                html += "<table id=\"myTable\" class=\"table table\" id=\"data-table\" >";
 
                 // Display table headers
                 html += "<thead><tr>";
@@ -88,20 +87,25 @@ function loadTable(table_name, openMenu = true) {
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
-                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
+                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn\"><i onclick='ExcelReport()' \"download-in-excel-btn\" class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
+
+
                 console.log(html);
 
                 $("#table-container").html(html);
+
                 setTimeout(function () {
-                    $("#data-table").DataTable({
-                        language: data_table_strings
-                    });
+                        $("#data-table").DataTable({
+                            language: data_table_strings
+                        });
 
-                    $("#data-table").parent().css("overflow-x", "scroll");
 
-                    $("#data-table-column").css("visibility", "visible");
-                }, 1);
+                        $("#data-table").parent().css("overflow-x", "scroll");
 
+                        $("#data-table-column").css("visibility", "visible");
+
+                    }
+                    , 1);
                 $(".data-cell-container").focusout(function () {
                     let newValue = $(this).children().eq(0).val();
                     let column = $(this).data("column");
@@ -222,3 +226,32 @@ function insertRow(table_name) {
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
+function ExcelReport() {
+    var tab_text = '<html xmlns:x="urn:schemas-microsoft-com:office:excel">';
+    tab_text = tab_text + '<head><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>';
+    tab_text = tab_text + '<x:Name>Test Sheet</x:Name>';
+    tab_text = tab_text + '<x:WorksheetOptions><x:Panes></x:Panes></x:WorksheetOptions></x:ExcelWorksheet>';
+    tab_text = tab_text + '</x:ExcelWorksheets></x:ExcelWorkbook></xml></head><body>';
+    tab_text = tab_text + "<table border='1px'>";
+
+//get table HTML code
+    tab_text = tab_text + $('#myTable').html();
+    tab_text = tab_text + '</table></body></html>';
+    var data_type = 'data:application/vnd.ms-excel';
+
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    //For IE
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+        if (window.navigator.msSaveBlob) {
+            var blob = new Blob([tab_text], {type: "application/csv;charset=utf-8;"});
+            navigator.msSaveBlob(blob, 'Test file.xls');
+        }
+    }
+//for Chrome and Firefox
+    else {
+        $('#download-in-excel-button').attr('href', data_type + ', ' + encodeURIComponent(tab_text));
+        $('#download-in-excel-button').attr('download', 'Test file.xls');
+    }
+}
+

@@ -17,12 +17,7 @@
 	</table>
 </div>
 </div>
-<?php
 
-    $i = "asd";
-    echo $i;
-
-?>
 
 
 
