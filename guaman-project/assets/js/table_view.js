@@ -31,7 +31,6 @@ function loadTable(table_name, openMenu = true) {
                 let column_nice_names = [];
                 let col_types = [];
 
-
                 Object.keys(data[0]).forEach(function (k) {
                     columns.push(k);
                     column_nice_names.push(data[0][k].nice_name);
@@ -51,8 +50,6 @@ function loadTable(table_name, openMenu = true) {
                 }
                 html += "<button class=\'btn btn-primary\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
                 html += "\n</div>";
-
-
 
                 html += "<table class=\"table table\" id=\"data-table\" >";
 

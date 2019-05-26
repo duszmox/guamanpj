@@ -28,10 +28,8 @@
                         function change(el) {
                             if (el.value === "<?php echo lang("tables_button_hide")?>") {
                                 el.value = "<?php echo lang("tables_button_show")?>";
-                                var folderContainer = $("div.folders-container");
-                                folderContainer.toggle("fast", function () {
-
-                                });
+                                var folderContainer = $(".folders-container");
+                                folderContainer.toggle("fast");
 
                                 $(".tables_label").text("");
 
