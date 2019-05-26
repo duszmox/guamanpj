@@ -33,7 +33,6 @@
 
                                 });
 
-
                                 $(".tables_label").text("");
 
 
@@ -86,6 +85,7 @@
         "new_row_button": "<?php echo lang("add_row_button_title");?>",
         "move_row_button": "<?php echo lang("move_row_title");?>",
         "actions": "<?php echo lang("actions_button_title");?>",
+        "excelexport": "<?php echo lang("download-in-excel");?>",
 
     };
 
@@ -127,5 +127,9 @@
     .tables-container {
         display: inline-block;
 
+    }
+    .excel-btn {
+        background: #1c7430;
+        border-color: #1c7430;
     }
 </style>
