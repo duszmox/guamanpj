@@ -50,7 +50,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 if (is_numeric($result_array_[$key]['beker_netto']) AND is_numeric($result_array_[$key]['kiker_netto'])) {
                     $result_array_[$key]["netto_profit"] = $result_array_[$key]["kiker_netto"] - $result_array_[$key]["beker_netto"];
                     if ($result_array_[$key]['kiker_netto'] != 0) {
-                        $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]), 4) * 100;
+                        $result_array_[$key]["netto_%"] = ($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]) * 100; // todo szazalek
                     }
                 }
             }
@@ -95,10 +95,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_keszlet":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['netto_profit'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
-                    $result_array_[$key]['afa'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['netto_profit'];
+                    $result_array_[$key]['afa'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
+                    $result_array_[$key]['netto_profit'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['afa'];
                     if ($result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]), 4) * 100;
+                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]) * 100,2);
                     }
                 }
             }
@@ -214,10 +214,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["beszerzesi_partner_%"] = 100 * ($result_array_[$i]["beszerzesi_partner_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);
+                $result_array_[$i]["beszerzesi_partner_%"] = 100 * ($result_array_[$i]["beszerzesi_partner_db"] / $sum); //todo szazalek
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);//todo szazalek
+                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);//todo szazalek
 
             }
 
@@ -275,11 +275,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);
-                $result_array_[$i]["gegeszoft_%"] = 100 * ($result_array_[$i]["gegeszoft_db"] / $sum);
-                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);
-                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);
-
+                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);//todo szazalek
+                $result_array_[$i]["gegeszoft_%"] = 100 * ($result_array_[$i]["gegeszoft_db"] / $sum);//todo szazalek
+                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);//todo szazalek
+                $result_array_[$i]["facebook_marketplace_%"] = 100 * ($result_array_[$i]["facebook_marketplace_db"] / $sum);//todo szazalek
             }
             break;
         case "guaman_beszerzesireportgadget":
@@ -333,10 +332,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["phonemax_%"] = 100 * ($result_array_[$i]["phonemax_db"] / $sum);
-                $result_array_[$i]["mobilpro_%"] = 100 * ($result_array_[$i]["mobilpro_db"] / $sum);
-                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);
-                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);
+                $result_array_[$i]["phonemax_%"] = 100 * ($result_array_[$i]["phonemax_db"] / $sum);//todo szazalek
+                $result_array_[$i]["mobilpro_%"] = 100 * ($result_array_[$i]["mobilpro_db"] / $sum);//todo szazalek
+                $result_array_[$i]["alibaba_%"] = 100 * ($result_array_[$i]["alibaba_db"] / $sum);//todo szazalek
+                $result_array_[$i]["bravophone_%"] = 100 * ($result_array_[$i]["bravophone_db"] / $sum);//todo szazalek
 
             }
             break;
@@ -405,13 +404,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
-                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
-                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
-                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);//todo szazalek
+                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);//todo szazalek
+                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);//todo szazalek
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);//todo szazalek
+                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);//todo szazalek
 
             }
             break;
@@ -480,13 +479,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
-                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
-                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
-                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);//todo szazalek
+                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);//todo szazalek
+                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);//todo szazalek
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);//todo szazalek
+                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);//todo szazalek
             }
 
 
@@ -558,13 +557,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
 
                 // Százalékok:
-                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);
-                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);
-                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);
-                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);
-                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);
-                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);
-                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);
+                $result_array_[$i]["webshop_%"] = 100 * ($result_array_[$i]["webshop_db"] / $sum);//todo szazalek
+                $result_array_[$i]["instagram_%"] = 100 * ($result_array_[$i]["instagram_db"] / $sum);//todo szazalek
+                $result_array_[$i]["visszatero_%"] = 100 * ($result_array_[$i]["visszatero_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hasznalt_alma_%"] = 100 * ($result_array_[$i]["hasznalt_alma_db"] / $sum);//todo szazalek
+                $result_array_[$i]["jofogas_%"] = 100 * ($result_array_[$i]["jofogas_db"] / $sum);//todo szazalek
+                $result_array_[$i]["hardverapro_%"] = 100 * ($result_array_[$i]["hardverapro_db"] / $sum);//todo szazalek
+                $result_array_[$i]["facebook_%"] = 100 * ($result_array_[$i]["facebook_db"] / $sum);//todo szazalek
 
             }
             break;
