@@ -12,30 +12,88 @@
         </div>
     </div>
 
-    <div class="card" style="position: absolute; right:20px; z-index: 100;">
-        <input id="show-table-list-btn" class="btn btn-primary" type="button" value="Szűrők">
-        <input id="show-filters-btn" class="btn btn-primary" type="button" value="Táblák">
-
-        <div id="filters-container-o">
-
+    <div class="card shadow-lg" id="sidebar-right" style="position: absolute; right:20px; z-index: 100; max-width: 400px;">
+        <div class="card-header">
+            <ul class="nav nav-pills card-header-pills float-right">
+                <li class="nav-item">
+                    <a id="show-table-list-btn" class="nav-link" style="cursor: pointer;"
+                       onclick="sidebarNav('filters')">
+                        Szűrők
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a id="show-filters-btn" class="nav-link active" style="cursor: pointer"
+                       onclick="sidebarNav('tables')">
+                        Táblák
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div id="table-list-container-o">
-            <h2>Táblák</h2>
-            <div id="table-container">
 
+        <div class="card-body" id="sidebar-body">
+            <div id="filters-container-o" style="display: none;">
+                Filterek
+            </div>
+            <div id="table-list-container-o">
+                <h2>Táblák</h2>
+                <div class="card-body folders-container" id="table-list-container">
+                    ...
+                </div>
             </div>
         </div>
+
     </div>
 
 </div>
 <script>
 
     function sidebarNav(pressedButton) {
-        if(pressedButton === "filters"){
+        if (pressedButton === "filters") {
+            if ($("#filters-container-o").is(":visible")) {
+                $("#filters-container-o").hide();
+            } else {
+                $("#sidebar-body").show();
 
+                $("#show-filters-btn").removeClass("active");
+                $("#show-table-list-btn").addClass("active");
+
+                $("#filters-container-o").show();
+                $("#table-list-container-o").hide();
+            }
+        } else if (pressedButton === "tables") {
+            if ($("#table-list-container-o").is(":visible")) {
+                $("#table-list-container-o").hide();
+            } else {
+                $("#sidebar-body").show();
+
+                $("#show-filters-btn").addClass("active");
+                $("#show-table-list-btn").removeClass("active");
+
+                $("#table-list-container-o").show();
+                $("#filters-container-o").hide();
+            }
+        }
+        if ($("#filters-container-o").is(":hidden") && $("#table-list-container-o").is(":hidden")) {
+            $("#sidebar-body").hide();
         }
     }
-    var data_table_strings = {
+
+    $(window).click(function() {
+        $("#filters-container-o").hide();
+        $("#table-list-container-o").hide();
+        $("#sidebar-body").hide();
+
+        $("#show-table-list-btn").removeClass("active");
+        $("#show-filters-btn").removeClass("active");
+
+    });
+
+    $("#sidebar-right").click(function (event) {
+        event.stopPropagation();
+    });
+
+
+        var data_table_strings = {
         processing: "<?php echo lang("processing_message"); ?>",
         search: "<?php echo lang("searcher_message"); ?>",
         lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message"); ?>",
@@ -70,7 +128,6 @@
 
     var base_url = "<?php echo base_url(); ?>";
 
-
     var folders = <?php /** @var array $folder_array */
         echo json_encode($folder_array); ?>;
     var tables = <?php /** @var array $table_array */
@@ -79,25 +136,13 @@
     var nonEditableTables = <?php /** @var array $nonEditableTables */
         echo json_encode($nonEditableTables); ?>;
 
-    function change(el) {
-        if (el.value === "<?php echo lang("tables_button_hide") ?>") {
-            el.value = "<?php echo lang("tables_button_show") ?>";
-            var folderContainer = $(".folders-container");
-            folderContainer.toggle("fast");
-
-            $(".tables_label").text("");
-
-
-        } else {
-            el.value = "<?php echo lang("tables_button_hide") ?>";
-            $("div.folders-container").toggle("fast", function () {
-
-            });
-            $(".tables_label").text("<?php echo lang("tables_title") ?>");
-        }
-    }
 </script>
 
+<script async src="<?php echo js_url("pdfmake.min.js"); ?>"></script>
+<script async src="<?php echo js_url("jszip.min.js"); ?>"></script>
+<script async src="<?php echo js_url("vfs_fonts.js"); ?>"></script>
+<script async src="<?php echo js_url("buttons.html5.min.js"); ?>"></script>
+<script async src="<?php echo js_url("dataTables.buttons.min.js"); ?>"></script>
 <script async src="<?php echo js_url("data_output_helper.js"); ?>"></script>
 <script async src="<?php echo js_url("table_view.js"); ?>"></script>
 
@@ -130,5 +175,8 @@
         background: #1c7430;
         border-color: #1c7430;
         display: inline-block;
+    }
+    .nav-link:hover.active{
+        color: white !important;
     }
 </style>
