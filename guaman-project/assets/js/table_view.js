@@ -17,8 +17,8 @@ function sidebarNav(pressedButton) {
         } else {
             $("#sidebar-body").show();
 
-            $("#show-filters-btn").removeClass("active");
-            $("#show-table-list-btn").addClass("active");
+            $("#show-filters-btn").removeClass("btn-outline-custom");
+            $("#show-table-list-btn").addClass("btn-outline-custom");
 
             $("#filters-container-o").show();
             $("#table-list-container-o").hide();
@@ -29,8 +29,8 @@ function sidebarNav(pressedButton) {
         } else {
             $("#sidebar-body").show();
 
-            $("#show-filters-btn").addClass("active");
-            $("#show-table-list-btn").removeClass("active");
+            $("#show-filters-btn").addClass("btn-outline-custom");
+            $("#show-table-list-btn").removeClass("btn-outline-custom");
 
             $("#table-list-container-o").show();
             $("#filters-container-o").hide();
@@ -47,8 +47,8 @@ function closeRightSidebar() {
     $("#table-list-container-o").hide();
     $("#sidebar-body").hide();
 
-    $("#show-table-list-btn").removeClass("active");
-    $("#show-filters-btn").removeClass("active");
+    $("#show-table-list-btn").removeClass("btn-outline-custom");
+    $("#show-filters-btn").removeClass("btn-outline-custom");
 }
 
 $(window).click(function () {
