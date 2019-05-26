@@ -46,6 +46,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_tablet":
         case "guaman_orakkiegeszitok":
         case "guaman_gadget":
+        case "guaman_keszletujkeszulek":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['beker_netto']) AND is_numeric($result_array_[$key]['kiker_netto'])) {
                     $result_array_[$key]["netto_profit"] = $result_array_[$key]["kiker_netto"] - $result_array_[$key]["beker_netto"];

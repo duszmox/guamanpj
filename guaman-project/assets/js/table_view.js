@@ -50,11 +50,11 @@ function loadTable(table_name, openMenu = true) {
                     html += "<button class=\'btn btn-primary mt-1\' onclick=\'insertRow(\"" + table_name + "\")\'><i class=\"fas fa-plus\"></i> " + lang.new_row_button + "</button>\n    ";
                 }
                 html += "<button class=\'btn btn-primary mt-1\' onclick=\'loadTable(\"" + table_name + "\", false)\'><i class=\"fas fa-redo\"></i> " + lang.reload_page_button + "</button>";
-                html += "\n<button type=\"button\" class=\"btn btn-success excel-btn mt-1\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</button>";
+                html += "\n<a type=\"button\" class=\"btn btn-success excel-btn mt-1\"><i class=\"fas fa-file-download\"></i> " + lang.excelexport + "</a>";
                 html += "\n</div>";
 
 
-                html += "<table id=\"myTable\" class=\"table table\" id=\"data-table\" >";
+                html += "<table  class=\"table table\" id=\"data-table\" >";
 
                 // Display table headers
                 html += "<thead><tr>";
@@ -99,6 +99,7 @@ function loadTable(table_name, openMenu = true) {
                     $("#data-table").parent().css("overflow-x", "scroll");
 
                     $("#data-table-column").css("visibility", "visible");
+                    ExcelReport();
                 }, 1);
 
                 $(".data-cell-container").focusout(function () {
@@ -230,12 +231,13 @@ function ExcelReport() {
     tab_text = tab_text + "<table border='1px'>";
 
 //get table HTML code
-    tab_text = tab_text + $('#myTable').html();
+    tab_text = tab_text + $('#data-table').html();
     tab_text = tab_text + '</table></body></html>';
     var data_type = 'data:application/vnd.ms-excel';
 
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE ");
+    console.log(tab_text);
     //For IE
     if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
         if (window.navigator.msSaveBlob) {
