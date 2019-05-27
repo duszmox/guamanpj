@@ -42,13 +42,13 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
             }
 
             break;
-        case "guaman_telefon":
+        /*case "guaman_telefon":
         case "guaman_tablet":
         case "guaman_orakkiegeszitok":
         case "guaman_gadget":
         case "guaman_keszletujkeszulek":
             foreach ($result_array_ as $key => $row) {
-                if (is_numeric($result_array_[$key]['beker_netto']) AND is_numeric($result_array_[$key]['kiker_netto'])) {
+                if (is_numeric($result_array_[$key]['beszerzesi_ar']) AND is_numeric($result_array_[$key]['eladasi_ar'])) {
                     $result_array_[$key]["netto_profit"] = $result_array_[$key]["kiker_netto"] - $result_array_[$key]["beker_netto"];
                     if ($result_array_[$key]['kiker_netto'] != 0) {
                         $result_array_[$key]["netto_%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["kiker_netto"]) * 100,2);
@@ -56,7 +56,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
             }
             break;
-
+*/
         case "guaman_hasznaltsales":
         case "guaman_partnersales" :
         case "guaman_gadgetsales" :
@@ -94,6 +94,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
             break;
 
         case "guaman_keszlet":
+        case "guaman_keszletujkeszulek":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
                     $result_array_[$key]['afa'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
