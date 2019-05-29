@@ -74,27 +74,29 @@ class Database_model extends CI_Model
         return $result_array;
     }
 
-    public function get_table($columns, $table, $order_by, $order, $filters = null)
+    private function apply_filters($filters)
     {
+        foreach ($filters as $filter) {
+            switch ($filter["type"]) {
+                case "checkbox":
+                    if(!$filter["checkedOptions"] == 0) {
+                        $this->db->where_in($filter["column"], $filter["checkedOptions"]);
+                    }
+                    break;
+            }
+        }
+        /*if ($filters != null && is_array($filters)) {
+            foreach ($filters as $filter) {
+                if (!isset($filter["column_name"])) continue;
+                if (!isset($filter["relation"])) continue;
+                if (!isset($filter["value"])) continue;
 
-        $table_columns = $this->get_columns_by_table($table);
-        if (!in_array($table, $this->get_table_names())) die(":(");
-        if (!in_array($order_by, $table_columns)) $order_by = "id";
-        if (!in_array(strtoupper($order), array("ASC", "DESC"))) $order = "ASC";
 
-        $this->db->select($columns);
+                if (!in_array($filter["column_name"], $table_columns)) continue;
+                if (!in_array($filter["relation"], array("=", ">", "<", "<=", ">=", "LIKE"))) continue;
+                if (trim($filter["value"]) == "") continue;
 
-        if($filters != null && is_array($filters)){
-            foreach ($filters as $filter){
-                if(!isset($filter["column_name"])) continue;
-                if(!isset($filter["relation"])) continue;
-                if(!isset($filter["value"])) continue;
-
-                if(!in_array($filter["column_name"], $table_columns)) continue;
-                if(!in_array($filter["relation"], array("=", ">", "<", "<=", ">=", "LIKE"))) continue;
-                if(trim($filter["value"]) == "") continue;
-
-                switch ($filter["relation"]){
+                switch ($filter["relation"]) {
                     case "=":
                         $this->db->where($filter["column_name"], $filter["value"]);
                         break;
@@ -102,7 +104,7 @@ class Database_model extends CI_Model
                         $this->db->where($filter["column_name"] . ">", $filter["value"]);
                         break;
                     case "<":
-                        $this->db->where($filter["column_name"]. "<", $filter["value"]);
+                        $this->db->where($filter["column_name"] . "<", $filter["value"]);
                         break;
                     case "<=":
                         $this->db->where($filter["column_name"] . "<=", $filter["value"]);
@@ -117,6 +119,21 @@ class Database_model extends CI_Model
                 }
             }
 
+        }*/
+    }
+
+    public function get_table($columns, $table, $order_by, $order, $filters = null)
+    {
+
+        $table_columns = $this->get_columns_by_table($table);
+        if (!in_array($table, $this->get_table_names())) die("Not valid table name");
+        if (!in_array($order_by, $table_columns)) $order_by = "id";
+        if (!in_array(strtoupper($order), array("ASC", "DESC"))) $order = "ASC";
+
+        $this->db->select($columns);
+
+        if($filters !== null) {
+            $this->apply_filters($filters);
         }
 
         $this->db->order_by($order_by, $order);
@@ -198,6 +215,7 @@ class Database_model extends CI_Model
         }
 
     }
+
     public function get_type_of_column($col)
     {
 
@@ -428,7 +446,6 @@ class Database_model extends CI_Model
         $this->db->select("*");
         $query = $this->db->get("guaman_table_columns")->result_array();
         foreach ($query as $key => $value) {
-
             if (strpos($value['column_name'], 'datum') || $value['column_name'] == "datum") {
                 $this->db->update("guaman_table_columns", array("type" => "date"), array("column_name" => $value['column_name']));
                 true;

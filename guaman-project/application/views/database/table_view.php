@@ -34,7 +34,9 @@
         <div class="card-body" id="sidebar-body">
             <div id="filters-container-o" style="display: none;">
                 <h2>Szűrők</h2>
-                <p>Nyaggasd Ambrust, hogy csinálja meg</p>
+                <div id="filter-container">
+
+                </div>
             </div>
             <div id="table-list-container-o">
                 <h2>Táblák</h2>

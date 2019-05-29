@@ -49,3 +49,17 @@ input:checked + label {
     margin-left: 20px;
     margin-right: 20px;
 }
+
+fieldset{
+    border: 1px groove #8587a3 !important;
+    padding: 15px !important;
+    border-radius: 7px;
+
+}
+legend{
+    width: auto !important;
+    font-size: 1.11em !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    margin-bottom: 0 !important;
+}

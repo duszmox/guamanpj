@@ -75,8 +75,9 @@ class Database extends CI_Controller
         require_status(Statuses::$LOGGED_IN);
 
         if ($this->input->post("filters")) {
-            $filters = json_decode($this->input->post("filters"));
-            if(!is_array($filters)){
+            $filters = $this->input->post("filters");
+
+            if (!is_array($filters)) {
                 $filters = null;
             }
         } else {
@@ -125,6 +126,42 @@ class Database extends CI_Controller
         } catch (Exception $e) {
             die($e->getMessage());
         }
+    }
+
+    function get_filters($table_name)
+    {
+        $result = array();
+        switch ($table_name) {
+            case "guaman_sales":
+                $result = array(
+                    array(
+                        "name" => "beszerzes_forrasa",
+                        "niceName" => "Beszerzés forrása",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "hasznalt",
+                                    "niceName" => "Használt"
+                                ),
+                                array(
+                                    "name" => "gadget",
+                                    "niceName" => "Gadget"
+                                ),
+                                array(
+                                    "name" => "partner",
+                                    "niceName" => "Partner"
+                                ),
+
+                            )
+                        )
+                    )
+                );
+                break;
+
+        }
+        json_output($result);
     }
 
     function update_field()
