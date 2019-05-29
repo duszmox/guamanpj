@@ -323,7 +323,7 @@ function loadTable(table_name, useFilters = false) {
 
                 // Don't delete user input when it's not necessary
                 if(previousTableName !== table_name) {
-                    getFiltersByTable();
+                    getFiltersByTable(table_name);
                     $("#filter-container").html(getHTMLFilterInputs(table_name));
                 }
                 previousTableName = table_name;

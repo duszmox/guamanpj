@@ -82,6 +82,7 @@ class Database_model extends CI_Model
                     if(!$filter["checkedOptions"] == 0) {
                         $this->db->where_in($filter["column"], $filter["checkedOptions"]);
                     }
+
                     break;
             }
         }
