@@ -170,7 +170,6 @@ function getPHPFiltersFromHTML() {
 
     return phpFilters;
 }
-
 /**
  * Gets checked option names (e.g.: hasznalt, gadget, stb)
  * @param filter
@@ -187,12 +186,22 @@ function getCheckedOptions(filter) {
     return checkedOptions;
 }
 
-function loadTable(table_name, useFilters = false) {
+function loadTable(table_name) {
 
+
+    // Load filter inputs when you changed table
+    if(previousTableName !== table_name) {
+        getFiltersByTable(table_name);
+        $("#filter-container").html(getHTMLFilterInputs(table_name));
+    }
+    previousTableName = table_name;
+
+
+    // Get filters
     let phpFilters = [];
     if(filters !== undefined && filters.length !== 0){
         phpFilters = getPHPFiltersFromHTML();
-        console.log(phpFilters);
+        console.log("Na itt vannak: " + phpFilters);
     }
 
     $.post(base_url + "database/get_table/" + table_name + "/1/desc", {"filters": phpFilters}, function (data) {
@@ -319,14 +328,7 @@ function loadTable(table_name, useFilters = false) {
                     update_table_field(table_name, column, $(this).data("id"), newValue);
                 });
 
-                // FILTER INPUTS:
 
-                // Don't delete user input when it's not necessary
-                if(previousTableName !== table_name) {
-                    getFiltersByTable(table_name);
-                    $("#filter-container").html(getHTMLFilterInputs(table_name));
-                }
-                previousTableName = table_name;
             })
                 .done(function () {
                     console.log("success");
