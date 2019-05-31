@@ -263,7 +263,7 @@ function loadTable(table_name, useFilters = false) {
 
                 $("#table-container").html(html);
                 setTimeout(function () {
-                    $("#data-table").dataTable({
+                    $("#data-table").DataTable({
                         language: data_table_strings,
                         dom: 'Bfrtip',
                         buttons: [
