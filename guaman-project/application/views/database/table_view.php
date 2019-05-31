@@ -62,8 +62,8 @@
 
     var data_table_strings = {
         processing: lang.processing_message,
-        search: lang.searcher_message,  // TODO GYULA A TÖBBIT IS ILYENRE. LEHET HASZNÁLNI A LANG FÁJL BELI KEY-eket
-        lengthMenu: lang.shown_pages_start_message"_MENU_" .lang.shown_pages_end_message,
+        search: lang.searcher_message,
+        lengthMenu: lang.shown_pages_start_message + "_MENU_" + lang.shown_pages_end_message,
         info: "",
         infoEmpty: "",
         infoFiltered: "",

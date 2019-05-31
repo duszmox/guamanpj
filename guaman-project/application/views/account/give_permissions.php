@@ -7,7 +7,7 @@
             <option disabled hidden selected value="">...</option>
             <?php /** @var array $users */
             foreach ($users as $user) { ?>
-                <option value="<?php echo $user["id"]; ?>"><?php echo $user["username"]; // TODO nice_user_name
+                <option value="<?php echo $user["id"]; ?>"><?php echo $user["nice_username"];
                     ?></option>
             <?php } ?>
         </select>

@@ -159,6 +159,73 @@ class Database extends CI_Controller
                     )
                 );
                 break;
+            case "guaman_keszletujkeszulek":
+            case "guaman_keszlet":
+                $result = array(
+                    array(
+                        "name" => "type",
+                        "niceName" => "Típus",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "telefon",
+                                    "niceName" => "Telefon"
+                                ),
+                                array(
+                                    "name" => "gadget",
+                                    "niceName" => "Gadget"
+                                ),
+                                array(
+                                    "name" => "orakkiegeszitok",
+                                    "niceName" => "Órák Kiegészítők"
+                                ),
+                                array(
+                                    "name" => "Tablet",
+                                    "niceName" => "Tablet"
+                                ),
+
+                            )
+                        )
+                    ),
+                    array(
+                        "name" => "beszerzesi_platform",
+                        "niceName" => "Beszerzési Platform",
+                        "type" => "checkbox",
+                        "column" => "beszerzesi_platform",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "facebook",
+                                    "niceName" => "Facebook"
+                                ),
+                                array(
+                                    "name" => "hasznaltalma",
+                                    "niceName" => "Használt Alma"
+                                ),
+                                array(
+                                    "name" => "alibaba",
+                                    "niceName" => "Alibaba"
+                                ),
+                                array(
+                                    "name" => "bravophone",
+                                    "niceName" => "Bravophone"
+                                ),
+                                array(
+                                    "name" => "jofogas",
+                                    "niceName" => "Jófogás"
+                                ),
+                                array(
+                                    "name" => "mobilpro",
+                                    "niceName" => "Mobilpro"
+                                ),
+
+                            )
+                        )
+                    )
+                );
+                break;
 
         }
         json_output($result);
