@@ -197,29 +197,50 @@ class Database extends CI_Controller
                         "customData" => array(
                             "options" => array(
                                 array(
-                                    "name" => "facebook",
+                                    "name" => "fb",
                                     "niceName" => "Facebook"
                                 ),
                                 array(
-                                    "name" => "hasznaltalma",
+                                    "name" => "ha",
                                     "niceName" => "Használt Alma"
                                 ),
                                 array(
-                                    "name" => "alibaba",
-                                    "niceName" => "Alibaba"
-                                ),
-                                array(
-                                    "name" => "bravophone",
-                                    "niceName" => "Bravophone"
-                                ),
-                                array(
-                                    "name" => "jofogas",
+                                    "name" => "jf",
                                     "niceName" => "Jófogás"
                                 ),
                                 array(
-                                    "name" => "mobilpro",
-                                    "niceName" => "Mobilpro"
+                                    "name" => "hr",
+                                    "niceName" => "Hardver Apró"
                                 ),
+
+                            )
+                        )
+                    )
+                );
+                break;
+            case "guaman_disztribucio":
+                $result = array(
+
+                    array(
+                        "name" => "type",
+                        "niceName" => "Típus",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "Partner",
+                                    "niceName" => "Partner"
+                                ),
+                                array(
+                                    "name" => "használt",
+                                    "niceName" => "Használt"
+                                ),
+                                array(
+                                    "name" => "kiegészítő",
+                                    "niceName" => "Kiegészítő"
+                                ),
+
 
                             )
                         )

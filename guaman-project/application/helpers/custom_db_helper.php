@@ -60,6 +60,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_hasznaltsales":
         case "guaman_partnersales" :
         case "guaman_gadgetsales" :
+        case "guaman_sales" :
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
                     $result_array_[$key]['afa'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126, 2);
