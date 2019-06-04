@@ -143,3 +143,4 @@ $lang["statistics_add"] = "Hozzáadás";
 $lang["manage_event_title"] = "Manage Event";
 $lang["statistics_edit"] = "Szerkesztés";
 $lang["download-in-excel"] = "Download in Excel";
+$lang["delete-row-title"] = "Eltávolítás";

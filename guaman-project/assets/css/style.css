@@ -66,8 +66,3 @@ legend{
 div#content {
     position: relative;
 }
-div.dataTables_filter {
-    position: absolute;
-    right: 30px;
-    top: 90px;
-}

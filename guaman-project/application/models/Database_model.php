@@ -4,6 +4,7 @@
  * User: horva
  * Date: 2019.03.14.
  * Time: 21:16
+ * @property Account_model Account_model
  */
 
 class Database_model extends CI_Model
@@ -11,6 +12,7 @@ class Database_model extends CI_Model
 
     public static $TABLE_NAME = "tables";
     public static $FOLDER_TABLE_NAME = "folders";
+    public static $TABLE_LOG = "login_log";
     public static $COLUMNS_TABLE_NAME = "table_columns";
 
     public function __construct()
@@ -20,6 +22,7 @@ class Database_model extends CI_Model
         self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
         self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
         self::$COLUMNS_TABLE_NAME = $this->config->item("table_prefix") . self::$COLUMNS_TABLE_NAME;
+        self::$TABLE_LOG = $this->config->item("table_prefix") . self::$TABLE_LOG;
     }
 
     public function get_table_names()
@@ -420,6 +423,10 @@ class Database_model extends CI_Model
         };
         return "false";
 
+    }
+    public function update_field_log($table_name, $column,$id,$value){
+        $this->load->model("Account_model");
+        return $this->db->insert(self::$TABLE_LOG, array("username" => $this->Account_model::$username,"date" => date('m/d/Y h:i:s a', time()), "type" => "update_field", "info" => "tabel_name : ".$table_name.", column : ".$column." , id : ".$id." , value : ".$value));
     }
 
     public function get_table_name_by_id($id)

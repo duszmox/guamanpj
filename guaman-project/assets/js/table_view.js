@@ -265,6 +265,7 @@ function loadTable(table_name) {
 
                     if (canEdit) {
                         html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_title + "</a></td>";
+                        html += "<td a><a href='" + base_url + "database/delete_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-danger '>" + lang.delete_row_title + "</a></td>";
                     }
                     html += "</tr>";
                 }
@@ -272,7 +273,7 @@ function loadTable(table_name) {
 
                 $("#table-container").html(html);
                 setTimeout(function () {
-                    $("#data-table").DataTable({
+                    $("#data-table").dataTable({
                         language: data_table_strings,
                         dom: 'Bfrtip',
                         buttons: [
@@ -284,7 +285,7 @@ function loadTable(table_name) {
                                 className: "btn btn-primary"
                             },
                             {
-                                text: "<i class=\"fas fa-copy\"></i> Vágólap",
+                                text: "<i class=\"fas fa-copy\"></i> Vágólap",//todo lang
                                 extend: 'copyHtml5',
                                 className: "btn btn-primary"
                             },
