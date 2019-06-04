@@ -29,8 +29,8 @@
  }
 
 .statistics-add-card {
-    margin-left: 20vm;
-    margin-right: 20vm;
+    margin-left: 30vm;
+    margin-right: 30vm;
 }
 .list {
     margin-bottom: 20px;
@@ -41,4 +41,16 @@
 }
 .event-title {
     width: 17% !important;
+}
+.add-ok {
+    background-color: #00CC00;
+    border-color: #00CC00;
+    font-weight: bold;
+
+}
+.add-ok:hover{
+    background-color: #1c7430;
+    border-color: #1c7430;
+    font-weight: bold;
+
 }

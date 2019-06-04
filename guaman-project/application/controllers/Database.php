@@ -75,8 +75,9 @@ class Database extends CI_Controller
         require_status(Statuses::$LOGGED_IN);
 
         if ($this->input->post("filters")) {
-            $filters = json_decode($this->input->post("filters"));
-            if(!is_array($filters)){
+            $filters = $this->input->post("filters");
+
+            if (!is_array($filters)) {
                 $filters = null;
             }
         } else {
@@ -125,6 +126,130 @@ class Database extends CI_Controller
         } catch (Exception $e) {
             die($e->getMessage());
         }
+    }
+
+    function get_filters($table_name)
+    {
+        $result = array();
+        switch ($table_name) {
+            case "guaman_sales":
+                $result = array(
+                    array(
+                        "name" => "beszerzes_forrasa",
+                        "niceName" => "Beszerzés forrása",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "hasznalt",
+                                    "niceName" => "Használt"
+                                ),
+                                array(
+                                    "name" => "gadget",
+                                    "niceName" => "Gadget"
+                                ),
+                                array(
+                                    "name" => "partner",
+                                    "niceName" => "Partner"
+                                ),
+
+                            )
+                        )
+                    )
+                );
+                break;
+            case "guaman_keszletujkeszulek":
+            case "guaman_keszlet":
+                $result = array(
+                    array(
+                        "name" => "type",
+                        "niceName" => "Típus",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "telefon",
+                                    "niceName" => "Telefon"
+                                ),
+                                array(
+                                    "name" => "gadget",
+                                    "niceName" => "Gadget"
+                                ),
+                                array(
+                                    "name" => "orakkiegeszitok",
+                                    "niceName" => "Órák Kiegészítők"
+                                ),
+                                array(
+                                    "name" => "Tablet",
+                                    "niceName" => "Tablet"
+                                ),
+
+                            )
+                        )
+                    ),
+                    array(
+                        "name" => "beszerzesi_platform",
+                        "niceName" => "Beszerzési Platform",
+                        "type" => "checkbox",
+                        "column" => "beszerzesi_platform",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "fb",
+                                    "niceName" => "Facebook"
+                                ),
+                                array(
+                                    "name" => "ha",
+                                    "niceName" => "Használt Alma"
+                                ),
+                                array(
+                                    "name" => "jf",
+                                    "niceName" => "Jófogás"
+                                ),
+                                array(
+                                    "name" => "hr",
+                                    "niceName" => "Hardver Apró"
+                                ),
+
+                            )
+                        )
+                    )
+                );
+                break;
+            case "guaman_disztribucio":
+                $result = array(
+
+                    array(
+                        "name" => "type",
+                        "niceName" => "Típus",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "Partner",
+                                    "niceName" => "Partner"
+                                ),
+                                array(
+                                    "name" => "használt",
+                                    "niceName" => "Használt"
+                                ),
+                                array(
+                                    "name" => "kiegészítő",
+                                    "niceName" => "Kiegészítő"
+                                ),
+
+
+                            )
+                        )
+                    )
+                );
+                break;
+
+        }
+        json_output($result);
     }
 
     function update_field()

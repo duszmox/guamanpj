@@ -1,5 +1,8 @@
 var output = "";
 
+var filters;
+var previousTableName = "";
+
 $(document).ready(function () {
     output += "<ul id='table-list' class='jsl-open table-list'>";
     tree("", 0);
@@ -59,20 +62,157 @@ $("#sidebar-right").click(function (event) {
     event.stopPropagation();
 });
 
+function getFiltersByTable(tableName) {
+    filters = undefined;
+    $.ajax({
+        type: 'POST',
+        url: base_url + "database/get_filters/" + tableName,
+        success: function (data) {
+            filters = data;
+        },
+        async: false
+    });
+    if (filters === undefined) alert("Please check your internet connection!"); // TODO LANG
+    return filters;
+}
+
+function generateHTMLCheckboxInput(options, filterName) {
+    var out = "";
+    for (let i = 0; i < options.length; i++) {
+        out += "<div class='checkbox-input-container'>";
+
+        out += "<span class='checkbox-label'>" + options[i].niceName + "</span> ";
+        out += "<input type='checkbox' name='" + filterName + "_" + options[i].name + "' id='" + filterName + "_" + options[i].name + "' checked>";
+
+        out += "</div>";
+    }
+    return out;
+}
+
+function getHTMLFilterInputs(table_name) {
+    if (filters === undefined) return;
+    if (filters.error !== undefined) {
+        alert(filters.error);
+        return;
+    }
+
+    let html = "";
+
+    // filter: niceName, name, column
+    for (let i = 0; i < filters.length; i++) {
+        if (filters[i] === undefined) continue;
+
+        // CUSTOM CUCC
+        html += "<div class='filter-container'>";
+        switch (filters[i].type) {
+            case "money":
+                html += filters[i].niceName + ": " + generateHTMLSelect([
+                    {
+                        "name": "greater_than",
+                        "niceName": ">"
+                    },
+                    {
+                        "name": "less_than",
+                        "niceName": "<"
+                    },
+                    {
+                        "name": "equal_to",
+                        "niceName": "="
+                    }
+                ], filters.name);
+
+                break;
+            case "checkbox":
+                html += "<fieldset><legend>" + filters[i].niceName + "</legend>";
+                html += generateHTMLCheckboxInput(filters[i].customData.options, filters[i].name);
+                html += "</fieldset>";
+        }
+        html += "</div>";
+
+    }
+
+    html += "<button class='btn btn-primary mt-2' onclick='loadTable(\"" + table_name + "\", true)'><i class=\"fas fa-sliders-h\"></i> Szűrés<!-- TODO LANG --></button>";
+    return html;
+}
+
+/**
+ * input data: [{name: ""}, niceName: ""]
+ * id: elect tag's id
+ */
+
+function generateHTMLSelect(data, htmlId) {
+    let out = "<select class='form-control d-inline-block w-auto' id='" + htmlId + "' name='" + htmlId + "'>";
+    for (let i = 0; i < data.length; i++) {
+        out += "<option name='" + data[i].name + "' id='" + data[i].name + "'>" + data[i].niceName + "</option>";
+    }
+    out += "</select>";
+    return out;
+}
+
+function getPHPFiltersFromHTML() {
+    // CUSTOM CUCC
+    let phpFilters = [];
+
+    for (let i = 0; i < filters.length; i++) {
+        let phpFilter = {};
+
+        phpFilter.type = filters[i].type;
+        phpFilter.column = filters[i].column;
+        switch (filters[i].type) {
+            case "checkbox":
+                phpFilter.name = filters[i].name;
+                phpFilter.checkedOptions = getCheckedOptions(filters[i]);
+                break;
+        }
+
+        phpFilters.push(phpFilter);
+    }
+
+    return phpFilters;
+}
+/**
+ * Gets checked option names (e.g.: hasznalt, gadget, stb)
+ * @param filter
+ */
+function getCheckedOptions(filter) {
+    let checkedOptions = [];
+    for (let i = 0; i < filter.customData.options.length; i++) {
+        let id = filter.name + "_" + filter.customData.options[i].name;
+        let isChecked = $("#" + id).is(":checked");
+        if (isChecked) {
+            checkedOptions.push(filter.customData.options[i].name);
+        }
+    }
+    return checkedOptions;
+}
 
 function loadTable(table_name) {
 
-    $.getJSON(base_url + "database/get_table/" + table_name + "/1/desc", function (data) {
+
+    // Load filter inputs when you changed table
+    if(previousTableName !== table_name) {
+        getFiltersByTable(table_name);
+        $("#filter-container").html(getHTMLFilterInputs(table_name));
+    }
+    previousTableName = table_name;
+
+
+    // Get filters
+    let phpFilters = [];
+    if(filters !== undefined && filters.length !== 0){
+        phpFilters = getPHPFiltersFromHTML();
+        console.log("Na itt vannak: " + phpFilters);
+    }
+
+    $.post(base_url + "database/get_table/" + table_name + "/1/desc", {"filters": phpFilters}, function (data) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
-            console.log(data);
+                console.log(data);
 
                 if (nonEditableTables.includes(table_name)) {
                     canEdit = false;
                 }
 
-                console.log(canEdit);
                 console.log(table_name);
-                console.log(base_url + "permissions/has_permission/" + table_name + "_table_edit");
                 let columns = [];
                 let column_nice_names = [];
                 let col_types = [];
@@ -129,11 +269,10 @@ function loadTable(table_name) {
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
-                console.log(html);
 
                 $("#table-container").html(html);
                 setTimeout(function () {
-                    $("#data-table").dataTable({
+                    $("#data-table").DataTable({
                         language: data_table_strings,
                         dom: 'Bfrtip',
                         buttons: [
@@ -189,17 +328,18 @@ function loadTable(table_name) {
                     update_table_field(table_name, column, $(this).data("id"), newValue);
                 });
 
+
             })
                 .done(function () {
                     console.log("success");
+
                     closeRightSidebar();
                 })
                 .fail(function () {
-                    console.log("error");
+                    alert("Please check your internet connection!"); // TODO lang
                 })
         }
-    )
-    ;
+    );
 
 }
 

@@ -56,8 +56,8 @@ $input_submit = array(
     "type" => "submit",
     'name'  => 'submit',
     'id'    => 'submit',
-    'value' => lang('big_ok'),
-    'class' => 'btn btn-primary'
+    'value' => "+" .  lang('event_add'),
+    'class' => 'btn btn-primary add-ok'
 );
 
 $input_options = array(

@@ -34,7 +34,9 @@
         <div class="card-body" id="sidebar-body">
             <div id="filters-container-o" style="display: none;">
                 <h2>Szűrők</h2>
-                <p>Nyaggasd Ambrust, hogy csinálja meg</p>
+                <div id="filter-container">
+
+                </div>
             </div>
             <div id="table-list-container-o">
                 <h2>Táblák</h2>
@@ -45,6 +47,7 @@
         </div>
 
     </div>
+
 
 </div>
 <script>
@@ -59,24 +62,24 @@
 
     var data_table_strings = {
         processing: lang.processing_message,
-        search: lang.searcher_message,  // TODO GYULA A TÖBBIT IS ILYENRE. LEHET HASZNÁLNI A LANG FÁJL BELI KEY-eket
-        lengthMenu: "<?php echo lang("shown_pages_start_message") . "_MENU_" . lang("shown_pages_end_message"); ?>",
+        search: lang.searcher_message,
+        lengthMenu: lang.shown_pages_start_message + "_MENU_" + lang.shown_pages_end_message,
         info: "",
         infoEmpty: "",
         infoFiltered: "",
         infoPostFix: "",
-        loadingRecords: "<?php echo lang("records_loading_message"); ?>",
-        zeroRecords: "<?php echo lang("records_zero_message"); ?>",
-        emptyTable: "<?php echo lang("empty_table_message"); ?>",
+        loadingRecords: lang.records_loading_message,
+        zeroRecords: lang.records_zero_message,
+        emptyTable: lang.empty_table_message,
         paginate: {
-            first: "<?php echo lang("first_page_message"); ?>",
-            previous: "<?php echo lang("previous_page_message"); ?>",
-            next: "<?php echo lang("next_page_message"); ?>",
-            last: "<?php echo lang("last_page_message"); ?>"
+            first: lang.first_page_message,
+            previous: lang.previous_page_message,
+            next: lang.next_page_message,
+            last: lang.last_page_message
         },
         aria: {
-            sortAscending: "<?php echo lang("asc_table_message"); ?>",
-            sortDescending: "<?php echo lang("desc_table_message"); ?>"
+            sortAscending: lang.asc_table_message,
+            sortDescending: lang.desc_table_message
         }
     };
 
