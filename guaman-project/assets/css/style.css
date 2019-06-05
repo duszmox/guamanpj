@@ -66,3 +66,23 @@ legend{
 div#content {
     position: relative;
 }
+div#data-table_paginate{
+    position:absolute;
+    bottom:40px;
+    right:30px;
+}
+div#data-table_info{
+    height:70px;
+}
+table#data-table{
+    position:relative;
+    top:35px;
+}
+div#data-table_filter{
+    position: absolute;
+    right:30px;
+    top:90px;
+}
+div.dt-buttons{
+    position:absolute;
+}
