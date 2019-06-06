@@ -7,5 +7,7 @@
     <orderEntry type="library" name="jquery-3.3.1" level="application" />
     <orderEntry type="module" module-name="Blog" />
     <orderEntry type="module" module-name="Blog" />
+    <orderEntry type="library" name="defaults-hu_HU" level="application" />
+    <orderEntry type="library" name="bootstrap-select" level="application" />
   </component>
 </module>

@@ -82,7 +82,7 @@ class Database_model extends CI_Model
         foreach ($filters as $filter) {
             switch ($filter["type"]) {
                 case "checkbox":
-                    if(!$filter["checkedOptions"] == 0) {
+                    if (!$filter["checkedOptions"] == 0) {
                         $this->db->where_in($filter["column"], $filter["checkedOptions"]);
                     }
 
@@ -136,7 +136,7 @@ class Database_model extends CI_Model
 
         $this->db->select($columns);
 
-        if($filters !== null) {
+        if ($filters !== null) {
             $this->apply_filters($filters);
         }
 
@@ -342,7 +342,6 @@ class Database_model extends CI_Model
      * @param $from_table
      * @param $to_table
      * @param $from_id
-     * @return bool
      * @throws Exception table_not_found_exception, id_not_found_exception, incompatible_tables_exception
      */
     public function move($from_table, $to_table, $from_id)
@@ -364,10 +363,9 @@ class Database_model extends CI_Model
         $this->db->insert($to_table, $data_array);
         if ($this->db->affected_rows() == 1) {
             $this->db->delete($from_table, array("id" => $from_id), 1);
-            return true;
+            return;
         }
-
-        return false;
+        throw new Exception("db_error");
     }
 
     /**
@@ -390,6 +388,12 @@ class Database_model extends CI_Model
         return true;
     }
 
+
+    public function get_table_objects()
+    {
+        return $this->db->get(self::$TABLE_NAME)->result_array();
+    }
+
     /**
      * Gets the available compatible tables for the current user
      * @param $from_table
@@ -398,20 +402,25 @@ class Database_model extends CI_Model
      */
     public function get_compatible_tables($from_table)
     {
-        $table_names = $this->get_table_names();
-        if (!in_array($from_table, $table_names)) throw new Exception("table_not_found_exception");
 
-        $compatible_tables = array();
-
-        foreach ($table_names as $table_name) {
-            if ($this->compatible_tables($from_table, $table_name)) {
-                if (has_permission($table_name . "_table_edit")) {
-                    $compatible_tables[] = $table_name;
-                }
+        $is_in_table = false;
+        $tables = $this->get_table_objects();
+        foreach ($tables as $table) {
+            if ($table["table_name"] == $from_table) {
+                $is_in_table = true;
+                break;
             }
         }
+        if (!$is_in_table) throw new Exception("table_not_found_exception");
 
+        $compatible_tables = array();
+        foreach ($tables as $table) {
+            if (has_permission($table["table_name"] . "_table_edit") && $table["editable"] == 1 && $this->compatible_tables($from_table, $table["table_name"])) {
+                $compatible_tables[] = $table;
+            }
+        }
         return $compatible_tables;
+
     }
 
     public function get_id_by_table_name($table_name)
@@ -424,9 +433,11 @@ class Database_model extends CI_Model
         return "false";
 
     }
-    public function update_field_log($table_name, $column,$id,$value){
+
+    public function update_field_log($table_name, $column, $id, $value)
+    {
         $this->load->model("Account_model");
-        return $this->db->insert(self::$TABLE_LOG, array("username" => Account_model::$username,"date" => date('m/d/Y h:i:s a', time()), "type" => "update_field", "info" => "tabel_name : ".$table_name.", column : ".$column." , id : ".$id." , value : ".$value));
+        return $this->db->insert(self::$TABLE_LOG, array("username" => Account_model::$username, "date" => date('m/d/Y h:i:s a', time()), "type" => "update_field", "info" => "tabel_name : " . $table_name . ", column : " . $column . " , id : " . $id . " , value : " . $value));
     }
 
     public function get_table_name_by_id($id)

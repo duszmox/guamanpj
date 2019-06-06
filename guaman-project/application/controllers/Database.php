@@ -317,76 +317,42 @@ class Database extends CI_Controller
      * @param $from_table
      * @param $from_id
      */
-    public function move_row($from_table, $from_id)
+    public function move_row()
     {
-        require_permission($from_table . "_table_edit");
+        $from_table = $this->input->post("fromTable");
+        $to_table = $this->input->post("toTable");
+        $rowId = $this->input->post("rowId");
 
+        require_permission($from_table . "_table_edit", "json");
+        require_permission($to_table . "_table_edit", "json");
 
-        if ($this->input->post("to_table")) {
-            require_permission($from_table . "_table_edit");
-            require_permission($this->input->post("to_table") . "_table_edit");
+        if (!Validator::is_numeric($rowId)) json_error(lang('invalid_id_message'));
 
-            if (!Validator::is_numeric($from_id)) js_alert(lang('invalid_id_message'));
-
-
-            try {
-                if ($this->Database_model->move($from_table, $this->input->post("to_table"), $from_id)) {
-                    js_alert_close_tab(lang('successful_move_row_message'));
-                } else {
-                    js_alert_close_tab(lang('failed_move_row_message'));
-                }
-            } catch (Exception $exception) {
-                switch ($exception->getMessage()) {
-                    case "incompatible_tables_exception":
-                        json_error("incompatible_tables_exception");
-                        break;
-                    case "id_not_found_exception":
-                        json_error("id_not_found_exception");
-                        break;
-                    case "table_not_found_exception":
-                        json_error("table_not_found_exception");
-                        break;
-                }
+        try {
+            $this->Database_model->move($from_table, $to_table, $rowId);
+        } catch (Exception $exception) {
+            switch ($exception->getMessage()) {
+                case "incompatible_tables_exception":
+                    json_error("Inkompatibilis táblák"); // TODO kicserélni langra
+                    break;
+                case "id_not_found_exception":
+                    json_error("Nincs ilyen azonosítójú sor"); // TODO kicserélni langra
+                    break;
+                case "table_not_found_exception":
+                    json_error("A tábla nem található."); // TODO kicserélni langra
+                    break;
+                case "db_error":
+                    json_error("Adatbázis hiba."); // TODO lang
+                    break;
+                default:
+                    json_error($exception->getMessage());
             }
-        } else {
-            require_permission($from_table . "_table_edit");
-
-            if (!Validator::is_numeric($from_id)) js_alert(lang('invalid_id_message'));
-            try {
-                $compatible_tables_ = $this->Database_model->get_compatible_tables($from_table);
-                $compatible_tables = array();
-                foreach ($compatible_tables_ as $table_name) {
-                    $compatible_tables[$table_name] = $this->Database_model->get_table_title($table_name);
-                }
-            } catch (Exception $e) {
-                switch ($e->getMessage()) {
-                    case "table_not_found_exception":
-                        js_alert(lang('table_not_found_message'));
-                        break;
-                }
-                die();
-            }
-
-            // load views and pass data
-            $this->load->view("templates/header");
-            $this->load->view("templates/menu");
-
-            try {
-                $this->load->view("database/move_row", array("compatible_tables" => $compatible_tables, "id" => $from_id, "from_table_title" => $this->Database_model->get_table_title($from_table)));
-            } catch (Exception $e) {
-                switch ($e->getMessage()) {
-                    case "table_not_found_exception":
-                        js_alert(lang("table_not_found_message"));
-                        break;
-                }
-                die();
-            }
-
-            $this->load->view("templates/footer");
-
-
         }
+        json_output("success");
     }
+
+
+
 
 
     // Most nem ezt használjuk, hanem lekérjük szépen php-val
@@ -396,13 +362,15 @@ class Database extends CI_Controller
      * @param $from_table
      * @throws Exception
      */
-    public function get_compatible_tables($from_table)
+    public
+    function get_compatible_tables($from_table)
     {
         require_permission($from_table . "_table_view");
         json_output($this->Database_model->get_compatible_tables($from_table));
     }
 
-    public function change()
+    public
+    function change()
     {
         $this->Database_model->change();
     }
