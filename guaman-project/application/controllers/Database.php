@@ -158,6 +158,7 @@ class Database extends CI_Controller
                                     "niceName" => "Nincs megadva" // TODO lang
                                 )
 
+
                             )
                         )
                     )
