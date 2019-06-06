@@ -274,7 +274,13 @@ function loadTable(table_name) {
                 setTimeout(function () {
                     $("#data-table").DataTable({
                         language: data_table_strings,
-                        dom: 'Bfrtip',
+                        dom:
+                            "<'row'<'col-sm-12'B>>"+
+                            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+                            //'Bflrtip',
+                        scrollX: true,
                         buttons: [
                             {
                                 text: "<i class=\"fas fa-redo\"></i> " + lang.reload_page_button_title,

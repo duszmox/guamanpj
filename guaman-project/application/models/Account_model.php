@@ -106,7 +106,7 @@ class Account_model extends CI_Model
 
     function login_log($username)
     {
-        $this->db->insert(self::$TABLE_LOG_LOGIN_NAME, array('id'=>NULL, "username" => $username, "date" => date('m/d/Y h:i:s a', time())));
+        $this->db->insert(self::$TABLE_LOG_LOGIN_NAME, array('id'=>NULL, "username" => $username, "date" => date('m/d/Y h:i:s a', time()), "type" => "login"));
 
     }
 
