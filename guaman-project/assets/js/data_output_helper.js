@@ -8,18 +8,18 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "</span>";
             }
-            return cell_body;
+            break;
         case "month":
             if (canEdit) {
                 // TODO select input
                 cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + value + "\'>";
-                cell_body += "<span hidden>"+ value + "</span>";
+                cell_body += "<span hidden>" + value + "</span>";
             } else {
 
                 let withzero = (value + "").length === 1 ? "0" + value : value;
                 cell_body = "<span><span hidden>" + withzero + "</span>" + getDisplayFormat(value, "month") + "</span>";
             }
-            return cell_body;
+            break;
         case "date":
             if (canEdit) {
                 cell_body = "<input type=\"date\" class=\"form-control data-cell\" value=\'" + value + "\'>";
@@ -27,7 +27,7 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "</span>";
             }
-            return cell_body;
+            break;
         case "money":
             console.log("DDD: " + value);
             let cell_value = value;
@@ -46,7 +46,7 @@ function getCellBody(value, col_type, canEdit) {
                 cell_body += "<span hidden>" + cell_value + " " + value + "</span>";
             }
             console.log(cell_value);
-            return cell_body;
+            break;
         case "percentage":
             if (canEdit) {
                 value += "";
@@ -55,8 +55,53 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "%</span>";
             }
-            return cell_body;
+            break;
 
+        case "termek_tipus":
+
+            let options = [
+                {
+                    name: "telefon",
+                    niceName: "Telefon",// TODO lang
+                },
+                {
+                    name: "tablet",
+                    niceName: "Tablet",// TODO lang
+                },
+                {
+                    name: "orakkiegeszitok",
+                    niceName: "Órák, kiegészítők", // TODO lang
+                },
+                {
+                    name: "gadget",
+                    niceName: "Gadget",// TODO lang
+                },
+                {
+                    name: "",
+                    niceName: "Nincs megadva" // TODO lang
+                }
+            ];
+            if (canEdit) {
+                cell_body = "<select class='form-control data-cell'>";
+                for (let i = 0; i < options.length; i++) {
+                    if (value === options[i].name) {
+                        cell_body += "<option value='" + options[i].name + "' selected>" + options[i].niceName + "</option>";
+                    } else {
+                        cell_body += "<option value='" + options[i].name + "'>" + options[i].niceName + "</option>";
+                    }
+                }
+                cell_body += "</select>";
+            } else {
+                let niceName = "Nincs megadva"; // TODO lang
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].name === value) {
+                        niceName = options[i].niceName;
+                        break;
+                    }
+                }
+                cell_body += "<span>" + niceName + "</span>";
+            }
+            break;
         default:
             if (canEdit) {
                 cell_body = "<input type=\"text\" class=\"form-control data-cell\" value=\'" + value + "\'>";
@@ -64,13 +109,13 @@ function getCellBody(value, col_type, canEdit) {
             } else {
                 cell_body = "<span>" + value + "</span>";
             }
-            return cell_body;
-
+            break;
     }
+    return cell_body;
 }
 
 // TODO megcsinálni, hogy JS-ből is tudjunk langot kiolvasni
-let MONTHS = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
+const MONTHS = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
 
 function getDisplayFormat(value, type) {
     console.log("type: " + type + "; value: " + value);

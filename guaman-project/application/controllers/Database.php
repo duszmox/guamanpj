@@ -153,6 +153,10 @@ class Database extends CI_Controller
                                     "name" => "partner",
                                     "niceName" => "Partner"
                                 ),
+                                array(
+                                    "name" => "",
+                                    "niceName" => "Nincs megadva" // TODO lang
+                                )
 
                             )
                         )
@@ -182,9 +186,13 @@ class Database extends CI_Controller
                                     "niceName" => "Órák Kiegészítők"
                                 ),
                                 array(
-                                    "name" => "Tablet",
+                                    "name" => "tablet",
                                     "niceName" => "Tablet"
                                 ),
+                                array(
+                                    "name" => "",
+                                    "niceName" => "Nincs megadva" // TODO lang
+                                )
 
                             )
                         )
@@ -212,7 +220,10 @@ class Database extends CI_Controller
                                     "name" => "hr",
                                     "niceName" => "Hardver Apró"
                                 ),
-
+                                array(
+                                    "name" => "",
+                                    "niceName" => "Nincs megadva" // TODO lang
+                                )
                             )
                         )
                     )
@@ -240,7 +251,10 @@ class Database extends CI_Controller
                                     "name" => "kiegészítő",
                                     "niceName" => "Kiegészítő"
                                 ),
-
+                                array(
+                                    "name" => "",
+                                    "niceName" => "Nincs megadva" // TODO lang
+                                )
 
                             )
                         )
