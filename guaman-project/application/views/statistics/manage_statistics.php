@@ -25,13 +25,13 @@
     var base_url = "<?php echo base_url()?>";
     var can_edit_stats = <?php echo has_permission("edit_stats") ? "true" : "false"; ?>;
     lang = {
-        "id": <?php echo lang('bid_id');?>,
-        "stat_name": <?php echo lang('statistics_name');11?>,
-        "type": <?php echo lang('type_label');?>,
-        "actions": <?php echo lang('actions_button_title');?>,
-        "remove_stat": <?php echo lang('delete-row-title');?>,
-        "confirm_delete_statistics": <?php echo lang('delete_confirm_statistics')?>,
-        "view_stat": <?php echo lang('watch_label')?>
+        "id": "<?php echo lang('bid_id');?>",
+        "stat_name": "<?php echo lang('statistics_name'); ?>",
+        "type": "<?php echo lang('type_label');?>",
+        "actions": "<?php echo lang('actions_button_title');?>",
+        "remove_stat": "<?php echo lang('delete-row-title');?>",
+        "confirm_delete_statistics": "<?php echo lang('delete_confirm_statistics')?>",
+        "view_stat": "<?php echo lang('watch_label')?>"
     };
 
     var data_table_strings = {
@@ -75,7 +75,7 @@
             html += "<tr>";
             html += "<th>" + lang.stat_name + "</th>";
             html += "<th>" + lang.type + "</th>";
-            html += "<th>" + lang.actions_button_title + "</th>";
+            html += "<th>" + lang.actions + "</th>";
             html += "</tr>";
             html += "</thead>";
 

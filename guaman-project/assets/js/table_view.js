@@ -3,6 +3,15 @@ var output = "";
 var filters;
 var previousTableName = "";
 
+
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 3000
+});
+
+
 $(document).ready(function () {
     output += "<ul id='table-list' class='jsl-open table-list'>";
     tree("", 0);
@@ -269,12 +278,11 @@ function loadTable(table_name) {
                     }
 
                     if (canEdit) {
-                        html += "<td><a href='" + base_url + "database/move_row/" + table_name + "/" + data[i]["id"] + "' target='_blank' class='btn btn-primary'>" + lang.move_row_title + "</a></td>";
+                        html += "<td><button onclick='moveRow(\"" + table_name + "\", \"" + data[i]["id"] + "\")' class='btn btn-primary'>" + lang.move_row_title + "</button></td>";
                     }
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
-
 
 
                 var exportOptions = {
@@ -384,9 +392,87 @@ function update_table_field(table_name, column, id, newValue) {
         column: column,
         id: id,
         value: newValue
-    }, function (data) {
-        //console.log(data);
+    }).done(function () {
+        Toast.fire({
+            type: 'success',
+            title: 'Sikeres mentés' // TODO lang
+        })
+    }).fail(function () {
+        Toast.fire({
+            type: 'error',
+            title: 'Ellenőrizd az internetkapcsolatot!' // TODO lang
+        })
     })
+}
+
+function moveRow(tableName, rowId) {
+    console.log(tableName + " " + rowId);
+
+
+    $.getJSON(base_url + "database/get_compatible_tables/" + tableName, {}, function (data) {
+        if (data.error !== undefined) {
+            Swal.fire({
+                type: "error",
+                "titleText": "Upsz...", // TODO lang
+                "text": data.error
+            })
+        } else {
+            let options = {};
+            for (let i = 0; i < data.length; i++) {
+                options[data[i].table_name] = data[i].table_title;
+            }
+            Swal.fire({
+                titleText: "Áthelyezés", // TODO lang
+                text: "Sor áthelyezése ebbe a táblába:",
+                showCancelButton: true,
+                type: "question",
+                cancelButtonColor: '#d33',
+                cancelButtonText: "Mégsem",
+                confirmButtonText: 'Áthelyezés',
+                input: 'select',
+                inputOptions: options,
+                reverseButtons: true
+            }).then((result) => {
+                if (result.value) {
+                    $.post(base_url + "database/move_row/", {
+                        fromTable: tableName,
+                        toTable: result.value,
+                        rowId: rowId
+                    })
+                        .done(function (data) {
+                            if (data === "success") {
+                                loadTable(tableName);
+                                Toast.fire({
+                                    type: "success",
+                                    title: "Sikeres áthelyezés" // TODO lang
+                                });
+                            }
+                            else if(data.error !== undefined){
+                                Toast.fire({
+                                    type: "error",
+                                    title: data.error
+                                });
+                                loadTable(tableName);
+                            }
+                        })
+                        .fail(function () {
+                            Toast.fire({
+                                type: "error",
+                                title: "Ellenőrizd az internetkapcsolatot!" // TODO lang
+                            });
+                        });
+                }
+            })
+        }
+    })
+        .fail(function () {
+            Toast.fire({
+                type: "error",
+                title: "Ellenőrizd az internetkapcsolatot!" // TODO lang
+            });
+        });
+
+
 }
 
 function get_nice_table_name(table_name) {
@@ -446,16 +532,29 @@ function tree(current_folder_id, level) {
 
 function insertRow(table_name) {
     $.post(base_url + "database/insert_new_row/" + table_name, function (data) {
-        if (data === "success") {
-            //alert("ok");
-        }/* else {
-            alert("Unexpected error. Please contact with the developers! [support@guamanpj.com]");
-        }*/
-    })/*.fail(function () {
-        alert("Unexpected error. Please contact with the developers! [support@guamanpj.com]");
-    })*/.always(function () {
-        loadTable(table_name);
-    });
+        console.log("DATA=" + data);
+        if (data === " success") {
+            Toast.fire({
+                type: 'success',
+                title: 'Sor hozzáadva' // TODO lang
+            });
+        } else if (data.error !== undefined) {
+            Toast.fire({
+                type: 'error',
+                title: data.error
+            })
+        }
+
+    })
+        .fail(function () {
+            Toast.fire({
+                type: 'error',
+                title: "Ellenőrizd az internetkapcsolatodat!"
+            })
+        })
+        .always(function () {
+            loadTable(table_name);
+        });
 }
 
 
