@@ -119,14 +119,14 @@ class Database extends CI_Controller
     function insert_new_row($table_name)
     {
         require_permission($table_name . "_table_edit");
-
+        //for($i=0;$i<100;$i++){
         try {
             $this->Database_model->insert($table_name, array("id" => ""));
             echo "success";
         } catch (Exception $e) {
             die($e->getMessage());
-        }
-    }
+        }}
+    //}
 
     function get_filters($table_name)
     {
@@ -242,6 +242,29 @@ class Database extends CI_Controller
                                 ),
 
 
+                            )
+                        )
+                    )
+                );
+                break;
+                case "guaman_login_log":
+                $result = array(
+
+                    array(
+                        "name" => "type",
+                        "niceName" => "Típus",
+                        "type" => "checkbox",
+                        "column" => "type",
+                        "customData" => array(
+                            "options" => array(
+                                array(
+                                    "name" => "login",
+                                    "niceName" => "Login"
+                                ),
+                                array(
+                                    "name" => "update_field",
+                                "niceName" => "Update Field"
+                                ),
                             )
                         )
                     )
