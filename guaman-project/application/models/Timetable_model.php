@@ -98,7 +98,7 @@ class Timetable_model extends CI_Model
     public function get_nice_name_by_id($id)
     {
         if(self::does_event_type_exists($id)){
-            throw new Exception("invalid id"); //todo lang + exception kezelés
+            throw new Exception("invalid_id");
         }
         $this->db->select("nice_name");
         $this->db->limit(1);

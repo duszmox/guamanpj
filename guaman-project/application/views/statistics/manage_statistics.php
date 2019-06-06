@@ -2,7 +2,7 @@
     <a href="<?php echo base_url("statistics/");?>" class="d-block text-decoration-none" style="color: inherit">
         <strong>
             <i class="fas fa-chevron-left"></i>
-            Kezdőlap<!-- TODO lang statistics back to home-->
+            <?php echo lang('homepage_label')?>
         </strong>
     </a>
     <h2 class="d-inline-block">
@@ -24,14 +24,14 @@
 <script>
     var base_url = "<?php echo base_url()?>";
     var can_edit_stats = <?php echo has_permission("edit_stats") ? "true" : "false"; ?>;
-    lang = { // TODO lang ide kicserélni
-        "id": "ID",
-        "stat_name": "Statisztika neve",
-        "type": "Típus",
-        "actions": "Műveletek",
-        "remove_stat": "Eltávolítás",
-        "confirm_delete_statistics": "Biztosan törölni szeretnéd ezt a statisztika beállítást? (Az adatok nem fognak törlődni)",
-        "view_stat": "Megtekintés"
+    lang = {
+        "id": <?php echo lang('bid_id');?>,
+        "stat_name": <?php echo lang('statistics_name');11?>,
+        "type": <?php echo lang('type_label');?>,
+        "actions": <?php echo lang('actions_button_title');?>,
+        "remove_stat": <?php echo lang('delete-row-title');?>,
+        "confirm_delete_statistics": <?php echo lang('delete_confirm_statistics')?>,
+        "view_stat": <?php echo lang('watch_label')?>
     };
 
     var data_table_strings = {

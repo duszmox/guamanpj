@@ -135,7 +135,7 @@ class Statistics extends CI_Controller
     {
         $this->load->model("Database_model");
 
-        if ($stat_id == null || !Validator::is_numeric($stat_id)) json_error("Invalid source table name!"); // TODO LANG
+        if ($stat_id == null || !Validator::is_numeric($stat_id)) json_error(lang('invalid_table_source_name'));
         require_permission($stat_id . "_stat_view", "json");
 
         try {

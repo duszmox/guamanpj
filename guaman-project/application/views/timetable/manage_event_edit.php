@@ -112,9 +112,9 @@ foreach ($inputs_array as $key2 => $value2) {
 
         $var_all_day = ($data['all_day'] == 1) ? "TRUE" : "FALSE";
 
-        echo "All Day" . form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>"; //todo lang All Day
+        echo lang('all_day_label') . form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>";
 
-        echo "Event type" . form_dropdown('event_type', $inputs_options[1], $actual_event_type, array("class" => "rounded-2-date")) . "<br>"; //todo lang Event_type
+        echo lang('event_type_label'). form_dropdown('event_type', $inputs_options[1], $actual_event_type, array("class" => "rounded-2-date")) . "<br>";
 
     }
     if($value2['type'] != "hidden") {
