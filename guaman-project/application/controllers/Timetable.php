@@ -85,9 +85,11 @@ class Timetable extends CI_Controller
         }
         $event_types = $this->Timetable_model->get_timetable_event_types();
         $event_places = $this->Timetable_model->get_timetable_event_places();
-
-        $actual_event_type = $this->Timetable_model->get_nice_name_by_id($data[0]['event_type']);
-
+        try {
+            $actual_event_type = $this->Timetable_model->get_nice_name_by_id($data[0]['event_type']);
+        }catch(Exception $e){
+            if ($e->getMessage() == "invalid_id") js_alert(lang('not-found-table-with-id'), base_url("timetable/manage_event_edit"));
+        }
 
         $this->load->view("templates/header", array('page_title' => "Manage Event"));
         $this->load->view("templates/menu");
@@ -102,7 +104,7 @@ class Timetable extends CI_Controller
 
         foreach ($required_inputs as $field) {
             if (is_null($field)) {
-                js_alert("A " . $field . " megadása kötelező.", "back"); //todo lang
+                js_alert(lang('big-article') . $field . lang('fill-the-field'), "back");
             }
         }
         $event_title = $this->input->post("event_title");
@@ -116,11 +118,11 @@ class Timetable extends CI_Controller
         try {
             $bool_query = $this->Timetable_model->add_event($event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
         } catch (Exception $e) {
-            if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
-            if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
+            if ($e->getMessage() == "invalid_event_end") js_alert(lang('wrong-event-end-value'), base_url("timetable/"));
+            if ($e->getMessage() == "invalid_event_type") js_alert(lang('wrong-event-type-value'), base_url("timetable/"));
         }
         if ($bool_query) {
-            js_alert("Kész az add", base_url("timetable/")); //todo lang
+            js_alert(lang('add-finished'), base_url("timetable/"));
         }
     }
 
@@ -132,7 +134,7 @@ class Timetable extends CI_Controller
 
         foreach ($required_inputs as $field) {
             if (is_null($field)) {
-                js_alert("A " . $field . " megadása kötelező.", "back"); //todo lang
+                js_alert(lang('big-article') . $field . lang('fill-the-field'), "back");
             }
         }
         $event_id = $this->input->post("event_id");
@@ -148,11 +150,11 @@ class Timetable extends CI_Controller
             $event_id = $this->Timetable_model->get_event_type_id_by_event_title($this->Timetable_model->get_event_type_event_title_by_id($event_id));
             $bool_query = $this->Timetable_model->edit_event($event_id, $event_title, $event_place, $all_day, $event_start, $event_end, $event_comment, $event_type);
         } catch (Exception $e) {
-            if ($e->getMessage() == "invalid_event_end") js_alert("Wrong event end value", base_url("timetable/")); //todo lang
-            if ($e->getMessage() == "invalid_event_type") js_alert("Wrong event type value", base_url("timetable/")); //todo lang
+            if ($e->getMessage() == "invalid_event_end") js_alert(lang('wrong-event-end-value'), base_url("timetable/"));
+            if ($e->getMessage() == "invalid_event_type") js_alert(lang('wrong-event-type-value'), base_url("timetable/"));
         }
         if ($bool_query) {
-            js_alert("Kész az edit", base_url("timetable/")); //todo lang
+            js_alert(lang('edit-finished'), base_url("timetable/"));
         }
     }
 

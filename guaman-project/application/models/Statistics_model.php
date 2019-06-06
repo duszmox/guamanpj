@@ -66,7 +66,7 @@ class Statistics_model extends CI_Model
 
         $tables = $this->Database_model->get_tables();
 
-        $invalid_column_message = "Invalid column: "; // TODO LANG
+        $invalid_column_message = lang('invalid-column');
         $table_names = array();
         foreach ($tables as $key => $value) {
             $table_names[] = $value['id'];

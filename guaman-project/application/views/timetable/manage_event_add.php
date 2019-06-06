@@ -35,7 +35,7 @@ $inputs_array[2] = array(
     'id' => 'event_start',
     'value' => date("Y-m-d") . "T" . date("H:i"),
     'class' => 'rounded-2-date',
-    'placeholder' => "Event Start" //todo lang
+    'placeholder' => lang('event_start')
 );
 
 $inputs_array[3] = array(
@@ -44,7 +44,7 @@ $inputs_array[3] = array(
     'id' => 'event_end',
     'value' => date("Y-m-d") . "T" . date("H:i"),
     'class' => 'rounded-2-date',
-    'placeholder' => "Event End" //todo lang
+    'placeholder' => lang('event_end')
 );
 
 $inputs_array[4] = array(
@@ -87,9 +87,9 @@ foreach ($inputs_array as $key2 => $value2) {
 
         $var_all_day = (!empty($data)) ? $data['event_type'] : "";
 
-        echo "All day" . form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>"; //todo lang All day
+        echo lang('all_day_label') . form_dropdown('all_day', $inputs_options[0], $var_all_day, array("class" => "rounded-2-date")) . "<br>";
 
-        echo "Event type ".form_dropdown('event_type', $inputs_options[1], "", array("class" => "rounded-2-date")) . "<br>"; //todo lang Event Type
+        echo lang('event_type_label').form_dropdown('event_type', $inputs_options[1], "", array("class" => "rounded-2-date")) . "<br>";
 
     }
     echo $value2['placeholder'] . form_input($value2) . "<br>";

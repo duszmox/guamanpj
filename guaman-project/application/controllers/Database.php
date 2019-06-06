@@ -258,7 +258,7 @@ class Database extends CI_Controller
 
         require_permission($table_name . "_table_edit");
         if (!$this->Database_model->isEditableTable($table_name)) {
-            json_error("You cannot change this field!"); // TODO lang
+            json_error(lang('cant-change-field'));
         }
         $column = $this->input->post("column");
         $id = $this->input->post("id");
