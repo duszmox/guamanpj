@@ -170,6 +170,7 @@ function getPHPFiltersFromHTML() {
 
     return phpFilters;
 }
+
 /**
  * Gets checked option names (e.g.: hasznalt, gadget, stb)
  * @param filter
@@ -190,7 +191,7 @@ function loadTable(table_name) {
 
 
     // Load filter inputs when you changed table
-    if(previousTableName !== table_name) {
+    if (previousTableName !== table_name) {
         getFiltersByTable(table_name);
         $("#filter-container").html(getHTMLFilterInputs(table_name));
     }
@@ -199,14 +200,18 @@ function loadTable(table_name) {
 
     // Get filters
     let phpFilters = [];
-    if(filters !== undefined && filters.length !== 0){
+    if (filters !== undefined && filters.length !== 0) {
         phpFilters = getPHPFiltersFromHTML();
         console.log("Na itt vannak: " + phpFilters);
     }
 
+    var rawData;
+
     $.post(base_url + "database/get_table/" + table_name + "/1/desc", {"filters": phpFilters}, function (data) {
             $.post(base_url + "permissions/has_permission/" + table_name + "_table_edit", function (canEdit) {
                 console.log(data);
+
+                rawData = data;
 
                 if (nonEditableTables.includes(table_name)) {
                     canEdit = false;
@@ -270,16 +275,26 @@ function loadTable(table_name) {
                 }
                 html += "</tbody></table>";
 
+
+
+                var exportOptions = {
+                    format: {
+                        body: function (data, row, column, node) {
+                            return rawData[row + 1][columns[column]];
+                        }
+                    }
+                };
+
                 $("#table-container").html(html);
                 setTimeout(function () {
                     $("#data-table").DataTable({
                         language: data_table_strings,
                         dom:
-                            "<'row'<'col-sm-12'B>>"+
+                            "<'row'<'col-sm-12'B>>" +
                             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                             "<'row'<'col-sm-12'tr>>" +
                             "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                            //'Bflrtip',
+                        //'Bflrtip',
                         scrollX: true,
                         buttons: [
                             {
@@ -292,22 +307,26 @@ function loadTable(table_name) {
                             {
                                 text: "<i class=\"fas fa-copy\"></i> Vágólap",
                                 extend: 'copyHtml5',
-                                className: "btn btn-primary"
+                                className: "btn btn-primary",
+                                exportOptions: exportOptions
                             },
                             {
                                 text: "<i class=\"fas fa-file-excel\"></i> Excel",
                                 extend: 'excelHtml5',
-                                className: "btn btn-primary"
+                                className: "btn btn-primary",
+                                exportOptions: exportOptions
                             },
                             {
                                 text: "<i class=\"fas fa-file-csv\"></i> CSV",
                                 extend: 'csvHtml5',
-                                className: "btn btn-primary"
+                                className: "btn btn-primary",
+                                exportOptions: exportOptions
                             },
                             {
                                 text: "<i class=\"fas fa-file-pdf\"></i> PDF",
                                 extend: 'pdfHtml5',
-                                className: "btn btn-primary"
+                                className: "btn btn-primary",
+                                exportOptions: exportOptions
                             }
                         ]
                     });
@@ -321,6 +340,7 @@ function loadTable(table_name) {
                 $(".data-cell-container").focusout(function () {
                     let newValue = $(this).children().eq(0).val();
                     let column = $(this).data("column");
+                    let row = $(this).data("row");
 
                     let col_id;
                     for (let b = 0; b < columns.length; b++) {
@@ -332,6 +352,7 @@ function loadTable(table_name) {
 
                     newValue = getBackData(newValue, col_types[col_id]);
                     update_table_field(table_name, column, $(this).data("id"), newValue);
+                    rawData[row + 1][column] = newValue;
                 });
 
 
@@ -345,7 +366,8 @@ function loadTable(table_name) {
                     alert("Please check your internet connection!"); // TODO lang
                 })
         }
-    );
+    )
+    ;
 
 }
 
