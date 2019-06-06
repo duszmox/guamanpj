@@ -100,10 +100,10 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 if (is_numeric($result_array_[$key]['eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
                     $result_array_[$key]['afa'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
                     $result_array_[$key]['netto_profit'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['afa'];
-                    if ($result_array_[$key]['eladasi_ar'] != 0) {
-                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]) * 100, 2);
+                    if ($result_array_[$key]['eladasi_ar'] == 0) {
+                        $result_array_[$key]["%"] = "0";
                     } else {
-                        $result_array_[$key]["%"] = "0 %";
+                        $result_array_[$key]["%"] = round(($result_array_[$key]["netto_profit"] / $result_array_[$key]["eladasi_ar"]) * 100, 2);
                     }
                 }
             }

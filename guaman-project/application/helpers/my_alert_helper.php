@@ -13,7 +13,7 @@
 function js_alert($text = "", $redirect_url = "")
 {
     die("<script>
-	alert('" . $text . "');
+	alert('" . esc_js($text) . "');
     window.location.href = '" . $redirect_url . "';
 </script>");
 
@@ -23,7 +23,7 @@ function js_alert($text = "", $redirect_url = "")
 function js_alert_close_tab($text = "")
 {
     die("<script>
-	alert('" . $text . "');
+	alert('" . esc_js($text) . "');
     window.close();
 
 </script>");
@@ -39,4 +39,9 @@ function json_output($data)
 {
     header('Content-Type: application/json');
     die (json_encode($data));
+}
+
+function esc_js($string)
+{
+    return str_replace("\n", '\n', str_replace('"', '\"', addcslashes(str_replace("\r", '', (string)$string), "\0..\37'\\")));
 }

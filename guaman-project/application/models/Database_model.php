@@ -426,7 +426,7 @@ class Database_model extends CI_Model
     }
     public function update_field_log($table_name, $column,$id,$value){
         $this->load->model("Account_model");
-        return $this->db->insert(self::$TABLE_LOG, array("username" => $this->Account_model::$username,"date" => date('m/d/Y h:i:s a', time()), "type" => "update_field", "info" => "tabel_name : ".$table_name.", column : ".$column." , id : ".$id." , value : ".$value));
+        return $this->db->insert(self::$TABLE_LOG, array("username" => Account_model::$username,"date" => date('m/d/Y h:i:s a', time()), "type" => "update_field", "info" => "tabel_name : ".$table_name.", column : ".$column." , id : ".$id." , value : ".$value));
     }
 
     public function get_table_name_by_id($id)
