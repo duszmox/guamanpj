@@ -195,7 +195,13 @@ class Database_model extends CI_Model
         foreach ($column_names as $column_name) {
             $result_array = $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" => $table_id, "column_name" => $column_name), 1)->result_array();
             //
-            $types[] = $result_array[0]["type"];
+
+
+            if (!isset($result_array[0]["type"])) {
+                echo "Nincsen neve : " . $column_name . ". \n";
+            } else {
+                $types[] = $result_array[0]["type"];
+            }
         }
         return $types;
     }
@@ -489,6 +495,35 @@ class Database_model extends CI_Model
             }
 
         }
+
+    }
+
+    public function addRowsToDatabaseManual()
+    {
+        //termék id
+        $char_termekid = strtoupper(substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1));
+        $number_termekid = rand(10, 99);
+        echo "Termék ID : " . $char_termekid . $number_termekid . "<br>";
+        echo "<hr>";
+
+        //bekerülési dátum
+        $timestamp = mt_rand(1, time());
+        $randomDate = date("d M Y", $timestamp);
+        echo "Bekerülési Dátum : " . $randomDate . " \n<br>";
+        echo "<hr>";
+
+        //platform
+        $array_pf_platform = array("fa","ha","partner");
+        $platform = array_rand($array_pf_platform);
+        echo "Platform :".$array_pf_platform[$platform] . "\n <br><hr>";
+
+        $array_of_termek = array("iPhone 6S","iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
+        $array_of_type = array("Telefon","Telefon","Telefon","Órák, kiegészítők","Tablet","Gadget","Gadget");
+        $termek_and_type = array_rand($array_of_termek);
+        echo "Termék :".$array_of_termek[$termek_and_type]."\n<br><hr>";
+        echo "Type :".$array_of_type[$termek_and_type]."\n<br><hr>";
+
+
 
     }
 }
