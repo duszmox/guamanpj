@@ -87,14 +87,20 @@ class Database extends CI_Controller
         $rows = $this->Database_model->get_table("*", $table_name, $order_by, $order, $filters);
         $output = array();
 
-        $cols = $this->Database_model->get_columns_by_table($table_name);
-        $col_nice_names = $this->Database_model->get_nice_column_names_by_table($table_name);
-        $types = $this->Database_model->get_col_types($this->Database_model->get_table_id($table_name), $cols);
+
+        $column_objects = $this->Database_model->get_column_objects($table_name);
 
         $header_row = array();
-        foreach ($cols as $key => $col) {
-            $header_row[$col] = array("nice_name" => $col_nice_names[$key], "type" => $types[$key]);
+        foreach ($column_objects as $key => $column_object) {
+            $header_row[$column_object["column_name"]] = array(
+                "nice_name" => $column_object["nice_column_name"],
+                "type" => $column_object["type"],
+                "name" => $column_object["column_name"],
+                "custom_data" => $column_object["custom_data"]
+            );
+
         }
+
         $output[] = $header_row;
 
         foreach ($rows as $key => $row) {
@@ -119,14 +125,13 @@ class Database extends CI_Controller
     function insert_new_row($table_name)
     {
         require_permission($table_name . "_table_edit");
-      //  for($i=0;$i<100;$i++){
         try {
             $this->Database_model->insert($table_name, array("id" => ""));
             echo "success";
         } catch (Exception $e) {
             die($e->getMessage());
-        }}
-    //}
+        }
+    }
 
     function get_filters($table_name)
     {
@@ -262,7 +267,7 @@ class Database extends CI_Controller
                     )
                 );
                 break;
-                case "guaman_login_log":
+            case "guaman_login_log":
                 $result = array(
 
                     array(
@@ -278,7 +283,7 @@ class Database extends CI_Controller
                                 ),
                                 array(
                                     "name" => "update_field",
-                                "niceName" => "Update Field"
+                                    "niceName" => "Update Field"
                                 ),
                             )
                         )
@@ -385,21 +390,23 @@ class Database extends CI_Controller
      * @param $from_table
      * @throws Exception
      */
-    public
-    function get_compatible_tables($from_table)
+    public function get_compatible_tables($from_table)
     {
         require_permission($from_table . "_table_view");
         json_output($this->Database_model->get_compatible_tables($from_table));
     }
 
-    public
-    function change()
+    public function change()
     {
         $this->Database_model->addRowsToDatabaseManual();
     }
 
-    function filter_settings(){
-
+    public function get_enum($enum_name){
+        try {
+            json_output($this->Database_model->get_enum($enum_name));
+        } catch (Exception $e) {
+            json_error($e->getMessage());
+        }
     }
 
 }

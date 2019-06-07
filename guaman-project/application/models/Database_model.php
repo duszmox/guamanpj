@@ -14,6 +14,8 @@ class Database_model extends CI_Model
     public static $FOLDER_TABLE_NAME = "folders";
     public static $TABLE_LOG = "login_log";
     public static $COLUMNS_TABLE_NAME = "table_columns";
+    public static $ENUM_NAMES_TABLE_NAME = "enumnames";
+    public static $ENUMS_TABLE_NAME = "enums";
 
     public function __construct()
     {
@@ -23,6 +25,8 @@ class Database_model extends CI_Model
         self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
         self::$COLUMNS_TABLE_NAME = $this->config->item("table_prefix") . self::$COLUMNS_TABLE_NAME;
         self::$TABLE_LOG = $this->config->item("table_prefix") . self::$TABLE_LOG;
+        self::$ENUM_NAMES_TABLE_NAME = $this->config->item("table_prefix") . self::$ENUM_NAMES_TABLE_NAME;
+        self::$ENUMS_TABLE_NAME = $this->config->item("table_prefix") . self::$ENUMS_TABLE_NAME;
     }
 
     public function get_table_names()
@@ -523,7 +527,39 @@ class Database_model extends CI_Model
         echo "Termék :".$array_of_termek[$termek_and_type]."\n<br><hr>";
         echo "Type :".$array_of_type[$termek_and_type]."\n<br><hr>";
 
+    }
 
 
+    /**
+     * @param $enum_name
+     * @return array
+     * @throws Exception
+     */
+    public function get_enum($enum_name){
+        return $this->db->get_where(self::$ENUMS_TABLE_NAME, array("enum_id" => $this->get_enum_id($enum_name)))->result_array();
+    }
+
+    /**
+     * @param $enum_name
+     * @throws Exception
+     */
+    public function get_enum_id($enum_name)
+    {
+        $this->db->select("id");
+        $x = $this->db->get_where(self::$ENUM_NAMES_TABLE_NAME, array("name" => $enum_name), 1)->result_array();
+        if(sizeof($x) == 0) throw new Exception("Enum name not found!");
+        return $x[0]["id"];
+    }
+
+
+
+
+    /**
+     * @param $table_name
+     * @return array
+     */
+    public function get_column_objects($table_name)
+    {
+        return $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" => $this->get_table_id($table_name)))->result_array();
     }
 }

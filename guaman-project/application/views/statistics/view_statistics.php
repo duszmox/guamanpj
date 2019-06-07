@@ -78,6 +78,7 @@
     var column_names = [];
     var nice_column_names = [];
     var col_types = [];
+    var column_custom_data = [];
 
     function loadTable() {
         var ctx = $('#statChart');
@@ -94,6 +95,7 @@
                         column_names.push(k);
                         nice_column_names.push(data.columns[k].nice_column_name);
                         col_types.push(data.columns[k].type);
+                        column_custom_data.push(data.columns[k].custom_data);
                     });
 
 
@@ -112,7 +114,7 @@
                         html += "<tr>";
 
                         for (let j = 0; j < column_names.length; j++) {
-                            html += "<td>" + getCellBody(data.table[i][column_names[j]], col_types[j], false) + "</td>";
+                            html += "<td>" + getCellBody(data.table[i][column_names[j]], col_types[j], false, JSON.parse(column_custom_data[j])) + "</td>";
                         }
 
                         html += "</tr>";

@@ -1,4 +1,4 @@
-function getCellBody(value, col_type, canEdit) {
+function getCellBody(value, col_type, canEdit, customData) {
     let cell_body = "";
     switch (col_type) {
         case "text":
@@ -29,7 +29,6 @@ function getCellBody(value, col_type, canEdit) {
             }
             break;
         case "money":
-            console.log("DDD: " + value);
             let cell_value = value;
             if (isNumeric(cell_value)) {
                 cell_value = numberWithSpaces(cell_value);
@@ -45,7 +44,6 @@ function getCellBody(value, col_type, canEdit) {
                 cell_body = "<span>" + cell_value + "</span>";
                 cell_body += "<span hidden>" + cell_value + " " + value + "</span>";
             }
-            console.log(cell_value);
             break;
         case "percentage":
             if (canEdit) {
@@ -57,49 +55,33 @@ function getCellBody(value, col_type, canEdit) {
             }
             break;
 
-        case "termek_tipus":
+        case "enum":
 
-            let options = [
-                {
-                    name: "telefon",
-                    niceName: "Telefon",// TODO lang
-                },
-                {
-                    name: "tablet",
-                    niceName: "Tablet",// TODO lang
-                },
-                {
-                    name: "orakkiegeszitok",
-                    niceName: "Órák, kiegészítők", // TODO lang
-                },
-                {
-                    name: "gadget",
-                    niceName: "Gadget",// TODO lang
-                },
-                {
-                    name: "",
-                    niceName: "Nincs megadva" // TODO lang
-                }
-            ];
+            let enumName = customData.sourceEnum;
+            console.log(customData);
+
+            var options = getEnum(enumName);
+
+           // options = getEnum();
             if (canEdit) {
                 cell_body = "<select class='form-control data-cell'>";
                 for (let i = 0; i < options.length; i++) {
-                    if (value === options[i].name) {
-                        cell_body += "<option value='" + options[i].name + "' selected>" + options[i].niceName + "</option>";
+                    if (value === options[i].value) {
+                        cell_body += "<option value='" + options[i].value + "' selected>" + options[i].nice_value + "</option>";
                     } else {
-                        cell_body += "<option value='" + options[i].name + "'>" + options[i].niceName + "</option>";
+                        cell_body += "<option value='" + options[i].value + "'>" + options[i].nice_value + "</option>";
                     }
                 }
                 cell_body += "</select>";
             } else {
-                let niceName = "Nincs megadva"; // TODO lang
+                let nice_value = "Nincs megadva"; // TODO lang
                 for (let i = 0; i < options.length; i++) {
-                    if (options[i].name === value) {
-                        niceName = options[i].niceName;
+                    if (options[i].value === value) {
+                        nice_value = options[i].nice_value;
                         break;
                     }
                 }
-                cell_body += "<span>" + niceName + "</span>";
+                cell_body += "<span>" + nice_value + "</span>";
             }
             break;
         default:
@@ -117,8 +99,29 @@ function getCellBody(value, col_type, canEdit) {
 // TODO megcsinálni, hogy JS-ből is tudjunk langot kiolvasni
 const MONTHS = ["Január", "Február", "Március", "Április", "Május", "Június", "Július", "Augusztus", "Szeptember", "Október", "November", "December"];
 
+
+var enums = {};
+
+function getEnum(enumName) {
+    if (enums[enumName] === undefined) {
+        $.ajax({
+            url: base_url + "database/get-enum/" + enumName,
+            success: function (data) {
+                enums[enumName] = data;
+            },
+            async: false,
+            method: "GET"
+        }).fail(function () {
+            internetConnectionProblemAlert();
+        });
+    }
+
+    return enums[enumName];
+
+
+}
+
 function getDisplayFormat(value, type) {
-    console.log("type: " + type + "; value: " + value);
     switch (type) {
         case "month":
             value += "";

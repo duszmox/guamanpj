@@ -6,6 +6,7 @@ var TABLE_NAME = undefined;
 
 var columns = [];
 var column_nice_names = [];
+var column_custom_data = [];
 var col_types = [];
 
 var filterTypes = [
@@ -108,6 +109,7 @@ function getFiltersByTable(tableName) {
     return filters;
 }
 
+// TODO átrakni egy common.js-be
 function internetConnectionProblemAlert() {
     Toast.fire({
         type: 'error',
@@ -262,11 +264,14 @@ function loadTable(table_name) {
                 columns = [];
                 column_nice_names = [];
                 col_types = [];
+                column_custom_data = [];
+
 
                 Object.keys(data[0]).forEach(function (k) {
                     columns.push(k);
                     column_nice_names.push(data[0][k].nice_name);
                     col_types.push(data[0][k].type);
+                    column_custom_data.push(data[0][k].custom_data);
                 });
 
                 $("#data-table").dataTable().remove();
@@ -304,7 +309,7 @@ function loadTable(table_name) {
 
                         html += "<td class='data-cell-container' data-id='" + (data[i]["id"]) + "' data-row='" + (i - 1) + "' data-column='" + columns[k] + "'>";
 
-                        html += getCellBody(data[i][columns[k]], col_types[k], canEdit);
+                        html += getCellBody(data[i][columns[k]], col_types[k], canEdit, JSON.parse(column_custom_data[k]));
 
                         html += "</td>";
                     }
