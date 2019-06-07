@@ -133,7 +133,8 @@ class Database extends CI_Controller
         }
     }
 
-    function get_filters($table_name){
+    function get_filters($table_name)
+    {
         $result = array();
         switch ($table_name) {
             case "guaman_sales":
@@ -315,10 +316,13 @@ class Database extends CI_Controller
 
     public function change()
     {
+        require_permission("admin");
         $this->Database_model->addRowsToDatabaseManual();
     }
 
-    public function get_enum($enum_name){
+    public function get_enum($enum_name)
+    {
+        // TODO permissions
         try {
             json_output($this->Database_model->get_enum($enum_name));
         } catch (Exception $e) {
@@ -326,5 +330,68 @@ class Database extends CI_Controller
         }
     }
 
+    public function get_enums()
+    {
+        // TODO permissions
+        try {
+            json_output($this->Database_model->get_enums());
+        } catch (Exception $e) {
+            json_error($e->getMessage());
+        }
+    }
+
+    public function save_filter($id)
+    {
+        // TODO require edit filters permissions
+
+        $filter = array(
+            "id" => $id,
+            "nice_name" => $this->input->post("nice_name"),
+            "type" => $this->input->post("type"),
+            "column" => $this->input->post("column"),
+            "custom_data" => json_encode($this->input->post("custom_data"))
+        );
+        //print_r($filter);
+
+        try {
+            $this->Database_model->update_filter($filter);
+        } catch (Exception $e) {
+            json_error($e->getMessage());
+        }
+        json_output("success");
+    }
+
+    public function save_new_filter()
+    {
+        $this->load->helper("string_helper");
+
+        // TODO permission
+        $filter = array(
+            "nice_name" => $this->input->post("nice_name"),
+            "name" => $this->slugit($this->input->post("nice_name") ."-" . random_string('alnum', 5) ),
+            "type" => $this->input->post("type"),
+            "column" => $this->input->post("column"),
+            "custom_data" => json_encode($this->input->post("custom_data")),
+            "table_id" => $this->Database_model->get_table_id($this->input->post("table_name"))
+        );
+        try {
+            $this->Database_model->add_filter($filter);
+        } catch (Exception $e) {
+            json_error($e->getMessage());
+        }
+        json_output("success");
+    }
+
+    private function slugit($str, $replace = array(), $delimiter = '-')
+    {
+        if (!empty($replace)) {
+            $str = str_replace((array)$replace, ' ', $str);
+        }
+        $clean = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+        $clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+        $clean = strtolower(trim($clean, '-'));
+        $clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+        return $clean;
+    }
 
 }

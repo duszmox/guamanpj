@@ -605,6 +605,7 @@ class Database_model extends CI_Model
         $output = array();
         foreach ($result_array as $resultItem){
             $output[]= array(
+                "id" => $resultItem["id"],
                 "name" => $resultItem["name"],
                 "niceName" => $resultItem["nice_name"],
                 "type" => $resultItem["type"],
@@ -613,5 +614,38 @@ class Database_model extends CI_Model
             );
         }
         return $output;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function get_enums()
+    {
+        $enums = $this->db->get(self::$ENUM_NAMES_TABLE_NAME)->result_array();
+
+        foreach ($enums as $key => $enum){
+            $enums[$key]["options"] = $this->get_enum($enum["name"]);
+        }
+        return $enums;
+    }
+
+    /**
+     * @param array $filter
+     * @throws Exception
+     */
+    public function update_filter(array $filter)
+    {
+        $this->db->update(self::$FILTERS_TABLE_NAME, $filter, array("id"=>$filter["id"]));
+        if($this->db->affected_rows() == 0) throw new Exception("Nem változott semmi.");  // todo lang
+    }
+
+    /**
+     * @param array $filter
+     * @throws Exception
+     */
+    public function add_filter(array $filter){
+        $this->db->insert(self::$FILTERS_TABLE_NAME, $filter);
+        if($this->db->affected_rows() == 0) throw new Exception("Sikertelen hozzáadás.");  // todo lang
+
     }
 }

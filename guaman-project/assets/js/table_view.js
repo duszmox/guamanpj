@@ -147,27 +147,27 @@ function getHTMLFilterInputs(table_name) {
         html += "<div class='filter-container'>";
         switch (filters[i].type) {
             case "money":
-               /* html += filters[i].niceName + ": " + generateHTMLSelect([
-                    {
-                        "name": "greater_than",
-                        "niceName": ">"
-                    },
-                    {
-                        "name": "less_than",
-                        "niceName": "<"
-                    },
-                    {
-                        "name": "equal_to",
-                        "niceName": "="
-                    }
-                ], filters.name);
-*/
+                /* html += filters[i].niceName + ": " + generateHTMLSelect([
+                     {
+                         "name": "greater_than",
+                         "niceName": ">"
+                     },
+                     {
+                         "name": "less_than",
+                         "niceName": "<"
+                     },
+                     {
+                         "name": "equal_to",
+                         "niceName": "="
+                     }
+                 ], filters.name);
+ */
                 break;
             case "checkbox":
                 html += "<fieldset><legend>" + filters[i].niceName + "</legend>";
 
                 let options;
-                switch (filters[i].customData.optionSource){
+                switch (filters[i].customData.optionSource) {
                     case "array":
                         options = filters[i].customData.options;
                         break;
@@ -452,13 +452,12 @@ function update_table_field(table_name, column, id, newValue) {
         id: id,
         value: newValue
     }).done(function (data) {
-        if(data === "success") {
+        if (data === "success") {
             Toast.fire({
                 type: 'success',
                 title: 'Sikeres mentés' // TODO lang
             })
-        }
-        else if(data.error !== undefined){
+        } else if (data.error !== undefined) {
             Toast.fire({
                 type: 'error',
                 title: data.error
@@ -612,6 +611,23 @@ function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
 }
 
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function getNiceFilterTypeName(filterTypeName) {
+    for (let i = 0; i < filterTypes.length; i++) {
+        if (filterTypes[i].name === filterTypeName) return filterTypes[i].niceName;
+    }
+    return "";
+}
+
+
 function editFilters() {
     if (TABLE_NAME === undefined) {
         Swal.fire({
@@ -630,7 +646,7 @@ function editFilters() {
         output += "<div class='col-4 text-right'>" + getNiceFilterTypeName(filters[i].type) + "</div>";
         output += "</div>";
     }
-    output += "<div class='row p-2 filter-settings-filter-row'><div class='col-12'><i class=\"fas fa-plus\"></i> Új szűrő hozzáadása</div></div>"; // TODO lang
+    output += "<div class='row p-2 filter-settings-filter-row' onclick='newFilter()'><div class='col-12'><i class=\"fas fa-plus\"></i> Új szűrő hozzáadása</div></div>"; // TODO lang
 
     output += "</div>";
     Swal.fire({
@@ -639,15 +655,7 @@ function editFilters() {
     })
 }
 
-
-function getNiceFilterTypeName(filterTypeName) {
-    for (let i = 0; i < filterTypes.length; i++) {
-        if (filterTypes[i].name === filterTypeName) return filterTypes[i].niceName;
-    }
-    return "";
-}
-
-function editFilter(filterIndex) {
+async function editFilter(filterIndex) {
     filter = filters[filterIndex];
 
 
@@ -655,8 +663,8 @@ function editFilter(filterIndex) {
     output += "<div class='p-3'>";
 
     output += "<div class='row p-1'>";
-    output += "<div class='col-7'><input class='form-control' placeholder='Szűrő neve' name='filter-name' value='" + escapeHtml(filter.niceName) + "' /></div>"; // todo lang
-    output += "<div class='col-5'><select class='form-control w-100' name='filter-type' onchange='loadFilterCustomDataFields($(this).val(), " + filterIndex + ")'>";
+    output += "<div class='col-7'><input class='form-control' id='filterName' placeholder='Szűrő neve' name='filter-name' value='" + escapeHtml(filter.niceName) + "' /></div>"; // todo lang
+    output += "<div class='col-5'><select class='form-control w-100' id='filterType' name='filter-type' onchange='loadFilterCustomDataFields($(this).val(), " + filterIndex + ")'>";
     for (let i = 0; i < filterTypes.length; i++) {
         let selectedTag = filter.type === filterTypes[i].name ? " selected" : "";
         output += "<option value='" + escapeHtml(filterTypes[i].name) + "'" + selectedTag + ">" + escapeHtml(filterTypes[i].niceName) + "</option>";
@@ -664,40 +672,144 @@ function editFilter(filterIndex) {
     output += "</select></div>";
     output += "</div>";
 
-    output += "<div class='d-flex p-1'>";
-    output += "<div class='text-left mr-2 p-1'><span>Szűrt oszlop:</span></div>"; // TODO lang
-    output += "<div class='flex-grow-1'><select class='form-control w-100' name='filtered-column'>";
+    output += "<div class='row p-1'>";
+    output += "<div class='text-left col-4'><div class='p-1'>Szűrt oszlop:</div></div>"; // TODO lang
+    output += "<div class='col-8'><select class='form-control w-100' id='filteredColumn' name='filtered-column'>";
     for (let i = 0; i < columns.length; i++) {
 
         let selectedTag = filter.column === columns[i] ? " selected" : "";
 
-        output += "<option value='" + escapeHtml(columns[i]) + "'"+selectedTag+">" + escapeHtml(column_nice_names[i]) + "</option>"
+        output += "<option value='" + escapeHtml(columns[i]) + "'" + selectedTag + ">" + escapeHtml(column_nice_names[i]) + "</option>"
     }
     output += "</select></div>";
     output += "</div>";
 
 
-    output += "<div id='enter-custom-data'></div>";
+    output += "<div id='enter-custom-data'>";
+    output += loadFilterCustomDataFields(filter.type, filterIndex, false);
+    output += "</div>";
     output += "</div>";
 
-    Swal.fire({
+
+    const {value: formValues} = await Swal.fire({
         title: filter.niceName,
-        html: output
+        html: output,
+        focusConfirm: false,
+        preConfirm: () => {
+            let out = {
+                id: filter.id,
+                nice_name: $("#filterName").val(),
+                type: $("#filterType").val(),
+                column: $("#filteredColumn").val(),
+            };
+            if (out.type === "checkbox") {
+                out["custom_data"] = {"sourceEnum": $("#filterSourceEnum").val(), "optionSource": "enum"};
+            }
+            return out;
+        }
     });
 
-    loadFilterCustomDataFields(filter.type, filterIndex);
+
+    console.log(formValues);
+    saveFilter(formValues)
 }
 
-function escapeHtml(unsafe) {
-    return unsafe
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+async function newFilter() {
+    let output = "";
+    output += "<div class='p-3'>";
+
+    output += "<div class='row p-1'>";
+    output += "<div class='col-7'><input class='form-control' id='filterName' placeholder='Szűrő neve' name='filter-name' /></div>"; // todo lang
+    output += "<div class='col-5'><select class='form-control w-100' id='filterType' name='filter-type' onchange='loadNewFilterCustomDataFields($(this).val())'>";
+    for (let i = 0; i < filterTypes.length; i++) {
+        output += "<option value='" + escapeHtml(filterTypes[i].name) + "'>" + escapeHtml(filterTypes[i].niceName) + "</option>";
+    }
+    output += "</select></div>";
+    output += "</div>";
+
+    output += "<div class='row p-1'>";
+    output += "<div class='text-left col-4'><div class='p-1'>Szűrt oszlop:</div></div>"; // TODO lang
+    output += "<div class='col-8'><select class='form-control w-100' id='filteredColumn' name='filtered-column'>";
+    for (let i = 0; i < columns.length; i++) {
+        output += "<option value='" + escapeHtml(columns[i]) + "'>" + escapeHtml(column_nice_names[i]) + "</option>"
+    }
+    output += "</select></div>";
+    output += "</div>";
+
+
+    output += "<div id='enter-custom-data'>";
+    output += loadNewFilterCustomDataFields(filterTypes[0].name, false);
+    output += "</div>";
+    output += "</div>";
+
+
+    const {value: formValues} = await Swal.fire({
+        title: "Új szűrő", // TODO LANG
+        html: output,
+        focusConfirm: false,
+        preConfirm: () => {
+            let out = {
+                nice_name: $("#filterName").val(),
+                type: $("#filterType").val(),
+                column: $("#filteredColumn").val(),
+                table_name: TABLE_NAME
+            };
+            if (out.type === "checkbox") {
+                out["custom_data"] = {"sourceEnum": $("#filterSourceEnum").val(), "optionSource": "enum"};
+            }
+            return out;
+        }
+    });
+
+
+    console.log(formValues);
+    saveNewFilter(formValues)
 }
 
-function loadFilterCustomDataFields(filterType, filterIndex = undefined) {
+function saveFilter(filter) {
+    $.post(base_url + "database/save_filter/" + filter.id, filter, function (data) {
+        if (data === "success") {
+            Toast.fire({
+                title: "Sikeres mentés!", // TODO lang
+                type: "success"
+            });
+            getFiltersByTable(TABLE_NAME);
+            $("#filter-container").html(getHTMLFilterInputs(TABLE_NAME));
+
+        } else if (data.error !== undefined) {
+            Toast.fire({
+                title: data.error,
+                type: "error"
+            })
+        }
+    })
+        .fail(function () {
+            internetConnectionProblemAlert();
+        })
+}
+
+function saveNewFilter(filter) {
+    $.post(base_url + "database/save_new_filter/", filter, function (data) {
+        if (data === "success") {
+            Toast.fire({
+                title: "Sikeres mentés!", // TODO lang
+                type: "success"
+            });
+            getFiltersByTable(TABLE_NAME);
+            $("#filter-container").html(getHTMLFilterInputs(TABLE_NAME));
+        } else if (data.error !== undefined) {
+            Toast.fire({
+                title: data.error,
+                type: "error"
+            })
+        }
+    })
+        .fail(function () {
+            internetConnectionProblemAlert();
+        })
+}
+
+function loadFilterCustomDataFields(filterType, filterIndex = undefined, display = true) {
     let output = "";
 
     let filter = filters[filterIndex];
@@ -705,22 +817,88 @@ function loadFilterCustomDataFields(filterType, filterIndex = undefined) {
     switch (filterType) {
         case "checkbox":
         case "select":
-            output += "<div class='row p-2'><div class='col-auto'><label class='text-left'>Értékek:</label></div></div>"; // TODO lang
             output += "<div id='filter-options'>";
 
-            if (filter !== undefined && filter.customData !== undefined && filter.customData.options !== undefined) {
-                for (let i = 0; i < filter.customData.options.length; i++) {
-                    option = filter.customData.options[i];
-                    output += "<div class='row p-1'>";
-                    output += "<div class='col-5'><input class='form-control' data-label='optionName' value='" + escapeHtml(option.value) + "'></div>";
-                    output += "<div class='col-5'><input class='form-control' data-label='optionNiceName' value='" + escapeHtml(option.nice_value) + "'></div>";
-                    output += "<div class='col-1'><i style='margin: 50%; cursor: pointer' class=\"far fa-trash-alt c-pointer\"></i></div>";
-                    output += "</div>";
+            if (filter !== undefined && filter.customData !== undefined) {
+                switch (filter.customData.optionSource) {
+                    case "enum":
+
+                        output += "<div class='row p-1'>";
+                        output += "<div class='col-4 text-left'><div class='p-1'>Forrás lista:</div></div>";
+                        output += "<div class='col-8'>";
+
+
+                        getEnums();
+
+                        output += "<select name='filter-source-enum' id='filterSourceEnum' class='form-control w-100'>";
+                        for (let i = 0; i < fullEnums.length; i++) {
+                            let selectedTag = filter.customData.sourceEnum === fullEnums[i].name ? " selected" : "";
+
+                            output += "<option value='" + escapeHtml(fullEnums[i].name) + "'" + selectedTag + ">" + escapeHtml(fullEnums[i].nice_name) + "</option>";
+
+                        }
+                        output += "</select>";
+
+                        output += "</div>";
+                        output += "</div>";
+                        break;
+                    case "array": // TODO ezt majd maaaajd
+                        for (let i = 0; i < filter.customData.options.length; i++) {
+                            option = filter.customData.options[i];
+                            output += "<div class='row p-1'>";
+                            output += "<div class='col-5'><input class='form-control' data-label='optionName' value='" + escapeHtml(option.value) + "'></div>";
+                            output += "<div class='col-5'><input class='form-control' data-label='optionNiceName' value='" + escapeHtml(option.nice_value) + "'></div>";
+                            output += "<div class='col-1'><i style='margin: 50%; cursor: pointer' class=\"far fa-trash-alt c-pointer\"></i></div>";
+                            output += "</div>";
+                        }
+                        break;
                 }
+
             }
 
             output += "</div>";
             break;
     }
-    $("#enter-custom-data").html(output);
+    if (display) {
+        $("#enter-custom-data").html(output);
+    } else {
+        return output;
+    }
+}
+
+function loadNewFilterCustomDataFields(filterType, display = true) {
+    let output = "";
+
+    switch (filterType) {
+        case "checkbox":
+        case "select":
+            output += "<div id='filter-options'>";
+
+
+            output += "<div class='row p-1'>";
+            output += "<div class='col-4 text-left'><div class='p-1'>Forrás lista:</div></div>";
+            output += "<div class='col-8'>";
+
+
+            getEnums();
+
+            output += "<select name='filter-source-enum' id='filterSourceEnum' class='form-control w-100'>";
+            for (let i = 0; i < fullEnums.length; i++) {
+                output += "<option value='" + escapeHtml(fullEnums[i].name) + "'>" + escapeHtml(fullEnums[i].nice_name) + "</option>";
+
+            }
+            output += "</select>";
+
+            output += "</div>";
+            output += "</div>";
+
+
+            output += "</div>";
+            break;
+    }
+    if (display) {
+        $("#enter-custom-data").html(output);
+    } else {
+        return output;
+    }
 }

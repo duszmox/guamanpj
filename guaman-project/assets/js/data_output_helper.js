@@ -125,6 +125,30 @@ function getEnum(enumName) {
 
 }
 
+var fullEnums = [];
+
+function getEnums() {
+    $.ajax({
+        url: base_url + "database/get-enums/",
+        success: function (data) {
+            if (data.error !== undefined) {
+                Toast.fire({
+                    title: data.error,
+                    type: "error"
+                })
+            } else {
+                fullEnums = data;
+            }
+        },
+        async: false,
+        method: "GET"
+    }).fail(function () {
+        internetConnectionProblemAlert();
+    });
+
+
+}
+
 function getDisplayFormat(value, type) {
     switch (type) {
         case "month":
