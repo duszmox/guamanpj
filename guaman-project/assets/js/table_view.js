@@ -122,8 +122,8 @@ function generateHTMLCheckboxInput(options, filterName) {
     for (let i = 0; i < options.length; i++) {
         out += "<div class='checkbox-input-container'>";
 
-        out += "<span class='checkbox-label'>" + options[i].niceName + "</span> ";
-        out += "<input type='checkbox' name='" + filterName + "_" + options[i].name + "' id='" + filterName + "_" + options[i].name + "' checked>";
+        out += "<span class='checkbox-label'>" + options[i].nice_value + "</span> ";
+        out += "<input type='checkbox' name='" + filterName + "_" + options[i].value + "' id='" + filterName + "_" + options[i].value + "' checked>";
 
         out += "</div>";
     }
@@ -147,7 +147,7 @@ function getHTMLFilterInputs(table_name) {
         html += "<div class='filter-container'>";
         switch (filters[i].type) {
             case "money":
-                html += filters[i].niceName + ": " + generateHTMLSelect([
+               /* html += filters[i].niceName + ": " + generateHTMLSelect([
                     {
                         "name": "greater_than",
                         "niceName": ">"
@@ -161,11 +161,20 @@ function getHTMLFilterInputs(table_name) {
                         "niceName": "="
                     }
                 ], filters.name);
-
+*/
                 break;
             case "checkbox":
                 html += "<fieldset><legend>" + filters[i].niceName + "</legend>";
-                html += generateHTMLCheckboxInput(filters[i].customData.options, filters[i].name);
+
+                let options;
+                switch (filters[i].customData.optionSource){
+                    case "array":
+                        options = filters[i].customData.options;
+                        break;
+                    case "enum":
+                        options = getEnum(filters[i].customData.sourceEnum)
+                }
+                html += generateHTMLCheckboxInput(options, filters[i].name);
                 html += "</fieldset>";
         }
         html += "</div>";
@@ -218,11 +227,26 @@ function getPHPFiltersFromHTML() {
  */
 function getCheckedOptions(filter) {
     let checkedOptions = [];
-    for (let i = 0; i < filter.customData.options.length; i++) {
-        let id = filter.name + "_" + filter.customData.options[i].name;
+
+    let options;
+    switch (filter.customData.optionSource) {
+        case "enum":
+            options = getEnum(filter.customData.sourceEnum);
+            break;
+
+        case "array":
+            options = filter.customData.options;
+            break;
+
+    }
+
+    for (let i = 0; i < options.length; i++) {
+
+        let id = filter.name + "_" + options[i].value;
+
         let isChecked = $("#" + id).is(":checked");
         if (isChecked) {
-            checkedOptions.push(filter.customData.options[i].name);
+            checkedOptions.push(options[i].value);
         }
     }
     return checkedOptions;
@@ -244,7 +268,6 @@ function loadTable(table_name) {
     let phpFilters = [];
     if (filters !== undefined && filters.length !== 0) {
         phpFilters = getPHPFiltersFromHTML();
-        console.log("Na itt vannak: " + phpFilters);
     }
 
     var rawData;
@@ -403,7 +426,6 @@ function loadTable(table_name) {
 
             })
                 .done(function () {
-                    console.log("success");
 
                     closeRightSidebar();
                 })
@@ -429,20 +451,25 @@ function update_table_field(table_name, column, id, newValue) {
         column: column,
         id: id,
         value: newValue
-    }).done(function () {
-        Toast.fire({
-            type: 'success',
-            title: 'Sikeres mentés' // TODO lang
-        })
+    }).done(function (data) {
+        if(data === "success") {
+            Toast.fire({
+                type: 'success',
+                title: 'Sikeres mentés' // TODO lang
+            })
+        }
+        else if(data.error !== undefined){
+            Toast.fire({
+                type: 'error',
+                title: data.error
+            })
+        }
     }).fail(function () {
         internetConnectionProblemAlert()
     })
 }
 
 function moveRow(tableName, rowId) {
-    console.log(tableName + " " + rowId);
-
-
     $.getJSON(base_url + "database/get_compatible_tables/" + tableName, {}, function (data) {
         if (data.error !== undefined) {
             Swal.fire({
@@ -559,7 +586,6 @@ function tree(current_folder_id, level) {
 
 function insertRow(table_name) {
     $.post(base_url + "database/insert_new_row/" + table_name, function (data) {
-        console.log("DATA=" + data);
         if (data === " success") {
             Toast.fire({
                 type: 'success',
@@ -686,8 +712,8 @@ function loadFilterCustomDataFields(filterType, filterIndex = undefined) {
                 for (let i = 0; i < filter.customData.options.length; i++) {
                     option = filter.customData.options[i];
                     output += "<div class='row p-1'>";
-                    output += "<div class='col-5'><input class='form-control' data-label='optionName' value='" + escapeHtml(option.name) + "'></div>";
-                    output += "<div class='col-5'><input class='form-control' data-label='optionNiceName' value='" + escapeHtml(option.niceName) + "'></div>";
+                    output += "<div class='col-5'><input class='form-control' data-label='optionName' value='" + escapeHtml(option.value) + "'></div>";
+                    output += "<div class='col-5'><input class='form-control' data-label='optionNiceName' value='" + escapeHtml(option.nice_value) + "'></div>";
                     output += "<div class='col-1'><i style='margin: 50%; cursor: pointer' class=\"far fa-trash-alt c-pointer\"></i></div>";
                     output += "</div>";
                 }

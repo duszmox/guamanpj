@@ -11,11 +11,13 @@ class Database_model extends CI_Model
 {
 
     public static $TABLE_NAME = "tables";
+    public static $INACTIVE_TABLE_NAME = "tables_inactive";
     public static $FOLDER_TABLE_NAME = "folders";
     public static $TABLE_LOG = "login_log";
     public static $COLUMNS_TABLE_NAME = "table_columns";
     public static $ENUM_NAMES_TABLE_NAME = "enumnames";
     public static $ENUMS_TABLE_NAME = "enums";
+    public static $FILTERS_TABLE_NAME = "filters";
 
     public function __construct()
     {
@@ -25,8 +27,10 @@ class Database_model extends CI_Model
         self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
         self::$COLUMNS_TABLE_NAME = $this->config->item("table_prefix") . self::$COLUMNS_TABLE_NAME;
         self::$TABLE_LOG = $this->config->item("table_prefix") . self::$TABLE_LOG;
-        self::$ENUM_NAMES_TABLE_NAME = $this->config->item("table_prefix") . self::$ENUM_NAMES_TABLE_NAME;
+        self::$INACTIVE_TABLE_NAME = $this->config->item("table_prefix") . self::$INACTIVE_TABLE_NAME;
         self::$ENUMS_TABLE_NAME = $this->config->item("table_prefix") . self::$ENUMS_TABLE_NAME;
+        self::$ENUM_NAMES_TABLE_NAME = $this->config->item("table_prefix") . self::$ENUM_NAMES_TABLE_NAME;
+        self::$FILTERS_TABLE_NAME = $this->config->item("table_prefix") . self::$FILTERS_TABLE_NAME;
     }
 
     public function get_table_names()
@@ -37,6 +41,13 @@ class Database_model extends CI_Model
         foreach ($query->result() as $row) {
             $table_names[] = $row->table_name;
         }
+
+        $query_inactive = $this->db->get(self::$INACTIVE_TABLE_NAME)->result_array();
+        foreach ($query_inactive as $key => $value) {
+            $table_names[] = $value["table_name"];
+
+        }
+
         return $table_names;
     }
 
@@ -248,6 +259,13 @@ class Database_model extends CI_Model
         return $arr[0]["id"];
     }
 
+    /**
+     * @param $table_name
+     * @param $column
+     * @param $id
+     * @param $value
+     * @throws Exception
+     */
     public function update_field($table_name, $column, $id, $value)
     {
         if (!Validator::is_alphanumeric($table_name)) {
@@ -261,6 +279,7 @@ class Database_model extends CI_Model
         }
 
         $this->db->update($table_name, array($column => $value), array("id" => $id));
+        if ($this->db->affected_rows() == 0) throw new Exception("Nem változtattunk semmit");
     }
 
     public function create_folder($name, $parent_folder)
@@ -504,38 +523,57 @@ class Database_model extends CI_Model
 
     public function addRowsToDatabaseManual()
     {
-        //termék id
-        $char_termekid = strtoupper(substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1));
-        $number_termekid = rand(10, 99);
-        echo "Termék ID : " . $char_termekid . $number_termekid . "<br>";
-        echo "<hr>";
+        for ($i = 0; $i < 100; $i++) {
+            //termék id
+            $char_termekid = strtoupper(substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1));
+            $number_termekid = rand(10, 99);
+            echo "Termék ID : " . $char_termekid . $number_termekid . "<br>";
+            echo "<hr>";
 
-        //bekerülési dátum
-        $timestamp = mt_rand(1, time());
-        $randomDate = date("d M Y", $timestamp);
-        echo "Bekerülési Dátum : " . $randomDate . " \n<br>";
-        echo "<hr>";
+            //bekerülési dátum
+            $timestamp = mt_rand(1, time());
+            $randomDate = date("Y-m-d", $timestamp);
+            echo "Bekerülési Dátum : " . $randomDate . " \n<br>";
+            echo "<hr>";
 
-        //platform
-        $array_pf_platform = array("fa","ha","partner");
-        $platform = array_rand($array_pf_platform);
-        echo "Platform :".$array_pf_platform[$platform] . "\n <br><hr>";
+            //platform
+            $array_of_platform = array("ws", "ig", "vt", "ha", "jf", "hr", "fb");
+            $platform = array_rand($array_of_platform);
+            echo "Platform : " . $array_of_platform[$platform] . "\n <br><hr>";
 
-        $array_of_termek = array("iPhone 6S","iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
-        $array_of_type = array("Telefon","Telefon","Telefon","Órák, kiegészítők","Tablet","Gadget","Gadget");
-        $termek_and_type = array_rand($array_of_termek);
-        echo "Termék :".$array_of_termek[$termek_and_type]."\n<br><hr>";
-        echo "Type :".$array_of_type[$termek_and_type]."\n<br><hr>";
+            $array_of_termek = array("iPhone 6S", "iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
+            $array_of_type = array("Telefon", "Gadget", "Órák, kiegészítők", "Tablet");
+            $termek = array_rand($array_of_termek);
+            $type = array_rand($array_of_type);
+            echo "Termék : " . $array_of_termek[$termek] . "\n<br><hr>";
+            echo "Type : " . $array_of_type[$type] . "\n<br><hr>";
 
+            $beszerzesi_ar = rand(100000, 800000);
+            $beszerzesi_ar = round($beszerzesi_ar / 1000, 0) * 1000;
+            echo "Beszerzési Ár : " . $beszerzesi_ar . "\n <br><hr>";
+
+            $brutto_eladasi_ar = rand($beszerzesi_ar, $beszerzesi_ar + 200000);
+            $brutto_eladasi_ar = round($brutto_eladasi_ar / 1000, 0) * 1000;
+            echo "Bruttó Eladási ár : " . $brutto_eladasi_ar . "\n <br><hr>";
+
+            $array_of_tarolas = array("Raktár A", "Raktár B", "Raktár C");
+            $tarolas_id = array_rand($array_of_tarolas);
+            echo "Tárolás : " . $array_of_tarolas[$tarolas_id] . "\n<br><hr>";
+
+
+            /*$this->db->insert("guaman_keszlet", array("id" => NULL, "id_azonosito" => $char_termekid . $number_termekid, "beker_datuma" => $randomDate, "beszerzesi_platform" =>
+                $array_of_platform[$platform], "termek" => $array_of_termek[$termek], "beszerzesi_ar" => $beszerzesi_ar, "brutto_eladasi_ar" => $brutto_eladasi_ar,
+                "type" => $array_of_type[$type], "tarolas_helyszine" => $array_of_tarolas[$tarolas_id])); */
+        }
     }
-
 
     /**
      * @param $enum_name
      * @return array
      * @throws Exception
      */
-    public function get_enum($enum_name){
+    public function get_enum($enum_name)
+    {
         return $this->db->get_where(self::$ENUMS_TABLE_NAME, array("enum_id" => $this->get_enum_id($enum_name)))->result_array();
     }
 
@@ -547,12 +585,9 @@ class Database_model extends CI_Model
     {
         $this->db->select("id");
         $x = $this->db->get_where(self::$ENUM_NAMES_TABLE_NAME, array("name" => $enum_name), 1)->result_array();
-        if(sizeof($x) == 0) throw new Exception("Enum name not found!");
+        if (sizeof($x) == 0) throw new Exception("Enum name not found!");
         return $x[0]["id"];
     }
-
-
-
 
     /**
      * @param $table_name
@@ -561,5 +596,22 @@ class Database_model extends CI_Model
     public function get_column_objects($table_name)
     {
         return $this->db->get_where(self::$COLUMNS_TABLE_NAME, array("table_id" => $this->get_table_id($table_name)))->result_array();
+    }
+
+    public function get_filters($table_name)
+    {
+        $result_array = $this->db->get_where(self::$FILTERS_TABLE_NAME, array("table_id" => $this->get_table_id($table_name)))->result_array();
+
+        $output = array();
+        foreach ($result_array as $resultItem){
+            $output[]= array(
+                "name" => $resultItem["name"],
+                "niceName" => $resultItem["nice_name"],
+                "type" => $resultItem["type"],
+                "column" => $resultItem["column"],
+                "customData" => json_decode($resultItem["custom_data"])
+            );
+        }
+        return $output;
     }
 }

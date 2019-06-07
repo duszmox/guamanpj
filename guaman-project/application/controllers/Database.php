@@ -133,8 +133,7 @@ class Database extends CI_Controller
         }
     }
 
-    function get_filters($table_name)
-    {
+    function get_filters($table_name){
         $result = array();
         switch ($table_name) {
             case "guaman_sales":
@@ -145,96 +144,13 @@ class Database extends CI_Controller
                         "type" => "checkbox",
                         "column" => "type",
                         "customData" => array(
-                            "options" => array(
-                                array(
-                                    "name" => "hasznalt",
-                                    "niceName" => "Használt"
-                                ),
-                                array(
-                                    "name" => "gadget",
-                                    "niceName" => "Gadget"
-                                ),
-                                array(
-                                    "name" => "partner",
-                                    "niceName" => "Partner"
-                                ),
-                                array(
-                                    "name" => "",
-                                    "niceName" => "Nincs megadva" // TODO lang
-                                )
-
-
-                            )
+                            "optionSource" => "enum",
+                            "sourceEnum" => "beszerzes_forrasa"
                         )
                     )
                 );
                 break;
-            case "guaman_keszletujkeszulek":
-            case "guaman_keszlet":
-                $result = array(
-                    array(
-                        "name" => "type",
-                        "niceName" => "Típus",
-                        "type" => "checkbox",
-                        "column" => "type",
-                        "customData" => array(
-                            "options" => array(
-                                array(
-                                    "name" => "telefon",
-                                    "niceName" => "Telefon"
-                                ),
-                                array(
-                                    "name" => "gadget",
-                                    "niceName" => "Gadget"
-                                ),
-                                array(
-                                    "name" => "orakkiegeszitok",
-                                    "niceName" => "Órák Kiegészítők"
-                                ),
-                                array(
-                                    "name" => "tablet",
-                                    "niceName" => "Tablet"
-                                ),
-                                array(
-                                    "name" => "",
-                                    "niceName" => "Nincs megadva" // TODO lang
-                                )
 
-                            )
-                        )
-                    ),
-                    array(
-                        "name" => "beszerzesi_platform",
-                        "niceName" => "Beszerzési Platform",
-                        "type" => "checkbox",
-                        "column" => "beszerzesi_platform",
-                        "customData" => array(
-                            "options" => array(
-                                array(
-                                    "name" => "fb",
-                                    "niceName" => "Facebook"
-                                ),
-                                array(
-                                    "name" => "ha",
-                                    "niceName" => "Használt Alma"
-                                ),
-                                array(
-                                    "name" => "jf",
-                                    "niceName" => "Jófogás"
-                                ),
-                                array(
-                                    "name" => "hr",
-                                    "niceName" => "Hardver Apró"
-                                ),
-                                array(
-                                    "name" => "",
-                                    "niceName" => "Nincs megadva" // TODO lang
-                                )
-                            )
-                        )
-                    )
-                );
-                break;
             case "guaman_disztribucio":
                 $result = array(
 
@@ -292,7 +208,7 @@ class Database extends CI_Controller
                 break;
 
         }
-        json_output($result);
+        json_output($this->Database_model->get_filters($table_name));
     }
 
     function update_field()
@@ -313,6 +229,7 @@ class Database extends CI_Controller
         } catch (Exception $exception) {
             json_error($exception->getMessage());
         }
+        json_output("success");
     }
 
     public function backup()
@@ -408,5 +325,6 @@ class Database extends CI_Controller
             json_error($e->getMessage());
         }
     }
+
 
 }

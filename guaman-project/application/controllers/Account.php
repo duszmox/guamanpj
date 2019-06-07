@@ -291,6 +291,18 @@ class Account extends CI_Controller
         $this->Account_model->delete_user($userid);
         redirect(base_url("account/admin"));
     }
+    function feedback(){
+        require_status(Statuses::$LOGGED_IN);
+        require_permission("admin");
+        $this->load->view("templates/header");
+
+        $this->load->model("Database_model");
+
+        $this->load->view("templates/menu");
+        $data = $this->Database_model->get_table("*", "guaman_feedback", "id", "DESC");
+        $this->load->view("account/feedback", array("data" => $data));
+        $this->load->view("templates/footer");
+    }
 
 
 }

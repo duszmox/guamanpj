@@ -58,11 +58,10 @@ function getCellBody(value, col_type, canEdit, customData) {
         case "enum":
 
             let enumName = customData.sourceEnum;
-            console.log(customData);
 
             var options = getEnum(enumName);
 
-           // options = getEnum();
+            // options = getEnum();
             if (canEdit) {
                 cell_body = "<select class='form-control data-cell'>";
                 for (let i = 0; i < options.length; i++) {
@@ -108,6 +107,11 @@ function getEnum(enumName) {
             url: base_url + "database/get-enum/" + enumName,
             success: function (data) {
                 enums[enumName] = data;
+                enums[enumName].push({
+                    id: -1,
+                    value: "",
+                    nice_value: "Nincs megadva" // TODO lang
+                });
             },
             async: false,
             method: "GET"
@@ -129,7 +133,11 @@ function getDisplayFormat(value, type) {
                 value = value.substr(1);
             }
             if (value > MONTHS.length) {
-                console.log("Invalid month number!");
+                Toast.fire({
+                    title: "Invalid month number!",
+                    type: "error"
+                })
+                ;
             } else {
                 value = MONTHS[value - 1];
             }
