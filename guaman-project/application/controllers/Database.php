@@ -119,7 +119,7 @@ class Database extends CI_Controller
     function insert_new_row($table_name)
     {
         require_permission($table_name . "_table_edit");
-        //for($i=0;$i<100;$i++){
+      //  for($i=0;$i<100;$i++){
         try {
             $this->Database_model->insert($table_name, array("id" => ""));
             echo "success";
@@ -395,7 +395,7 @@ class Database extends CI_Controller
     public
     function change()
     {
-        $this->Database_model->change();
+        $this->Database_model->addRowsToDatabaseManual();
     }
 
     function filter_settings(){
