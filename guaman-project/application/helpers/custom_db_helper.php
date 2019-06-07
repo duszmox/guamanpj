@@ -36,7 +36,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                     if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]["netto_%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);
                     } else {
-                        $result_array_[$key]["netto_%"] = "0 %";
+                        $result_array_[$key]["netto_%"] = "0";
                     }
                 }
             }
@@ -69,12 +69,12 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                     if ($result_array_[$key]['netto_eladasi_ar'] != 0) {
                         $result_array_[$key]["%"] = round(100 * $result_array_[$key]["netto_profit"] / $result_array_[$key]["netto_eladasi_ar"], 2);
                     } else {
-                        $result_array_[$key]["%"] = "0 %";
+                        $result_array_[$key]["%"] = "0";
                     }
                 } else {
                     $result_array_[$key]['brutto_eladasi_ar'] = 0;
                     $result_array_[$key]['beszerzesi_ar'] = 0;
-                    $result_array_[$key]["%"] = "0 %";
+                    $result_array_[$key]["%"] = "0";
 
                 }
                 $date1 = $result_array_[$key]['beker_datuma'];
