@@ -599,7 +599,7 @@ function editFilters() {
         output += "<div class='col-4 text-right'>" + getNiceFilterTypeName(filters[i].type) + "</div>";
         output += "</div>";
     }
-    output += "<div class='row p-2 filter-settings-filter-row'><div class='col-12'><i class=\"fas fa-plus\"></i> Új filter hozzáadása</div></div>"; // TODO lang
+    output += "<div class='row p-2 filter-settings-filter-row'><div class='col-12'><i class=\"fas fa-plus\"></i> Új szűrő hozzáadása</div></div>"; // TODO lang
 
     output += "</div>";
     Swal.fire({
@@ -638,8 +638,9 @@ function editFilter(filterIndex) {
     output += "<div class='flex-grow-1'><select class='form-control w-100' name='filtered-column'>";
     for (let i = 0; i < columns.length; i++) {
 
+        let selectedTag = filter.column === columns[i] ? " selected" : "";
 
-        output += "<option value='" + escapeHtml(columns[i]) + "'>" + escapeHtml(column_nice_names[i]) + "</option>"
+        output += "<option value='" + escapeHtml(columns[i]) + "'"+selectedTag+">" + escapeHtml(column_nice_names[i]) + "</option>"
     }
     output += "</select></div>";
     output += "</div>";
