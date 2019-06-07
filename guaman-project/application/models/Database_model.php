@@ -508,22 +508,23 @@ class Database_model extends CI_Model
 
         //bekerülési dátum
         $timestamp = mt_rand(1, time());
-        $randomDate = date("d M Y", $timestamp);
+        $randomDate = date("Y-m-d", $timestamp);
         echo "Bekerülési Dátum : " . $randomDate . " \n<br>";
         echo "<hr>";
 
         //platform
         $array_pf_platform = array("fa","ha","partner");
         $platform = array_rand($array_pf_platform);
-        echo "Platform :".$array_pf_platform[$platform] . "\n <br><hr>";
+        echo "Platform : ".$array_pf_platform[$platform] . "\n <br><hr>";
 
         $array_of_termek = array("iPhone 6S","iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
         $array_of_type = array("Telefon","Telefon","Telefon","Órák, kiegészítők","Tablet","Gadget","Gadget");
         $termek_and_type = array_rand($array_of_termek);
-        echo "Termék :".$array_of_termek[$termek_and_type]."\n<br><hr>";
-        echo "Type :".$array_of_type[$termek_and_type]."\n<br><hr>";
+        echo "Termék : ".$array_of_termek[$termek_and_type]."\n<br><hr>";
+        echo "Type : ".$array_of_type[$termek_and_type]."\n<br><hr>";
 
-
+        $beszerzesi_ar = rand(100000,800000);
+        echo "Beszerzési Ár : " . $beszerzesi_ar . "\n <br><hr>";
 
     }
 }

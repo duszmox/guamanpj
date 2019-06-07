@@ -98,8 +98,8 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
         case "guaman_keszletujkeszulek":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
-                    $result_array_[$key]['afa'] = round((((int)$result_array_[$key]['eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
-                    $result_array_[$key]['netto_profit'] = ($result_array_[$key]['eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['afa'];
+                    $result_array_[$key]['afa'] = round((((int)$result_array_[$key]['brutto_eladasi_ar'] - (int)$result_array_[$key]['beszerzesi_ar']) * 0.2126), 2);
+                    $result_array_[$key]['netto_profit'] = ($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) - $result_array_[$key]['afa'];
                     if ($result_array_[$key]['brutto_eladasi_ar'] == 0) {
                         $result_array_[$key]["%"] = "0";
                     } else {
