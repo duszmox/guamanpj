@@ -19,13 +19,13 @@
                 <li class="nav-item">
                     <a id="show-table-list-btn" class="nav-link" style="cursor: pointer;"
                        onclick="sidebarNav('filters')">
-                        Szűrők
+                        Szűrők <!--todo lang-->
                     </a>
                 </li>
                 <li class="nav-item">
                     <a id="show-filters-btn" class="nav-link btn-outline-custom" style="cursor: pointer"
                        onclick="sidebarNav('tables')">
-                        Táblák
+                        <!-- todo lang-->Táblák
                     </a>
                 </li>
             </ul>
@@ -33,13 +33,18 @@
 
         <div class="card-body" id="sidebar-body">
             <div id="filters-container-o" style="display: none;">
-                <h2>Szűrők</h2>
-                <div id="filter-container">
+                <h2>
+                    Szűrők <!-- todo lang-->
+                </h2> <!-- todo lang-->
 
+                <?php if(has_permission("edit_filters")){ ?>
+                    <a href="#" onclick="editFilters()" >Beállítások <i class="fas fa-cog"></i></a>
+                <?php } ?>
+                <div id="filter-container">
                 </div>
             </div>
             <div id="table-list-container-o">
-                <h2>Táblák</h2>
+                <h2>Táblák</h2> <!-- todo lang-->
                 <div class="card-body folders-container" id="table-list-container">
                     ...
                 </div>
@@ -51,7 +56,6 @@
 
 </div>
 <script>
-
 
 
     /*var lang = {
@@ -157,7 +161,7 @@
         border-color: #c2320a;
     }
 
-    .btn-outline-custom{
+    .btn-outline-custom {
         border: 1px solid #1c294e;
         border-radius: 5px;
         transition: 0.3s;
@@ -165,9 +169,18 @@
         color: white !important;
     }
 
-    .btn-outline-custom:hover{
+    .btn-outline-custom:hover {
         background-color: #fff;
         color: #1c294e !important;
+    }
+
+    .filter-settings-filter-row{
+        border-bottom: 1px solid #e4e4e4;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+    .filter-settings-filter-row:hover{
+        background-color: #f7f7f7;
     }
 
 </style>

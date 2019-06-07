@@ -241,15 +241,15 @@ class Database extends CI_Controller
                         "customData" => array(
                             "options" => array(
                                 array(
-                                    "name" => "Partner",
+                                    "name" => "partner",
                                     "niceName" => "Partner"
                                 ),
                                 array(
-                                    "name" => "használt",
+                                    "name" => "hasznalt",
                                     "niceName" => "Használt"
                                 ),
                                 array(
-                                    "name" => "kiegészítő",
+                                    "name" => "kiegeszito",
                                     "niceName" => "Kiegészítő"
                                 ),
                                 array(
@@ -396,6 +396,10 @@ class Database extends CI_Controller
     function change()
     {
         $this->Database_model->change();
+    }
+
+    function filter_settings(){
+
     }
 
 }

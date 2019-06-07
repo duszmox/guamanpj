@@ -2,7 +2,22 @@ var output = "";
 
 var filters;
 var previousTableName = "";
+var TABLE_NAME = undefined;
 
+var columns = [];
+var column_nice_names = [];
+var col_types = [];
+
+var filterTypes = [
+    {
+        name: "checkbox",
+        niceName: "Jelölőnégyzetes" // TODO lang
+    },
+    {
+        name: "select",
+        niceName: "Lenyíló lista" // TODO lang
+    }
+];
 
 const Toast = Swal.mixin({
     toast: true,
@@ -71,6 +86,12 @@ $("#sidebar-right").click(function (event) {
     event.stopPropagation();
 });
 
+
+/**
+ *
+ * @param tableName
+ * @returns filters
+ */
 function getFiltersByTable(tableName) {
     filters = undefined;
     $.ajax({
@@ -80,9 +101,18 @@ function getFiltersByTable(tableName) {
             filters = data;
         },
         async: false
+    }).fail(function () {
+        internetConnectionProblemAlert();
     });
-    if (filters === undefined) alert("Please check your internet connection!"); // TODO LANG
+    if (filters === undefined) internetConnectionProblemAlert();
     return filters;
+}
+
+function internetConnectionProblemAlert() {
+    Toast.fire({
+        type: 'error',
+        title: 'Ellenőrizd az internetkapcsolatot!' // TODO lang
+    });
 }
 
 function generateHTMLCheckboxInput(options, filterName) {
@@ -198,6 +228,7 @@ function getCheckedOptions(filter) {
 
 function loadTable(table_name) {
 
+    TABLE_NAME = table_name;
 
     // Load filter inputs when you changed table
     if (previousTableName !== table_name) {
@@ -227,9 +258,10 @@ function loadTable(table_name) {
                 }
 
                 console.log(table_name);
-                let columns = [];
-                let column_nice_names = [];
-                let col_types = [];
+
+                columns = [];
+                column_nice_names = [];
+                col_types = [];
 
                 Object.keys(data[0]).forEach(function (k) {
                     columns.push(k);
@@ -398,10 +430,7 @@ function update_table_field(table_name, column, id, newValue) {
             title: 'Sikeres mentés' // TODO lang
         })
     }).fail(function () {
-        Toast.fire({
-            type: 'error',
-            title: 'Ellenőrizd az internetkapcsolatot!' // TODO lang
-        })
+        internetConnectionProblemAlert()
     })
 }
 
@@ -446,8 +475,7 @@ function moveRow(tableName, rowId) {
                                     type: "success",
                                     title: "Sikeres áthelyezés" // TODO lang
                                 });
-                            }
-                            else if(data.error !== undefined){
+                            } else if (data.error !== undefined) {
                                 Toast.fire({
                                     type: "error",
                                     title: data.error
@@ -456,20 +484,14 @@ function moveRow(tableName, rowId) {
                             }
                         })
                         .fail(function () {
-                            Toast.fire({
-                                type: "error",
-                                title: "Ellenőrizd az internetkapcsolatot!" // TODO lang
-                            });
+                            internetConnectionProblemAlert()
                         });
                 }
             })
         }
     })
         .fail(function () {
-            Toast.fire({
-                type: "error",
-                title: "Ellenőrizd az internetkapcsolatot!" // TODO lang
-            });
+            internetConnectionProblemAlert()
         });
 
 
@@ -547,10 +569,7 @@ function insertRow(table_name) {
 
     })
         .fail(function () {
-            Toast.fire({
-                type: 'error',
-                title: "Ellenőrizd az internetkapcsolatodat!"
-            })
+            internetConnectionProblemAlert()
         })
         .always(function () {
             loadTable(table_name);
@@ -560,4 +579,116 @@ function insertRow(table_name) {
 
 function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function editFilters() {
+    if (TABLE_NAME === undefined) {
+        Swal.fire({
+            title: "Válassz ki egy táblát!", // TODO lang
+            type: "warning"
+        });
+        return;
+    }
+
+    let output = "";
+    output += "<div>";
+
+    for (let i = 0; i < filters.length; i++) {
+        output += "<div class='row p-2 filter-settings-filter-row' onclick='editFilter(" + i + ")'>";
+        output += "<div class='col-8 text-left'><b>" + filters[i].niceName + "</b></div>";
+        output += "<div class='col-4 text-right'>" + getNiceFilterTypeName(filters[i].type) + "</div>";
+        output += "</div>";
+    }
+    output += "<div class='row p-2 filter-settings-filter-row'><div class='col-12'><i class=\"fas fa-plus\"></i> Új filter hozzáadása</div></div>"; // TODO lang
+
+    output += "</div>";
+    Swal.fire({
+        title: "Szűrők szerkesztése", // TODO lang
+        html: output
+    })
+}
+
+
+function getNiceFilterTypeName(filterTypeName) {
+    for (let i = 0; i < filterTypes.length; i++) {
+        if (filterTypes[i].name === filterTypeName) return filterTypes[i].niceName;
+    }
+    return "";
+}
+
+function editFilter(filterIndex) {
+    filter = filters[filterIndex];
+
+
+    let output = "";
+    output += "<div class='p-3'>";
+
+    output += "<div class='row p-1'>";
+    output += "<div class='col-7'><input class='form-control' placeholder='Szűrő neve' name='filter-name' value='" + escapeHtml(filter.niceName) + "' /></div>"; // todo lang
+    output += "<div class='col-5'><select class='form-control w-100' name='filter-type' onchange='loadFilterCustomDataFields($(this).val(), " + filterIndex + ")'>";
+    for (let i = 0; i < filterTypes.length; i++) {
+        let selectedTag = filter.type === filterTypes[i].name ? " selected" : "";
+        output += "<option value='" + escapeHtml(filterTypes[i].name) + "'" + selectedTag + ">" + escapeHtml(filterTypes[i].niceName) + "</option>";
+    }
+    output += "</select></div>";
+    output += "</div>";
+
+    output += "<div class='d-flex p-1'>";
+    output += "<div class='text-left mr-2 p-1'><span>Szűrt oszlop:</span></div>"; // TODO lang
+    output += "<div class='flex-grow-1'><select class='form-control w-100' name='filtered-column'>";
+    for (let i = 0; i < columns.length; i++) {
+
+
+        output += "<option value='" + escapeHtml(columns[i]) + "'>" + escapeHtml(column_nice_names[i]) + "</option>"
+    }
+    output += "</select></div>";
+    output += "</div>";
+
+
+    output += "<div id='enter-custom-data'></div>";
+    output += "</div>";
+
+    Swal.fire({
+        title: filter.niceName,
+        html: output
+    });
+
+    loadFilterCustomDataFields(filter.type, filterIndex);
+}
+
+function escapeHtml(unsafe) {
+    return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function loadFilterCustomDataFields(filterType, filterIndex = undefined) {
+    let output = "";
+
+    let filter = filters[filterIndex];
+
+    switch (filterType) {
+        case "checkbox":
+        case "select":
+            output += "<div class='row p-2'><div class='col-auto'><label class='text-left'>Értékek:</label></div></div>"; // TODO lang
+            output += "<div id='filter-options'>";
+
+            if (filter !== undefined && filter.customData !== undefined && filter.customData.options !== undefined) {
+                for (let i = 0; i < filter.customData.options.length; i++) {
+                    option = filter.customData.options[i];
+                    output += "<div class='row p-1'>";
+                    output += "<div class='col-5'><input class='form-control' data-label='optionName' value='" + escapeHtml(option.name) + "'></div>";
+                    output += "<div class='col-5'><input class='form-control' data-label='optionNiceName' value='" + escapeHtml(option.niceName) + "'></div>";
+                    output += "<div class='col-1'><i style='margin: 50%; cursor: pointer' class=\"far fa-trash-alt c-pointer\"></i></div>";
+                    output += "</div>";
+                }
+            }
+
+            output += "</div>";
+            break;
+    }
+    $("#enter-custom-data").html(output);
 }
