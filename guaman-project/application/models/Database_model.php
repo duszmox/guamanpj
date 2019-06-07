@@ -11,6 +11,7 @@ class Database_model extends CI_Model
 {
 
     public static $TABLE_NAME = "tables";
+    public static $INACTIVE_TABLE_NAME = "tables_inactive";
     public static $FOLDER_TABLE_NAME = "folders";
     public static $TABLE_LOG = "login_log";
     public static $COLUMNS_TABLE_NAME = "table_columns";
@@ -23,6 +24,7 @@ class Database_model extends CI_Model
         self::$FOLDER_TABLE_NAME = $this->config->item("table_prefix") . self::$FOLDER_TABLE_NAME;
         self::$COLUMNS_TABLE_NAME = $this->config->item("table_prefix") . self::$COLUMNS_TABLE_NAME;
         self::$TABLE_LOG = $this->config->item("table_prefix") . self::$TABLE_LOG;
+        self::$INACTIVE_TABLE_NAME = $this->config->item("table_prefix") . self::$INACTIVE_TABLE_NAME;
     }
 
     public function get_table_names()
@@ -33,6 +35,13 @@ class Database_model extends CI_Model
         foreach ($query->result() as $row) {
             $table_names[] = $row->table_name;
         }
+
+        $query_inactive = $this->db->get(self::$INACTIVE_TABLE_NAME)->result_array();
+        foreach($query_inactive as $key => $value){
+            $table_names[] = $value["table_name"];
+
+        }
+
         return $table_names;
     }
 
@@ -487,15 +496,16 @@ class Database_model extends CI_Model
             echo "<hr>";
 
             //platform
-            $array_of_platform = array("fa", "ha", "partner");
+            $array_of_platform = array("ws", "ig", "vt","ha","jf","hr","fb");
             $platform = array_rand($array_of_platform);
             echo "Platform : " . $array_of_platform[$platform] . "\n <br><hr>";
 
             $array_of_termek = array("iPhone 6S", "iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
-            $array_of_type = array("Telefon", "Telefon", "Telefon", "Órák, kiegészítők", "Tablet", "Gadget", "Gadget");
-            $termek_and_type = array_rand($array_of_termek);
-            echo "Termék : " . $array_of_termek[$termek_and_type] . "\n<br><hr>";
-            echo "Type : " . $array_of_type[$termek_and_type] . "\n<br><hr>";
+            $array_of_type = array("Telefon","Gadget", "Órák, kiegészítők", "Tablet");
+            $termek = array_rand($array_of_termek);
+            $type = array_rand($array_of_type);
+            echo "Termék : " . $array_of_termek[$termek] . "\n<br><hr>";
+            echo "Type : " . $array_of_type[$type] . "\n<br><hr>";
 
             $beszerzesi_ar = rand(100000, 800000);
             $beszerzesi_ar = round($beszerzesi_ar / 1000, 0) * 1000;
@@ -510,9 +520,9 @@ class Database_model extends CI_Model
             echo "Tárolás : " . $array_of_tarolas[$tarolas_id] . "\n<br><hr>";
 
 
-            /*$this->db->insert("guaman_keszletujkeszulek", array("id" => NULL, "id_azonosito" => $char_termekid . $number_termekid, "beker_datuma" => $randomDate, "beszerzesi_platform" =>
-                $array_of_platform[$platform], "termek" => $array_of_termek[$termek_and_type], "beszerzesi_ar" => $beszerzesi_ar, "brutto_eladasi_ar" => $brutto_eladasi_ar,
-                "type" => $array_of_type[$termek_and_type], "tarolas_helyszine" => $array_of_tarolas[$tarolas_id]));*/
+            /*$this->db->insert("guaman_keszlet", array("id" => NULL, "id_azonosito" => $char_termekid . $number_termekid, "beker_datuma" => $randomDate, "beszerzesi_platform" =>
+                $array_of_platform[$platform], "termek" => $array_of_termek[$termek], "beszerzesi_ar" => $beszerzesi_ar, "brutto_eladasi_ar" => $brutto_eladasi_ar,
+                "type" => $array_of_type[$type], "tarolas_helyszine" => $array_of_tarolas[$tarolas_id])); */
         }
     }
 }

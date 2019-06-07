@@ -27,7 +27,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 }
             }
             break;
-        case "guaman_tartozeksales":
+        /*case "guaman_tartozeksales":
             foreach ($result_array_ as $key => $row) {
                 if (is_numeric($result_array_[$key]['brutto_eladasi_ar']) && is_numeric($result_array_[$key]['beszerzesi_ar'])) {
                     $result_array_[$key]['afa'] = round(($result_array_[$key]['brutto_eladasi_ar'] - $result_array_[$key]['beszerzesi_ar']) * 0.2126, 2);
@@ -78,6 +78,9 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
 
                 }
                 $date1 = $result_array_[$key]['beker_datuma'];
+                if(!isset($result_array_[$key]['eladas_datum']) || $result_array_[$key]['eladas_datum'] === ""){
+                    $result_array_[$key]['eladas_datum'] = date("Y-m-d");
+                }
                 $date2 = $result_array_[$key]['eladas_datum'];
                 $diff = abs(strtotime($date2) - strtotime($date1));
                 $result_array_[$key]['forgasi_nap'] = floor($diff / (60 * 60 * 24)) . " " . lang("day");
