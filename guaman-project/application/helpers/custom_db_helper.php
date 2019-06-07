@@ -404,8 +404,8 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 $result_array_[$i]["facebook_db"] = 0;
 
                 foreach ($hasznaltsales as $hasznaltsale) {
-                    if (trim_month(get_month($hasznaltsale["beszer_datum"])) == $current_month) {
-                        switch (strtolower($hasznaltsale["platform"])) {
+                    if (trim_month(get_month($hasznaltsale["beker_datuma"])) == $current_month) {
+                        switch (strtolower($hasznaltsale["beszerzesi_platform"])) {
                             case "ws":
                                 $result_array_[$i]["webshop_db"]++;
                                 break;
@@ -487,8 +487,8 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 $result_array_[$i]["facebook_db"] = 0;
 
                 foreach ($gadgets as $gadget) {
-                    if (trim_month(get_month($gadget["beszer_datum"])) == $current_month) {
-                        switch (strtolower($gadget["platform"])) {
+                    if (trim_month(get_month($gadget["beker_datuma"])) == $current_month) {
+                        switch (strtolower($gadget["beszerzesi_platform"])) {
                             case "ws":
                                 $result_array_[$i]["webshop_db"]++;
                                 break;
@@ -568,8 +568,8 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
                 $result_array_[$i]["facebook_db"] = 0;
 
                 foreach ($report_partner as $row) {
-                    if (trim_month(get_month($row["beszer_datum"])) == $current_month) {
-                        switch (strtolower($row["platform"])) {
+                    if (trim_month(get_month($row["beker_datuma"])) == $current_month) {
+                        switch (strtolower($row["beszerzesi_platform"])) {
                             case "ws":
                                 $result_array_[$i]["webshop_db"]++;
                                 break;

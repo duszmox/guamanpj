@@ -469,62 +469,50 @@ class Database_model extends CI_Model
 
     public function change()
     {
-        $this->db->select("*");
-        $query = $this->db->get("guaman_table_columns")->result_array();
-        foreach ($query as $key => $value) {
-            if (strpos($value['column_name'], 'datum') || $value['column_name'] == "datum") {
-                $this->db->update("guaman_table_columns", array("type" => "date"), array("column_name" => $value['column_name']));
-                true;
-            }
-            if ((strpos($value['nice_column_name'], 'ár')) || (strpos($value['nice_column_name'], 'Ár')) || ((strpos($value['nice_column_name'], 'Nettó')) || (strpos($value['nice_column_name'], 'Bruttó')))) {
-                if (!strpos($value['nice_column_name'], 'Város')) {
-                    if (!strpos($value['column_name'], 'nap')) {
-                        if (!strpos($value['column_name'], 'ros')) {
-                            if (!strpos($value['column_name'], 'tar')) {
-                                if ($value['column_name'] == "futar") continue;
-                                if ($value['column_name'] == "tarolas_helyszine") continue;
-                                if ($value['column_name'] == "tarolasi_helyszine") continue;
-                                if ($value['column_name'] == "tarhely") continue;
-                                echo $value['nice_column_name'] . " : " . $value['column_name'] . " -> " . $value['type'];
-                                $this->db->update("guaman_table_columns", array("type" => "money"), array("column_name" => $value['column_name']));
-                                echo "<br>";
-                            }
-                        }
-                    }
-                }
-            }
-
-        }
-
     }
 
     public function addRowsToDatabaseManual()
     {
-        //termék id
-        $char_termekid = strtoupper(substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1));
-        $number_termekid = rand(10, 99);
-        echo "Termék ID : " . $char_termekid . $number_termekid . "<br>";
-        echo "<hr>";
+        for ($i = 0; $i < 100; $i++) {
+            //termék id
+            $char_termekid = strtoupper(substr(str_shuffle("abcdefghijklmnopqrstuvwxyz"), 0, 1));
+            $number_termekid = rand(10, 99);
+            echo "Termék ID : " . $char_termekid . $number_termekid . "<br>";
+            echo "<hr>";
 
-        //bekerülési dátum
-        $timestamp = mt_rand(1, time());
-        $randomDate = date("Y-m-d", $timestamp);
-        echo "Bekerülési Dátum : " . $randomDate . " \n<br>";
-        echo "<hr>";
+            //bekerülési dátum
+            $timestamp = mt_rand(1, time());
+            $randomDate = date("Y-m-d", $timestamp);
+            echo "Bekerülési Dátum : " . $randomDate . " \n<br>";
+            echo "<hr>";
 
-        //platform
-        $array_pf_platform = array("fa","ha","partner");
-        $platform = array_rand($array_pf_platform);
-        echo "Platform : ".$array_pf_platform[$platform] . "\n <br><hr>";
+            //platform
+            $array_of_platform = array("fa", "ha", "partner");
+            $platform = array_rand($array_of_platform);
+            echo "Platform : " . $array_of_platform[$platform] . "\n <br><hr>";
 
-        $array_of_termek = array("iPhone 6S","iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
-        $array_of_type = array("Telefon","Telefon","Telefon","Órák, kiegészítők","Tablet","Gadget","Gadget");
-        $termek_and_type = array_rand($array_of_termek);
-        echo "Termék : ".$array_of_termek[$termek_and_type]."\n<br><hr>";
-        echo "Type : ".$array_of_type[$termek_and_type]."\n<br><hr>";
+            $array_of_termek = array("iPhone 6S", "iPhone 7S", "iPhone 8", "Rolex", "iPad Pro", "Krypto hangszóró", "Apple füllhallgató");
+            $array_of_type = array("Telefon", "Telefon", "Telefon", "Órák, kiegészítők", "Tablet", "Gadget", "Gadget");
+            $termek_and_type = array_rand($array_of_termek);
+            echo "Termék : " . $array_of_termek[$termek_and_type] . "\n<br><hr>";
+            echo "Type : " . $array_of_type[$termek_and_type] . "\n<br><hr>";
 
-        $beszerzesi_ar = rand(100000,800000);
-        echo "Beszerzési Ár : " . $beszerzesi_ar . "\n <br><hr>";
+            $beszerzesi_ar = rand(100000, 800000);
+            $beszerzesi_ar = round($beszerzesi_ar / 1000, 0) * 1000;
+            echo "Beszerzési Ár : " . $beszerzesi_ar . "\n <br><hr>";
 
+            $brutto_eladasi_ar = rand($beszerzesi_ar, $beszerzesi_ar + 200000);
+            $brutto_eladasi_ar = round($brutto_eladasi_ar / 1000, 0) * 1000;
+            echo "Bruttó Eladási ár : " . $brutto_eladasi_ar . "\n <br><hr>";
+
+            $array_of_tarolas = array("Raktár A", "Raktár B", "Raktár C");
+            $tarolas_id = array_rand($array_of_tarolas);
+            echo "Tárolás : " . $array_of_tarolas[$tarolas_id] . "\n<br><hr>";
+
+
+            /*$this->db->insert("guaman_keszletujkeszulek", array("id" => NULL, "id_azonosito" => $char_termekid . $number_termekid, "beker_datuma" => $randomDate, "beszerzesi_platform" =>
+                $array_of_platform[$platform], "termek" => $array_of_termek[$termek_and_type], "beszerzesi_ar" => $beszerzesi_ar, "brutto_eladasi_ar" => $brutto_eladasi_ar,
+                "type" => $array_of_type[$termek_and_type], "tarolas_helyszine" => $array_of_tarolas[$tarolas_id]));*/
+        }
     }
 }
