@@ -25,6 +25,7 @@ class Timetable extends CI_Controller
      */
     public function index($user_id = 0)
     {
+        require_status(Statuses::$LOGGED_IN);
         if ($user_id == 0) {
             //todo csak akkor ha van a HR modulból rá engedélye / főnöke
 
@@ -56,7 +57,7 @@ class Timetable extends CI_Controller
 
     public function manage_event_add()
     {
-
+        require_status(Statuses::$LOGGED_IN);
 
         $event_types = $this->Timetable_model->get_timetable_event_types();
         $event_places = $this->Timetable_model->get_timetable_event_places();
@@ -74,6 +75,7 @@ class Timetable extends CI_Controller
      */
     public function manage_event_edit($event = "")
     {
+        require_status(Statuses::$LOGGED_IN);
         $data = array();
         if ($event == "") {
             js_alert("No event picked", base_url("timetable/"));
@@ -100,6 +102,7 @@ class Timetable extends CI_Controller
 
     public function manage_event_upload_add()
     {
+        require_status(Statuses::$LOGGED_IN);
         $required_inputs = array("event_title", "event_place", "all_day", "event_type", "event_start", "event_end", "event_comment");
 
         foreach ($required_inputs as $field) {
@@ -129,7 +132,7 @@ class Timetable extends CI_Controller
 
     public function manage_event_upload_edit()
     {
-
+        require_status(Statuses::$LOGGED_IN);
         $required_inputs = array("event_id", "event_title", "event_place", "all_day", "event_type", "event_start", "event_end", "event_comment");
 
         foreach ($required_inputs as $field) {
@@ -161,7 +164,7 @@ class Timetable extends CI_Controller
 
     public function manage_participants($event = "")
     {
-
+        require_status(Statuses::$LOGGED_IN);
     }
 
 

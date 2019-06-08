@@ -179,6 +179,7 @@ class Account extends CI_Controller
      */
     function logout()
     {
+        require_status(Statuses::$LOGGED_IN);
         $this->Account_model->log_out();
         js_alert(lang("logout_message"), base_url("account/login"));
     }
@@ -288,6 +289,7 @@ class Account extends CI_Controller
         }
     }
     function delete_user($userid){
+        require_status(Statuses::$LOGGED_IN);
         $this->Account_model->delete_user($userid);
         redirect(base_url("account/admin"));
     }

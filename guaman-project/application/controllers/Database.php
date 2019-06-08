@@ -37,6 +37,7 @@ class Database extends CI_Controller
 
     function create_folder()
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission("edit_folders");
 
         $this->load->view("templates/header");
@@ -53,6 +54,7 @@ class Database extends CI_Controller
 
     function create_table()
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission("edit_tables");
 
         if ($this->input->post("submit") /* + ... */) {
@@ -115,6 +117,7 @@ class Database extends CI_Controller
 
     function get_column_names($table_name)
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission($table_name . "_table_view");
 
         $this->output
@@ -124,6 +127,7 @@ class Database extends CI_Controller
 
     function insert_new_row($table_name)
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission($table_name . "_table_edit");
         try {
             $this->Database_model->insert($table_name, array("id" => ""));
@@ -135,6 +139,7 @@ class Database extends CI_Controller
 
     function get_filters($table_name)
     {
+        require_status(Statuses::$LOGGED_IN);
         $result = array();
         switch ($table_name) {
             case "guaman_sales":
@@ -214,6 +219,7 @@ class Database extends CI_Controller
 
     function update_field()
     {
+        require_status(Statuses::$LOGGED_IN);
         $table_name = $this->input->post("table_name");
 
         require_permission($table_name . "_table_edit");
@@ -235,6 +241,7 @@ class Database extends CI_Controller
 
     public function backup()
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission("download_backup");
 
         $this->load->dbutil();
@@ -265,6 +272,8 @@ class Database extends CI_Controller
      */
     public function move_row()
     {
+        require_status(Statuses::$LOGGED_IN);
+
         $from_table = $this->input->post("fromTable");
         $to_table = $this->input->post("toTable");
         $rowId = $this->input->post("rowId");
@@ -310,6 +319,7 @@ class Database extends CI_Controller
      */
     public function get_compatible_tables($from_table)
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission($from_table . "_table_view");
         json_output($this->Database_model->get_compatible_tables($from_table));
     }
@@ -323,6 +333,7 @@ class Database extends CI_Controller
     public function get_enum($enum_name)
     {
         // TODO permissions
+        require_status(Statuses::$LOGGED_IN);
         try {
             json_output($this->Database_model->get_enum($enum_name));
         } catch (Exception $e) {
@@ -333,6 +344,7 @@ class Database extends CI_Controller
     public function get_enums()
     {
         // TODO permissions
+        require_status(Statuses::$LOGGED_IN);
         try {
             json_output($this->Database_model->get_enums());
         } catch (Exception $e) {
@@ -343,7 +355,7 @@ class Database extends CI_Controller
     public function save_filter($id)
     {
         // TODO require edit filters permissions
-
+        require_status(Statuses::$LOGGED_IN);
         $filter = array(
             "id" => $id,
             "nice_name" => $this->input->post("nice_name"),
@@ -363,6 +375,7 @@ class Database extends CI_Controller
 
     public function save_new_filter()
     {
+        require_status(Statuses::$LOGGED_IN);
         $this->load->helper("string_helper");
 
         // TODO permission
@@ -384,6 +397,7 @@ class Database extends CI_Controller
 
     private function slugit($str, $replace = array(), $delimiter = '-')
     {
+        require_status(Statuses::$LOGGED_IN);
         if (!empty($replace)) {
             $str = str_replace((array)$replace, ' ', $str);
         }

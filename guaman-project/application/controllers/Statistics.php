@@ -12,6 +12,7 @@ class Statistics extends CI_Controller
     }
 
     public function index(){
+        require_status(Statuses::$LOGGED_IN);
         $this->load->view("templates/header", array("title" => lang("statistics_title")));
         $this->load->view("templates/menu");
 
@@ -127,6 +128,7 @@ class Statistics extends CI_Controller
 
     public function remove($id)
     {
+        require_status(Statuses::$LOGGED_IN);
         require_permission("edit_stats");
         $this->Statistics_model->remove($id);
     }
@@ -134,7 +136,7 @@ class Statistics extends CI_Controller
     public function get_source_table($stat_id = null)
     {
         $this->load->model("Database_model");
-
+        require_status(Statuses::$LOGGED_IN);
         if ($stat_id == null || !Validator::is_numeric($stat_id)) json_error(lang('invalid_table_source_name'));
         require_permission($stat_id . "_stat_view", "json");
 
