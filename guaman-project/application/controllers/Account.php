@@ -30,7 +30,6 @@ class Account extends CI_Controller
         $password = $this->input->post("password");
 
 
-
         if (!$username || !$password) {
             // Load login form
 
@@ -46,10 +45,10 @@ class Account extends CI_Controller
             if ($this->Account_model->login_user($username, Validator::encrypt($password))) {
                 $this->Account_model->login_log($username);
                 $normal_url = str_replace("--", "/", $this->input->post("url"));
-                $url_post = ($normal_url != "")?$normal_url:base_url("account/profile");
+                $url_post = ($normal_url != "") ? $normal_url : base_url("account/profile");
                 js_alert(lang("successful_login_message"), $url_post);
             } else {
-                js_alert(lang("wrong_login_message"), base_url("account/login/").$this->input->post("url"));
+                js_alert(lang("wrong_login_message"), base_url("account/login/") . $this->input->post("url"));
             }
         }
 
@@ -206,17 +205,16 @@ class Account extends CI_Controller
         $user_id = $this->Account_model->get_id_by_username($username);
 
 
-
         $this->load->view("templates/header", array("title" => lang("admin_title")));
 
         $this->load->view("templates/menu");
         $users = $this->Account_model->get_users("username");
         $users_admin = array();
         $users_not_admin = array();
-        foreach($users as $key => $value){
-            if($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")){
+        foreach ($users as $key => $value) {
+            if ($this->Permissions_model->has_permission($this->Account_model->get_id_by_username($value['username']), "admin")) {
                 $users_admin[] = $value['username'];
-            }else{
+            } else {
                 $users_not_admin[] = $value['username'];
             }
         }
@@ -242,13 +240,14 @@ class Account extends CI_Controller
      * @param int $user_id
      * @throws Exception
      */
-    function get_permissions($user_id = null){
+    function get_permissions($user_id = null)
+    {
         require_permission("admin");
 
-        if(!Validator::is_numeric($user_id)) json_error(lang("invalid_user_id_label"));
+        if (!Validator::is_numeric($user_id)) json_error(lang("invalid_user_id_label"));
         $permissions = $this->Permissions_model->get_permissions();
 
-        foreach ($permissions as $key => $permission){
+        foreach ($permissions as $key => $permission) {
             $permissions[$key]["has_permission"] = $this->Permissions_model->has_permission($user_id, $permission["permission_name"]);
         }
 
@@ -258,17 +257,18 @@ class Account extends CI_Controller
     /**
      * Adds or removes the specific permissions
      */
-    function save_permissions($user_id = null){
+    function save_permissions($user_id = null)
+    {
         require_permission("admin");
 
-        if(!Validator::is_numeric($user_id)) json_error(lang("invalid_user_id"));
+        if (!Validator::is_numeric($user_id)) json_error(lang("invalid_user_id"));
 
         $permission_names = $this->Permissions_model->get_permission_names();
 
         $in_permissions = $this->input->post("permissions");
 
-        foreach ($in_permissions as $in_permission){
-            if(!in_array($in_permission["name"], $permission_names)) json_error(lang("invalid_permission_name"));
+        foreach ($in_permissions as $in_permission) {
+            if (!in_array($in_permission["name"], $permission_names)) json_error(lang("invalid_permission_name"));
         }
 
 
@@ -278,8 +278,8 @@ class Account extends CI_Controller
             json_error($e->getMessage());
         }
 
-        foreach ($in_permissions as $in_permission){
-            if($in_permission["value"] === "on") {
+        foreach ($in_permissions as $in_permission) {
+            if ($in_permission["value"] === "on") {
                 try {
                     $this->Permissions_model->add_permission($user_id, $in_permission["name"]);
                 } catch (Exception $e) {
@@ -288,12 +288,16 @@ class Account extends CI_Controller
             }
         }
     }
-    function delete_user($userid){
+
+    function delete_user($userid)
+    {
         require_status(Statuses::$LOGGED_IN);
         $this->Account_model->delete_user($userid);
         redirect(base_url("account/admin"));
     }
-    function feedback(){
+
+    function feedback()
+    {
         require_status(Statuses::$LOGGED_IN);
         require_permission("admin");
         $this->load->view("templates/header");
@@ -304,6 +308,27 @@ class Account extends CI_Controller
         $data = $this->Database_model->get_table("*", "guaman_feedback", "id", "DESC");
         $this->load->view("account/feedback", array("data" => $data));
         $this->load->view("templates/footer");
+    }
+
+    function feedback_uploader()
+    {
+        require_permission("feedback");
+        if (NULL !== $this->input->post("title") && NULL !== $this->input->post("content")) {
+            $title = $this->input->post("title");
+            $content = $this->input->post("content");
+
+            echo $title . $content;
+
+        } else {
+            $this->load->view("templates/header");
+
+            $this->load->model("Database_model");
+            $this->load->view("templates/menu");
+            $data = $this->Database_model->get_table("*", "guaman_feedback", "id", "DESC");
+            $this->load->view("account/feedback_uploader", array("data" => $data));
+            $this->load->view("templates/footer");
+
+        }
     }
 
 
