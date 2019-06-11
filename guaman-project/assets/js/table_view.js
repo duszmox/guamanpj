@@ -338,8 +338,12 @@ function loadTable(table_name) {
                     }
 
                     if (canEdit) {
-                        html += "<td><button onclick='moveRow(\"" + table_name + "\", \"" + data[i]["id"] + "\")' class='btn btn-primary'>" + lang.move_row_title + "</button></td>";
+                        html += "<td><div class='btn-group'><button onclick='moveRow(\"" + table_name + "\", \"" + data[i]["id"] + "\")' class='btn btn-primary  '>" + lang.move_row_title + "</button>";
                     }
+                    if(table_name === "guaman_keszlet" || table_name === "guaman_keszletujkeszulek"){
+                        html += "<button onclick='saleRow(\"" + table_name + "\", \"" + data[i]["id"] + "\")' class='btn btn-success '>" + "Eladás" + "</button>";
+                    }
+                    html += "</div></td>";
                     html += "</tr>";
                 }
                 html += "</tbody></table>";
@@ -466,6 +470,67 @@ function update_table_field(table_name, column, id, newValue) {
     }).fail(function () {
         internetConnectionProblemAlert()
     })
+}
+
+function saleRow(tableName, rowId){
+    $.getJSON(base_url + "database/get_compatible_tables/" + tableName, {}, function (data) {
+        if (data.error !== undefined) {
+            Swal.fire({
+                type: "error",
+                "titleText": "Upsz...", // TODO lang
+                "text": data.error
+            })
+        } else {
+            let options = {};
+            for (let i = 0; i < data.length; i++) {
+                options[data[i].table_name] = data[i].table_title;
+            }
+            Swal.fire({
+                titleText: "Eladás", // TODO lang
+                text: rowId+"-ik sor eladása",
+                showCancelButton: true,
+                type: "text",
+                cancelButtonColor: '#d33',
+                cancelButtonText: "Mégsem",
+                confirmButtonText: 'Eladás',
+                type: "question",
+                reverseButtons: true
+            }).then((result) => {
+                if(result.value) {
+
+
+                    $.post(base_url + "database/move_row/", {
+                        fromTable: tableName,
+                        toTable: "guaman_sales",
+                        rowId: rowId
+                    })
+                        .done(function (data) {
+                            if (data === "success") {
+                                loadTable(tableName);
+                                Toast.fire({
+                                    type: "success",
+                                    title: "Sikeres áthelyezés" // TODO lang
+                                });
+                            } else if (data.error !== undefined) {
+                                Toast.fire({
+                                    type: "error",
+                                    title: data.error
+                                });
+                                loadTable(tableName);
+                            }
+                        })
+                        .fail(function () {
+                            internetConnectionProblemAlert()
+                        });
+                }
+            })
+        }
+    })
+        .fail(function () {
+            internetConnectionProblemAlert()
+        });
+
+
 }
 
 function moveRow(tableName, rowId) {

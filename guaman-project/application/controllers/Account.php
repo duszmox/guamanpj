@@ -317,7 +317,16 @@ class Account extends CI_Controller
             $title = $this->input->post("title");
             $content = $this->input->post("content");
 
-            echo $title . $content;
+            $this->load->model("Account_model");
+            $author = $this->Account_model::$nice_username;
+            $date = date("Y-m-d");
+
+            if ($this->Account_model->insert_feedback($content, $title, $author, $date)) {
+                js_alert("Sikeres feltöltés", "feedback");
+            } else {
+                js_alert("Hibás feltöltés", "feedback");
+            }
+
 
         } else {
             $this->load->view("templates/header");

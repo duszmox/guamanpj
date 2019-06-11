@@ -10,6 +10,7 @@ class Account_model extends CI_Model
 {
     public static $TABLE_NAME = "users";
     public static $TABLE_LOG_LOGIN_NAME = "login_log";
+    public static $FEEDBACK_TABLE_NAME = "feedback";
     public static $username = "";
     public static $nice_username = "";
     public static $user_id = 0;
@@ -23,6 +24,7 @@ class Account_model extends CI_Model
 
         self::$TABLE_NAME = $this->config->item("table_prefix") . self::$TABLE_NAME;
         self::$TABLE_LOG_LOGIN_NAME = $this->config->item("table_prefix") . self::$TABLE_LOG_LOGIN_NAME;
+        self::$FEEDBACK_TABLE_NAME = $this->config->item("table_prefix") . self::$FEEDBACK_TABLE_NAME;
 
 
         $this->session->sess_expiration = $this->config->item("session_time");// expires in 4 hours
@@ -180,6 +182,9 @@ class Account_model extends CI_Model
     public function delete_user($userid){
         $this->db->where("id", $userid);
         $this->db->delete(self::$TABLE_NAME);
+    }
+    public function insert_feedback($content,$title,$author,$date){
+        return $this->db->insert(self::$FEEDBACK_TABLE_NAME, array("author" => $author, "title" => $title, "content" => $content, "date" => $date));
     }
 
 

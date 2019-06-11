@@ -78,7 +78,7 @@ function custom_db_actions($table_name, $result_array, $column_names, $columns)
 
                 }
                 $date1 = $result_array_[$key]['beker_datuma'];
-                if(!isset($result_array_[$key]['eladas_datum']) || $result_array_[$key]['eladas_datum'] === ""){
+                if($result_array_[$key]['eladas_datum'] !== ""){
                     $result_array_[$key]['eladas_datum'] = date("Y-m-d");
                 }
                 $date2 = $result_array_[$key]['eladas_datum'];
